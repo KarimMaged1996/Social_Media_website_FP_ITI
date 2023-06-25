@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+    # apps
+    'post.apps.PostConfig',
+    'comment.apps.CommentConfig',
+
     # 3rd-Party
     'django_cleanup.apps.CleanupConfig',
     'corsheaders',
