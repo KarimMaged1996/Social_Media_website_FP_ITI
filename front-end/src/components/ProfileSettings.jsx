@@ -3,10 +3,10 @@ import React from 'react'
 export function ProfileSettings() {
   return (
     <divc lass="update-account layout">
-        <div class="container">
-            <div class="layout__box text-white">
-                <div class="layout__boxHeader">
-                    <div class="layout__boxTitle">
+        <div className="container">
+            <div className="layout__box text-white">
+                <div className="layout__boxHeader">
+                    <div className="layout__boxTitle">
                         <a href="profile.html">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                 viewBox="0 0 32 32">
@@ -19,30 +19,30 @@ export function ProfileSettings() {
                         <h3>Edit your profile</h3>
                     </div>
                 </div>
-                <div class="layout__body">
-                    <form class="form" action="#">
-                        <div class="form__group">
+                <div className="layout__body">
+                    <form className="form" action="#">
+                        <div className="form__group">
                             <label for="profile_pic">Avatar</label>
                             <input id="profile_pic" name="profile_pic" type="file" />
                         </div>
 
-            <div class="form__group">
+            <div className="form__group">
                 <label for="username">Username</label>
                 <input id="username" name="username" type="text" placeholder="E.g. Mohamed" />
             </div>
 
-            <div class="form__group">
+            <div className="form__group">
                 <label for="email">Email</label>
                 <input id="email" name="email" type="text" placeholder="E.g. mohamed@email.com" />
             </div>
 
-                        <div class="form__group">
+                        <div className="form__group">
                             <label for="user_bio">Bio</label>
                             <textarea name="user_bio" id="user_bio" placeholder="Write about yourself..."></textarea>
                         </div>
-                        <div class="form__action">
-                            <a class="btn btn--dark text-white" href="index.html">Cancel</a>
-                            <button class="btn btn--main text-white " type="submit">Update</button>
+                        <div className="form__action">
+                            <a className="btn btn--dark text-white" href="index.html">Cancel</a>
+                            <button className="btn btn--main text-white " type="submit">Update</button>
                         </div>
                     </form>
                 </div>

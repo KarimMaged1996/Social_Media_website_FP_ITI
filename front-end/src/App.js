@@ -1,6 +1,5 @@
 import logo from "./logo.svg";
 import "./App.css";
-import "./style.css";
 import { MyNav } from "./components/MyNav";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./components/Home";

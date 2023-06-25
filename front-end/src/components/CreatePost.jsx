@@ -2,11 +2,11 @@ import React from 'react'
 
 export  function CreatePost() {
   return (
-    <main class="create-room layout text-white">
-    <div class="container">
-      <div class="layout__box">
-        <div class="layout__boxHeader">
-          <div class="layout__boxTitle">
+    <main className="create-room layout text-white">
+    <div className="container">
+      <div className="layout__box">
+        <div className="layout__boxHeader">
+          <div className="layout__boxTitle">
             <a href="index.html">
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                 <title>arrow-left</title>
@@ -18,14 +18,14 @@ export  function CreatePost() {
             <h3>Create a Post</h3>
           </div>
         </div>
-        <div class="layout__body">
-          <form class="form" action="#">
-            <div class="form__group">
+        <div className="layout__body">
+          <form className="form" action="#">
+            <div className="form__group">
               <label for="room_name">Title</label>
               <input required  id="room_name" name="room_name" type="text" placeholder="E.g. Mastering Python + Django" />
             </div>
 
-             <div class="form__group">
+             <div className="form__group">
               <label for="room_topic">Topic</label>
               <input required type="text" name="topic" id="room_topic" list="topic-list" />
               <datalist id="topic-list">
@@ -39,14 +39,14 @@ export  function CreatePost() {
             </div> 
 
 
-            <div class="form__group">
+            <div className="form__group">
               <label for="room_about">About</label>
               <textarea required name="room_about" id="room_about" placeholder="Write about your study group..."></textarea>
             </div>
-            <div class="form__action">
+            <div className="form__action">
 
-              <a class="btn btn-danger" href="index.html">Cancel</a>
-              <button class="btn btn-success" type="submit">Create Post</button>
+              <a className="btn btn-danger" href="index.html">Cancel</a>
+              <button className="btn btn-success" type="submit">Create Post</button>
 
             </div>
           </form>

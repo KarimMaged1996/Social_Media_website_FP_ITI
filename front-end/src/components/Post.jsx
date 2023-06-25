@@ -2,12 +2,12 @@ import React from 'react'
 
 export  function Post() {
   return (
-    <main class="profile-page layout layout--2 text-white">
-      <div class="container">
+    <main className="profile-page layout layout--2 text-white">
+      <div className="container">
         
-        <div class="room">
-          <div class="room__top">
-            <div class="room__topLeft">
+        <div className="room">
+          <div className="room__top">
+            <div className="room__topLeft">
               <a href="index.html">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                   <title>arrow-left</title>
@@ -19,7 +19,7 @@ export  function Post() {
               <h3>Study Room</h3>
             </div>
 
-            <div class="room__topRight">
+            <div className="room__topRight">
               <a href="#">
                 <svg
                   enable-background="new 0 0 24 24"
@@ -56,7 +56,7 @@ export  function Post() {
               </a>
             </div>
 
-             <button class="action-button" data-id="120" data-delete-url="https://randomuser.me/api/3324923"
+             <button className="action-button" data-id="120" data-delete-url="https://randomuser.me/api/3324923"
             data-edit-url="profile.html">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
               <title>ellipsis-horizontal</title>
@@ -72,42 +72,42 @@ export  function Post() {
             </svg>
           </button> 
           </div>
-          <div class="room__box scroll">
-            <div class="room__header scroll">
-              <div class="room__info">
+          <div className="room__box scroll">
+            <div className="room__header scroll">
+              <div className="room__info">
                 <h3>100 Days of Code Challenge</h3>
                 <span>3 days ago</span>
               </div>
-              <div class="room__hosted">
+              <div className="room__hosted">
                 <p>Hosted By</p>
-                <a href="#" class="room__author">
-                  <div class="avatar avatar--small">
+                <a href="#" className="room__author">
+                  <div className="avatar avatar--small">
                     <img src="https://randomuser.me/api/portraits/men/37.jpg" />
                   </div>
                   <span>@sherif</span>
                 </a>
               </div>
-              <div class="room__details">
+              <div className="room__details">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi, tenetur laudantium? Dicta repellendus
                 rerum consectetur, voluptatem repudiandae eum ea porro cupiditate provident nulla, deserunt, ab ipsum
                 corporis laboriosam deleniti molestias?
               </div>
-              <span class="room__topics">JavaScript</span>
+              <span className="room__topics">JavaScript</span>
             </div>
-            <div class="room__conversation">
-              <div class="threads scroll">
-                <div class="thread">
-                  <div class="thread__top">
-                    <div class="thread__author">
-                      <a href="#" class="thread__authorInfo">
-                        <div class="avatar avatar--small">
+            <div className="room__conversation">
+              <div className="threads scroll">
+                <div className="thread">
+                  <div className="thread__top">
+                    <div className="thread__author">
+                      <a href="#" className="thread__authorInfo">
+                        <div className="avatar avatar--small">
                           <img src="https://randomuser.me/api/portraits/men/37.jpg" />
                         </div>
                         <span>@sherif</span>
                       </a>
-                      <span class="thread__date">3 day ago</span>
+                      <span className="thread__date">3 day ago</span>
                     </div>
-                    <div class="thread__delete">
+                    <div className="thread__delete">
                       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                         <title>remove</title>
                         <path
@@ -116,7 +116,7 @@ export  function Post() {
                       </svg>
                     </div>
                   </div>
-                  <div class="thread__details">
+                  <div className="thread__details">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque nobis, deserunt cum quibusdam aliquam
                     nihil unde et impedit, quaerat! Corporis praesentium aspernatur autem laboriosam natus similique,
                     adipisci nam maxime.
@@ -125,18 +125,18 @@ export  function Post() {
               </div>
             </div>
           </div>
-          <div class="room__message">
+          <div className="room__message">
             <form action="#"><input name="" placeholder="Write your message here..." /></form>
           </div>
         </div>
        
 
        
-        <div class="participants">
-          <h3 class="participants__top">Participants <span>(1 Joined)</span></h3>
-          <div class="participants__list scroll">
-            <a href="profile.html" class="participant">
-              <div class="avatar avatar--medium">
+        <div className="participants">
+          <h3 className="participants__top">Participants <span>(1 Joined)</span></h3>
+          <div className="participants__list scroll">
+            <a href="profile.html" className="participant">
+              <div className="avatar avatar--medium">
                 <img src="https://randomuser.me/api/portraits/men/37.jpg" />
               </div>
               <p>

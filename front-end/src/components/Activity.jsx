@@ -2,12 +2,12 @@ import React from 'react'
 
 export  function Activity() {
   return (
-    <main class="layout text-white">
+    <main className="layout text-white">
 
-    <div class="container ">
-      <div class="layout__box">
-        <div class="layout__boxHeader">
-          <div class="layout__boxTitle">
+    <div className="container ">
+      <div className="layout__box">
+        <div className="layout__boxHeader">
+          <div className="layout__boxTitle">
             <a href="index.html">
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                 <title>arrow-left</title>
@@ -20,11 +20,11 @@ export  function Activity() {
           </div>
         </div>
 
-        <div class="activities-page layout__body">
-          <div class="activities__box">
-            <div class="activities__boxHeader roomListRoom__header">
-              <a href="profile.html" class="roomListRoom__author">
-                <div class="avatar avatar--small">
+        <div className="activities-page layout__body">
+          <div className="activities__box">
+            <div className="activities__boxHeader roomListRoom__header">
+              <a href="profile.html" className="roomListRoom__author">
+                <div className="avatar avatar--small">
                   <img src="https://scontent.fcai20-1.fna.fbcdn.net/v/t31.18172-8/1276831_589092761204726_7990303463526666031_o.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=K61Lp5OFy8MAX_SRFMN&_nc_ht=scontent.fcai20-1.fna&oh=00_AfAuhFeQ3UXtMYGTgE1XV3mmDrMp3ve1TRaaud_38-PDcQ&oe=64BFFE96" />
                 </div>
                 <p>
@@ -32,7 +32,7 @@ export  function Activity() {
                   <span>5 days ago</span>
                 </p>
               </a>
-              <div class="roomListRoom__actions">
+              <div className="roomListRoom__actions">
                 <a href="#">
                   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                     <title>remove</title>
@@ -43,18 +43,18 @@ export  function Activity() {
                 </a>
               </div>
             </div>
-            <div class="activities__boxContent">
+            <div className="activities__boxContent">
               <p>replied to post “<a href="room.html">100 Days of code challenge!</a>”</p>
-              <div class="activities__boxRoomContent">
+              <div className="activities__boxRoomContent">
                 I’ll have to try this sometime. Really like this idea. Wanna talk about it? I ‘m....
               </div>
             </div>
           </div>
 
-          <div class="activities__box">
-            <div class="activities__boxHeader roomListRoom__header">
-              <a href="profile.html" class="roomListRoom__author">
-                <div class="avatar avatar--small active">
+          <div className="activities__box">
+            <div className="activities__boxHeader roomListRoom__header">
+              <a href="profile.html" className="roomListRoom__author">
+                <div className="avatar avatar--small active">
                   <img src="https://randomuser.me/api/portraits/men/13.jpg" />
                 </div>
                 <p>
@@ -62,7 +62,7 @@ export  function Activity() {
                   <span>5 days ago</span>
                 </p>
               </a>
-              <div class="roomListRoom__actions">
+              <div className="roomListRoom__actions">
                 <a href="#">
                   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                     <title>remove</title>
@@ -73,9 +73,9 @@ export  function Activity() {
                 </a>
               </div>
             </div>
-            <div class="activities__boxContent">
+            <div className="activities__boxContent">
               <p>replied to post “<a href="room.html">100 Days of code challenge!</a>”</p>
-              <div class="activities__boxRoomContent">
+              <div className="activities__boxRoomContent">
                 I’ll have to try this sometime. Really like this idea. Wanna talk about it? I ‘m....
               </div>
             </div>
