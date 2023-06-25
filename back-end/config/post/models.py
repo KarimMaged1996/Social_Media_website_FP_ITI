@@ -1,6 +1,6 @@
 from django.db import models
 from user.models import User
-from group.models import Group
+# from group.models import Group
 from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -19,7 +19,7 @@ class Post(models.Model):
     image4 = models.ImageField(upload_to='media/post_images/', null=True, blank=True) # An optional image for the post
     video = models.FileField(upload_to='media/post_videos/', null=True, blank=True) # An optional video for the post
     score = models.ManyToManyField(User, related_name='upvoted_posts', null=True, blank=True) # A ManyToMany field that tracks which users have liked the post
-    group = models.ForeignKey(Group, null=True, blank=True)
+    # group = models.ForeignKey(Group, null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': self.pk}) # Returns the URL to the detail view of the post

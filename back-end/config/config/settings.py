@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # apps
     'post.apps.PostConfig',
     'comment.apps.CommentConfig',
+    'user.apps.UserConfig',
 
     # 3rd-Party
     'django_cleanup.apps.CleanupConfig',
@@ -68,7 +69,7 @@ SIMPLE_JWT = {
 }
 
 # configuring our default Authentication model to a custom model
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'user.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -115,9 +116,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'social_media',
-        'USER': 'postgres',
-        'PASSWORD': '18501900',
+        'NAME': 'techster',
+        'USER': 'dewidar',
+        'PASSWORD': '953751',
         'HOST': 'localhost',
         'PORT': '5432'
     }
