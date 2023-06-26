@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
-from .views import HomePage, Register, Logout, activate
+from .views import HomePage, Register, Logout, activate, resetPassword, getResetPasswordLink
 
 urlpatterns = [
     path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -9,5 +9,7 @@ urlpatterns = [
     path('logout/', Logout.as_view(), name='logout'),
     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',  
         activate.as_view(), name='activate'),
-    path('home/', HomePage.as_view(), name='homepage')
+    path('home/', HomePage.as_view(), name='homepage'),
+    path('resetpassword/(?P<uid>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', resetPassword, name='resetpassword'),
+    path('resetpasswordlink/', getResetPasswordLink, name='resetpasswordlink'),
 ]
