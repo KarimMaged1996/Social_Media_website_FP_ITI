@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-hf4^s6a@%jpsqz_o)$v)icpn@6id4r=13*)aw7yggvl5m9r@e(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.14']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # apps
     'post.apps.PostConfig',
     'comment.apps.CommentConfig',
+    'user.apps.UserConfig',
 
     # 3rd-Party
     'django_cleanup.apps.CleanupConfig',
@@ -68,7 +69,7 @@ SIMPLE_JWT = {
 }
 
 # configuring our default Authentication model to a custom model
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'user.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,6 +87,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = (
 'http://localhost:3000',
 'http://localhost:8000',
+
+
 )
 
 ROOT_URLCONF = 'config.urls'
@@ -115,9 +118,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'social_media',
-        'USER': 'postgres',
-        'PASSWORD': '18501900',
+        'NAME': 'techster',
+        'USER': 'dewidar',
+        'PASSWORD': '953751',
         'HOST': 'localhost',
         'PORT': '5432'
     }
