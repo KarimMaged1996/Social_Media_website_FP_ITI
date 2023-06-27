@@ -156,16 +156,16 @@ def getResetPasswordLink(request):
 
 @api_view(['POST', 'GET'])
 def resetPassword(request, uid, token):
-
-
     
-    id = urlsafe_base64_decode(uid).decode('utf-8')
  
     try:
+        id = urlsafe_base64_decode(uid).decode('utf-8')
+
         user = User.objects.get(pk=id)   
         passowrd = request.data.get('password', None)
         confrim_password = request.data.get('confirm_password', None)
-        print(password_reset_token.check_token(user, token))
+
+       
         if not password_reset_token.check_token(user, token):
             return Response({'msg': 'invalid link'}, status.HTTP_400_BAD_REQUEST)
         if not passowrd or not confrim_password:
@@ -191,9 +191,32 @@ def resetPassword(request, uid, token):
 def myProfile(request):
 
     if request.method == 'GET':
-        print(request.user)
 
+        user = User.objects.get(pk=request.user.pk)
+        serializer = UserSerializer(user)
         data = {
-            "state" : True
+            "stauts" : 'Success',
+            "data": serializer.data,
+            'msg': 'The Requested User data'
         }
         return Response(data, status.HTTP_200_OK)
+    
+    if request.method == 'POST':
+        try:
+            user = User.objects.get(pk=request.user.pk)
+       
+            
+          
+            serializer = UserSerializer(instance=user, data=request.data, partial=True, 
+                    context={'current_site': get_current_site(request), 'request': request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            
+            data = {
+                "msg": 'success',
+                'data': serializer.data
+            }
+            return Response(data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"status": "fail", "msg": e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
