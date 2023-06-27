@@ -43,14 +43,14 @@ INSTALLED_APPS = [
     'post.apps.PostConfig',
     'comment.apps.CommentConfig',
     'user.apps.UserConfig',
-    'chat.apps.ChatConfig',
+    
 
     # 3rd-Party
     'django_cleanup.apps.CleanupConfig',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-    'channels',
+    
   
     
 ]
@@ -181,10 +181,3 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 
-# Chat
-ASGI_APPLICATION = "chat.routing.application" #routing.py will handle the ASGI
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': "channels.layers.InMemoryChannelLayer"
-        }
-    }
