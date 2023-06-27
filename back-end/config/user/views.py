@@ -16,7 +16,7 @@ from django.contrib.sites.shortcuts import get_current_site
 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string  
-from .tokens import account_activation_token  , password_reset_token
+from .tokens import account_activation_token, password_reset_token
 from django.core.mail import EmailMessage 
 
 from .models import User
@@ -56,11 +56,8 @@ class Register(APIView):
         })  
         to_email = [user.email]
         email = EmailMessage(mail_subject, message, to=to_email)
-    
         email.send()
     
-        
-        
         return Response(data, status=status.HTTP_201_CREATED)
 
 
@@ -82,7 +79,6 @@ class Logout(APIView):
 
 
 class activate(APIView):
-
     def get(self, request, uidb64, token):
         id = urlsafe_base64_decode(uidb64)
         id = id.decode('utf-8')
@@ -140,10 +136,7 @@ def getResetPasswordLink(request):
 @api_view(['POST', 'GET'])
 def resetPassword(request, uid, token):
 
-
-    
     id = urlsafe_base64_decode(uid).decode('utf-8')
- 
     try:
         user = User.objects.get(pk=id)   
         passowrd = request.data.get('password', None)

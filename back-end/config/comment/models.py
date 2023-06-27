@@ -37,7 +37,7 @@ class Comment(models.Model):
 
 class Comment_Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    post = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="post_comments")
     value = models.IntegerField(choices=((1, 'Upvote'), (-1, 'Downvote')))
     created_at = models.DateTimeField(auto_now_add=True)
 

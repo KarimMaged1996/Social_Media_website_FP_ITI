@@ -1,9 +1,15 @@
 from rest_framework.permissions import BasePermission
+from django.shortcuts import get_object_or_404
+from .models import Post
 
 class IsAuthorOrReadOnly(BasePermission):
     def has_object_permission(self, request, view, obj):
         # Read permissions are allowed to any request,
         # so we'll always allow GET, HEAD or OPTIONS requests.
+        if not request.user.is_authenticated:
+            return False
+        
+        
         if request.method in ['GET', 'HEAD', 'OPTIONS']:
             return True
 
