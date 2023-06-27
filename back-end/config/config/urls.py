@@ -24,4 +24,5 @@ urlpatterns = [
 
     # path('post/',include('post.urls')),
     # path('comment/',include('comment.urls')),
+    path('groups/', include('groups.urls'))
 ]
