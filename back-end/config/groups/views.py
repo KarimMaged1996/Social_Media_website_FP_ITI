@@ -68,7 +68,7 @@ def joinGroup(request,pk):
     
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticatedAndGroupMember])
-def unjoinGroup(request,pk):
+def leaveGroup(request,pk):
     if request.method == 'DELETE':
         joinRelation = UserInGroup.objects.get(user_id=request.user.id, group_id=pk)
         if joinRelation:

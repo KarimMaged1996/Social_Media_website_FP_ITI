@@ -8,5 +8,5 @@ urlpatterns = [
     path('single_group/<int:pk>/',views.SingleGroup.as_view()),
     path('group_members/<int:pk>/', views.groupMembers),
     path('join_group/<int:pk>/',views.joinGroup),
-    path('unjoin_group/<int:pk>/',views.unjoinGroup)
+    path('leave_group/<int:pk>/',views.leaveGroup)
 ]
