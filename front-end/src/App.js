@@ -18,9 +18,13 @@ import {Profile} from "./components/Profile";
 import privateRoute from "./utils/privateRoute";
 import PrivateRoute from "./utils/privateRoute";
 
+
+
+import Chat from './Chat';
+
 function App() {
 	return (
-		<div>
+		<div className="App">
 			<MyNav />
 			<Routes>
 
@@ -39,6 +43,9 @@ function App() {
 				<Route path='create-post' element={<CreatePost />} />
 				<Route path='post' element={<Post />} />
 				<Route path='profile' element={<PrivateRoute component={Profile} />} />
+
+				<Route path='chat' element={<Chat />} />
+				
 
 
 				<Route path='*' element={<NotFound />} />

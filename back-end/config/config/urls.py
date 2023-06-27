@@ -17,12 +17,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from . import routing
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('user.urls'))
+    path('user-api/', include('user.urls')),
+
+    path('api/', include('chat.urls')),
+    path('ws/', include(routing.websocket_urlpatterns)),
 
 
     # path('post/',include('post.urls')),
     # path('comment/',include('comment.urls')),
 ]
+
+
+
+
+
+
+

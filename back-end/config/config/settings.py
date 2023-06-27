@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'post.apps.PostConfig',
     'comment.apps.CommentConfig',
     'user.apps.UserConfig',
+    'chat',
+    
+    
     
 
     # 3rd-Party
@@ -50,10 +53,25 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'channels',
     
   
     
 ]
+
+
+ASGI_APPLICATION = 'config.asgi.application'
+
+WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+
 
 # configuring rest_framework to use JWT for authentication
 REST_FRAMEWORK = {
@@ -113,6 +131,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
 
 
 # Database
