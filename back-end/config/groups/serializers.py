@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import GroupCategory, Group, UserInGroup
+from user.models import User
 
 class GroupCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,7 +12,14 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = '__all__'
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email','username','password']
+
 class UserInGroupSerializer(serializers.ModelSerializer):
+    user_id = UserSerializer()
+    
     class Meta:
         model = UserInGroup
-        fields = '__all__'
+        fields = ['user_id']
