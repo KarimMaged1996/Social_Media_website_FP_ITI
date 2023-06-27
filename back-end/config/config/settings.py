@@ -179,3 +179,12 @@ EMAIL_HOST_PASSWORD = 'wqjtoecnoufetkld'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+
+# Chat
+ASGI_APPLICATION = "chat.routing.application" #routing.py will handle the ASGI
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': "channels.layers.InMemoryChannelLayer"
+        }
+    }
