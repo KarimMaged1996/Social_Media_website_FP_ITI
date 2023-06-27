@@ -15,15 +15,18 @@ import { Activity } from "./components/Activity";
 import { CreatePost } from "./components/CreatePost";
 import { Post } from "./components/Post";
 import {Profile} from "./components/Profile";
+import privateRoute from "./utils/privateRoute";
+import PrivateRoute from "./utils/privateRoute";
 
 function App() {
 	return (
 		<div>
 			<MyNav />
 			<Routes>
-				<Route path='' element={<Home />} />
-				<Route path='home' element={<Home />} />
 
+				
+				<Route path='' element={<PrivateRoute component={Home}/>} />
+				<Route path='home' element={<Home />} />
 				<Route path='signup' element={<SignupPage />} />
 
 				<Route path='Login' element={<LoginPage />} />
@@ -35,7 +38,7 @@ function App() {
 				<Route path='activity' element={<Activity />} />
 				<Route path='create-post' element={<CreatePost />} />
 				<Route path='post' element={<Post />} />
-				<Route path='profile' element={<Profile />} />
+				<Route path='profile' element={<PrivateRoute component={Profile} />} />
 
 
 				<Route path='*' element={<NotFound />} />
