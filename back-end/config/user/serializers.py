@@ -3,10 +3,24 @@ from .models import User
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
+        extra_kwargs = {
+            'password': {'write_only': True, 'read_only': False},
+            }
+    
+
+    def update(self, instance, validated_data):
+
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        instance.save()
+    
+        return instance
 
 
 class SignupSerializer(serializers.ModelSerializer):
@@ -28,7 +42,6 @@ class SignupSerializer(serializers.ModelSerializer):
                 password=password,
                 gender=validated_data['gender'],
                 dateofbirth=validated_data['dateofbirth'],
-
             )
             return user
 
