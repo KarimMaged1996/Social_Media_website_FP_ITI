@@ -2,6 +2,11 @@
 from django.forms import ValidationError
 from django.shortcuts import render
 from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.sites.shortcuts import get_current_site  
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string  
+from .tokens import account_activation_token  , password_reset_token
+from django.core.mail import EmailMessage 
 
 
 # DRF imports
@@ -11,25 +16,37 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer
-from rest_framework.decorators import api_view
-from django.contrib.sites.shortcuts import get_current_site  
+from rest_framework.decorators import api_view, permission_classes
 
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.template.loader import render_to_string  
-from .tokens import account_activation_token  , password_reset_token
-from django.core.mail import EmailMessage 
 
+# app Imports
 from .models import User
+
+
+
 # Create your views here.
 
-
 class HomePage(APIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        content = {'msg': f"Authenticatied user {request.user}?P<uid>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20}"}
+        
+        user = User.objects.get(pk=request.user.pk)
+        print(user)
+        content = {
+            "avatar": f"{get_current_site(request)}{user.avatar.url}"
+        }
 
         return Response(content)
+
+    def post(self, request):
+        print(request.data['image'])
+       
+        user = User.objects.get(pk=request.user.id)
+        print(user)
+        user.avatar = request.FILES['image']
+        user.save()
+        return Response({"msg": "done"})
 
 
 
@@ -165,3 +182,18 @@ def resetPassword(request, uid, token):
     except Exception as e:
         return Response({"msg": e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
     
+
+
+
+    
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def myProfile(request):
+
+    if request.method == 'GET':
+        print(request.user)
+
+        data = {
+            "state" : True
+        }
+        return Response(data, status.HTTP_200_OK)
