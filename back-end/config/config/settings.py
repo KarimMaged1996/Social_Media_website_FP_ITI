@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'post.apps.PostConfig',
     'comment.apps.CommentConfig',
     'user.apps.UserConfig',
+    'chat.apps.ChatConfig',
 
     # 3rd-Party
     'django_cleanup.apps.CleanupConfig',
