@@ -1,53 +1,40 @@
-# Djnago Imports
-from typing import Optional
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser
 
-# Create your models here.
-class UserProfileManager(BaseUserManager):
-    def create_user(self, email, username, password=None):
-        if not email:
-            raise ValueError('Users must have an email address')
-        user =self.model(email=self.normalize_email(email),
-        username=username,
-        )
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-    def create_staffuser(self, email,username, password=None):
-        user = self.create_user(email,
-        password=password,
-        username=username
-        )
-        user.is_staff = True
-        user.save(using=self._db)
-        return user
-    
-    def create_superuser(self, email, username, password=None):
-        user = self.create_user(email,
-            password=password,
-            username=username
-            )
-        user.is_staff =True
-        user.is_admin =True
-        user.is_active =True
-        user.save(using=self._db)
-        return user
- 
-    
+from .manager import CustomUserManager
+
 class User(AbstractBaseUser):
     
+
+    TYPE_CHOICES = [
+        ('admin', 'Admin'),
+        ('customer', 'Customer')
+    ]
+    GENDER_CHOICES = [
+        ('m', 'Male'),
+        ('f', 'Female'),
+        ('notsay', 'Prefer Not to say')
+    ]
+ 
+    firstname = models.CharField(max_length=20)
+    lastname = models.CharField(max_length=20)
     username = models.CharField(max_length=20, unique=True)
-    email = models.CharField(max_length=80, unique=True)
-    password = models.CharField(max_length=255)
+    email = models.EmailField(max_length=90, unique=True)
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
+    dateofbirth = models.DateField()
+    techbin = models.IntegerField(default=0)
+    date_created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_reset = models.BooleanField(default=False)
+
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+    
+    objects = CustomUserManager()
 
-    REQUIRED_FIELDS = ['username',]
-    objects = UserProfileManager()
 
     def get_full_name(self):
         return self.email
@@ -58,7 +45,6 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
    
-
 
 
 
