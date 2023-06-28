@@ -20,9 +20,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('user.urls'))
+    path('api/', include('user.urls')),
 
 
     # path('post/',include('post.urls')),
     # path('comment/',include('comment.urls')),
+    path('groups/', include('groups.urls')),
+    path('rest-auth',include('rest_framework.urls'))
 ]

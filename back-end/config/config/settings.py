@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-hf4^s6a@%jpsqz_o)$v)icpn@6id4r=13*)aw7yggvl5m9r@e(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.14']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,9 +40,10 @@ INSTALLED_APPS = [
 
 
     # apps
-    'post.apps.PostConfig',
+    # 'post.apps.PostConfig',
     'comment.apps.CommentConfig',
     'user.apps.UserConfig',
+    'groups.apps.GroupsConfig',
 
     # 3rd-Party
     'django_cleanup.apps.CleanupConfig',
@@ -62,7 +63,7 @@ REST_FRAMEWORK = {
 # simple JWT configurations
 from datetime import timedelta
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True
@@ -119,8 +120,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'techster',
-        'USER': 'dewidar',
-        'PASSWORD': '953751',
+        'USER': 'postgres',
+        'PASSWORD': '18501900',
         'HOST': 'localhost',
         'PORT': '5432'
     }
