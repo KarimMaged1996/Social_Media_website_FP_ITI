@@ -73,6 +73,8 @@ CHANNEL_LAYERS = {
 
 
 
+
+
 # configuring rest_framework to use JWT for authentication
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
