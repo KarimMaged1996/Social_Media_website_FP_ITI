@@ -46,7 +46,7 @@ class Like_list(generics.ListAPIView):
 # endpoint to list all tha author posts
 @api_view(['GET'])
 @permission_classes([IsAuthorOrReadOnly])
-def AuthorPost(request,pk):
+def UserPosts(request,pk):
     if request.method == 'GET':
         try:
             owner = User.objects.get(id = pk)
