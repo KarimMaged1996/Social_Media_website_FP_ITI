@@ -800,6 +800,8 @@ a {
 
 .create-room.layout .layout__box {
   max-width: 68rem;
+  max-height: 50rem;
+  overflow-y: auto;
 }
 
 /*==============================
@@ -1168,4 +1170,30 @@ a {
   font-weight: 500;
   color: var(--color-main);
   font-weight: 1.4rem;
+}
+
+
+
+/****** Custome Scroll-bar 
+
+
+/* Custom scrollbar track */
+::-webkit-scrollbar {
+  width: 0.8rem; /* width of the scrollbar */
+}
+
+/* Custom scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* color of the thumb */
+  border-radius: 4px; /* rounded corners of the thumb */
+}
+
+/* Custom scrollbar track on hover */
+::-webkit-scrollbar-track:hover {
+  background-color: #f1f1f1; /* color of the track on hover */
+}
+
+/* Custom scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* color of the thumb on hover */
 }

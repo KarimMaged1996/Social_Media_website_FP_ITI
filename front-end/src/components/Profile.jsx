@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 export  function Profile() {
   return (
@@ -52,7 +53,9 @@ export  function Profile() {
 
            <div style={{ fontSize: '2rem' }}>Techbin: <span>250</span></div>
 
-           <a href="edit-user.html" className="btn btn--main btn--pill text-white">Edit Profile</a>
+           <NavLink to='/editprofile'>
+            <p href="edit-user.html" className="btn btn--main btn--pill text-white">Edit Profile</p>
+            </NavLink>
          </div>
          <div className="profile__about">
            <h3>About</h3>
