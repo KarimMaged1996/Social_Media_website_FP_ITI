@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-hf4^s6a@%jpsqz_o)$v)icpn@6id4r=13*)aw7yggvl5m9r@e(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.14']
+ALLOWED_HOSTS = ['192.168.1.14' , '127.0.0.1']
 
 
 # Application definition
@@ -44,14 +44,35 @@ INSTALLED_APPS = [
     'post.apps.PostConfig',
     'comment.apps.CommentConfig',
     'user.apps.UserConfig',
+    'chat',
+    
+    
+    
 
     # 3rd-Party
     'django_cleanup.apps.CleanupConfig',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'channels',
+    
+  
     
 ]
+
+
+ASGI_APPLICATION = 'config.asgi.application'
+
+WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+
 
 # configuring rest_framework to use JWT for authentication
 REST_FRAMEWORK = {
@@ -113,6 +134,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -120,8 +142,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'techster',
-        'USER': 'dewidar',
-        'PASSWORD': '953751',
+        'USER': 'postgres',
+        'PASSWORD': '0000',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -179,8 +201,11 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 
+<<<<<<< HEAD
 # Media URL
 MEDIA_URL = '/media/'
 
 # Path where media is stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+=======
+>>>>>>> f2f403d87094f5cf7ca1428e9e8245b99ffb089f

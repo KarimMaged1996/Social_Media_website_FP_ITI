@@ -16,14 +16,33 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+<<<<<<< HEAD
 from django.conf.urls.static import static
 from django.conf import settings
+=======
+
+from . import routing
+>>>>>>> f2f403d87094f5cf7ca1428e9e8245b99ffb089f
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('user.urls'))
+    path('user-api/', include('user.urls')),
+
+    path('api/', include('chat.urls')),
+    path('ws/', include(routing.websocket_urlpatterns)),
 
 
     # path('post/',include('post.urls')),
     # path('comment/',include('comment.urls')),
+<<<<<<< HEAD
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
+]
+
+
+
+
+
+
+
+>>>>>>> f2f403d87094f5cf7ca1428e9e8245b99ffb089f
