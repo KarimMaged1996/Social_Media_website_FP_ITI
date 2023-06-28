@@ -22,7 +22,7 @@ class User(AbstractBaseUser):
     email = models.EmailField(max_length=90, unique=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
-    dateofbirth = models.DateField()
+    dateofbirth = models.DateField(null = True, blank=True)
     techbin = models.IntegerField(default=0)
     bio = models.TextField(default="", null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
