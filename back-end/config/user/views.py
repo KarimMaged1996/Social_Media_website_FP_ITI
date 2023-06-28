@@ -18,13 +18,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer
 from rest_framework.decorators import api_view, permission_classes
 
-<<<<<<< HEAD
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.template.loader import render_to_string  
-from .tokens import account_activation_token, password_reset_token
-from django.core.mail import EmailMessage 
-=======
->>>>>>> main
 
 # app Imports
 from .models import User
@@ -159,13 +152,7 @@ def getResetPasswordLink(request):
 
 @api_view(['POST', 'GET'])
 def resetPassword(request, uid, token):
-<<<<<<< HEAD
-
-    id = urlsafe_base64_decode(uid).decode('utf-8')
-=======
     
- 
->>>>>>> main
     try:
         id = urlsafe_base64_decode(uid).decode('utf-8')
 
@@ -173,7 +160,6 @@ def resetPassword(request, uid, token):
         passowrd = request.data.get('password', None)
         confrim_password = request.data.get('confirm_password', None)
 
-       
         if not password_reset_token.check_token(user, token):
             return Response({'msg': 'invalid link'}, status.HTTP_400_BAD_REQUEST)
         if not passowrd or not confrim_password:
@@ -191,13 +177,10 @@ def resetPassword(request, uid, token):
         return Response({"msg": e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
-
-
     
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def myProfile(request):
-
     if request.method == 'GET':
 
         user = User.objects.get(pk=request.user.pk)
