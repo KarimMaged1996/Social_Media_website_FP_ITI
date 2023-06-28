@@ -9,25 +9,43 @@ from rest_framework import  generics
 from django.http import Http404
 from rest_framework.decorators import api_view,permission_classes
 
-
-class Post_list(generics.ListCreateAPIView):
-    premission_classes = [IsAuthorOrReadOnly]
+# ListCreateAPIView
+class Post_list(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-class Post_details(generics.RetrieveUpdateDestroyAPIView):
-    premission_classes = [IsAuthorOrReadOnly]
+# RetrieveUpdateDestroyAPIView
+class Post_details(generics.RetrieveAPIView):
+    # premission_classes = [IsAuthorOrReadOnly]
+    permission_classes =  (IsAuthenticated, )
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-class Like_list(generics.ListCreateAPIView):
-    premission_classes = [IsAuthenticated]
+class PostCreate(generics.CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+
+class PostUpdate(generics.UpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+
+class PostDelete(generics.DestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+
+class Like_list(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
 
-# endpoint to list the post comments 
+
+# endpoint to list all tha author posts
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthorOrReadOnly])
 def AuthorPost(request,pk):
     if request.method == 'GET':
         try:
@@ -38,25 +56,5 @@ def AuthorPost(request,pk):
         except User.DoesNotExist:
             raise Http404("User not found")
     return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-
-
-
-# def add_vote(request, post_id):
-#     post = get_object_or_404(Post, pk=post_id)
-#     value = int(request.POST.get('value', 0))
-#     vote = Vote.objects.filter(user=request.user, post=post).first()
-
-#     if vote:
-#         if vote.value == value:
-#             vote.delete()
-#         else:
-#             vote.value = value
-#             vote.save()
-#     else:
-#         Vote.objects.create(user=request.user, post=post, value=value)
-
-#     post.update_score()
 
 

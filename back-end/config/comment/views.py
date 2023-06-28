@@ -10,17 +10,33 @@ from django.http import Http404
 from rest_framework.decorators import api_view,permission_classes
 
 class Comment_list(generics.ListCreateAPIView):
-    premission_classes = [IsAuthorOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
 class Comment_details(generics.RetrieveUpdateDestroyAPIView):
-    premission_classes = [IsAuthorOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
+class CommentCreate(generics.CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+class CommentUpdate(generics.UpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+
+class CommentDelete(generics.DestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+
+
 class CommentLike_list(generics.ListCreateAPIView):
-    premission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = Comment_Vote.objects.all()
     serializer_class = CommentLikesSerializer
 
