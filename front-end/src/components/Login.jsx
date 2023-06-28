@@ -34,17 +34,6 @@ export function LoginPage() {
       });
   }
 
-  function test() {
-    axios
-      .get('http://127.0.0.1:8000/groups/categories/', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-      });
-  }
   return (
     <main className="auth layout text-white">
       <div className="container">
@@ -106,7 +95,6 @@ export function LoginPage() {
           </div>
         </div>
       </div>
-      <button onClick={test}>Test</button>
     </main>
   );
 }
