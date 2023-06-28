@@ -204,9 +204,7 @@ def myProfile(request):
     if request.method == 'POST':
         try:
             user = User.objects.get(pk=request.user.pk)
-       
             
-          
             serializer = UserSerializer(instance=user, data=request.data, partial=True, 
                     context={'current_site': get_current_site(request), 'request': request})
             serializer.is_valid(raise_exception=True)
