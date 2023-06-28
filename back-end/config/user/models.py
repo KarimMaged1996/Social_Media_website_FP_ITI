@@ -21,8 +21,10 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=90, unique=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     dateofbirth = models.DateField()
     techbin = models.IntegerField(default=0)
+    bio = models.TextField(default="", null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -40,12 +42,11 @@ class User(AbstractBaseUser):
         return self.email
     def get_short_name(self):
         return self.email
-    
-    def __str__(self) -> str:
-        return self.email
-    
     def has_perm(self, perm, obj=None):
         return True
-    
     def has_module_perms(self, app_label):
         return True
+   
+
+
+

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,10 @@ SECRET_KEY = 'django-insecure-hf4^s6a@%jpsqz_o)$v)icpn@6id4r=13*)aw7yggvl5m9r@e(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 # ALLOWED_HOSTS = ['192.168.1.14']
+=======
+>>>>>>> main
 ALLOWED_HOSTS = ['*']
 
 
@@ -41,9 +45,10 @@ INSTALLED_APPS = [
 
 
     # apps
-    'post.apps.PostConfig',
+    # 'post.apps.PostConfig',
     'comment.apps.CommentConfig',
     'user.apps.UserConfig',
+    'groups.apps.GroupsConfig',
 
     # 3rd-Party
     'django_cleanup.apps.CleanupConfig',
@@ -63,7 +68,7 @@ REST_FRAMEWORK = {
 # simple JWT configurations
 from datetime import timedelta
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=100),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True
@@ -119,9 +124,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+<<<<<<< HEAD
         'NAME': 'techster3',
         'USER': 'amrabrazek',
         'PASSWORD': 'Amr01099902278',
+=======
+        'NAME': 'techster',
+        'USER': 'postgres',
+        'PASSWORD': '18501900',
+>>>>>>> main
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -177,3 +188,10 @@ EMAIL_HOST_PASSWORD = 'wqjtoecnoufetkld'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+
+# Media URL
+MEDIA_URL = '/media/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
