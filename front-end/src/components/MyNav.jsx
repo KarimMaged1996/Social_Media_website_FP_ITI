@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -6,8 +6,12 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import logo from '../assets/xml.svg';
+import { AuthContext } from '../context/AuthContext';
 
 export function MyNav({ isLoggedIn }) {
+
+  const {user} = useContext(AuthContext)
+
   return (
     <Navbar expand="lg" className="header">
       <Container>
@@ -15,7 +19,7 @@ export function MyNav({ isLoggedIn }) {
           <img src={logo} alt="Logo" />
           <h1>Techster</h1>
         </Navbar.Brand>
-        {isLoggedIn ? (
+        {user ? (
           <Form className="header__search">
             <label>
               <svg
@@ -36,7 +40,7 @@ export function MyNav({ isLoggedIn }) {
           <Nav className="header__menu me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
             {/* ... */}
           </Nav>
-          {isLoggedIn ? (
+          {user ? (
             <Nav className="header__menu">
               <Nav.Link href="#">
                 <div className="avatar avatar--medium active">
