@@ -24,8 +24,8 @@ urlpatterns = [
     path('api/', include('user.urls')),
 
 
-    # path('post/',include('post.urls')),
-    # path('comment/',include('comment.urls')),
+    path('post/',include('post.urls')),
+    path('comment/',include('comment.urls')),
     path('groups/', include('groups.urls')),
     path('rest-auth',include('rest_framework.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

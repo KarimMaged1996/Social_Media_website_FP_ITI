@@ -73,11 +73,8 @@ class Register(APIView):
         })  
         to_email = [user.email]
         email = EmailMessage(mail_subject, message, to=to_email)
-    
         email.send()
     
-        
-        
         return Response(data, status=status.HTTP_201_CREATED)
 
 
@@ -99,7 +96,6 @@ class Logout(APIView):
 
 
 class activate(APIView):
-
     def get(self, request, uidb64, token):
         id = urlsafe_base64_decode(uidb64)
         id = id.decode('utf-8')
@@ -157,7 +153,6 @@ def getResetPasswordLink(request):
 @api_view(['POST', 'GET'])
 def resetPassword(request, uid, token):
     
- 
     try:
         id = urlsafe_base64_decode(uid).decode('utf-8')
 
@@ -165,7 +160,6 @@ def resetPassword(request, uid, token):
         passowrd = request.data.get('password', None)
         confrim_password = request.data.get('confirm_password', None)
 
-       
         if not password_reset_token.check_token(user, token):
             return Response({'msg': 'invalid link'}, status.HTTP_400_BAD_REQUEST)
         if not passowrd or not confrim_password:
@@ -183,13 +177,10 @@ def resetPassword(request, uid, token):
         return Response({"msg": e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
-
-
     
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def myProfile(request):
-
     if request.method == 'GET':
 
         user = User.objects.get(pk=request.user.pk)
@@ -204,9 +195,7 @@ def myProfile(request):
     if request.method == 'POST':
         try:
             user = User.objects.get(pk=request.user.pk)
-       
             
-          
             serializer = UserSerializer(instance=user, data=request.data, partial=True, 
                     context={'current_site': get_current_site(request), 'request': request})
             serializer.is_valid(raise_exception=True)

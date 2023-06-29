@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 
 
     # apps
-    # 'post.apps.PostConfig',
+    'post.apps.PostConfig',
     'comment.apps.CommentConfig',
     'user.apps.UserConfig',
     'groups.apps.GroupsConfig',
@@ -120,9 +120,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'techster',
+        'NAME': 'techster4',
         'USER': 'postgres',
-        'PASSWORD': '12345',
+        'PASSWORD': '18501900',
         'HOST': 'localhost',
         'PORT': '5432'
     }
