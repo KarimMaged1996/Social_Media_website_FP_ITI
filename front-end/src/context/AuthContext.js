@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
       let userObj = {
         id: decoded.user_id,
       };
+      
       setUser(userObj);
       setTokens(access);
     } else {

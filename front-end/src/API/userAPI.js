@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = 'http://192.168.1.14:8000'
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3OTEzNzQxLCJpYXQiOjE2ODc5MDc3NDEsImp0aSI6ImVkM2I3ZDZkMDVjYzQzMjA4ZTA1NzUzYjQxYmUzZGYzIiwidXNlcl9pZCI6N30.1588cSfibR9u4wlaz5997sa0ouQA4eppt4IdlWz7Zes'
+const token = localStorage.getItem('access_token')
 
 const myProfile = async () => {
    let content = {}
