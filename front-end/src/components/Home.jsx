@@ -1,12 +1,13 @@
 import React from "react";
 import { Topics } from "./Topics";
+import { Activity } from "./Activity";
 
 export function Home() {
 	return (
 		<main class="layout layout--3">
 		<div class="container">
       
-        <div class="topics">
+        {/* <div class="topics">
           <div class="topics__header">
             <h2>Your Communities</h2>
           </div>
@@ -34,8 +35,8 @@ export function Home() {
               <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
             </svg>
           </a>
-        </div>
-        {/* <Topics /> */}
+        </div> */}
+        <Topics />
         <div class="roomList">
           <div class="mobile-menu">
             <form class="header__search">
@@ -143,7 +144,7 @@ export function Home() {
           </div>
         </div>
 
-        <div class="activities">
+        {/* <div class="activities">
           <div class="activities__header">
             <h2>Recent Activities</h2>
           </div>
@@ -206,7 +207,8 @@ export function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <Activity />
       </div></main>
 	);
 }
