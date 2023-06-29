@@ -14,6 +14,7 @@ import { ProfileSettings } from "./components/ProfileSettings";
 import { Activity } from "./components/Activity";
 import { CreatePost } from "./components/CreatePost";
 import { Post } from "./components/Post";
+import { AddPost } from "./components/AddPost";
 import { Profile } from "./components/Profile";
 import privateRoute from "./utils/privateRoute";
 import PrivateRoute from "./utils/privateRoute";
@@ -38,6 +39,7 @@ function App() {
 
           <Route path="activity" element={<Activity />} />
           <Route path="create-post" element={<CreatePost />} />
+          <Route path="addpost" element={<AddPost />} />
           <Route path="post" element={<Post />} />
           <Route
             path="profile"
