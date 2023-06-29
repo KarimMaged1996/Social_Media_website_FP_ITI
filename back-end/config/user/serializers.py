@@ -45,7 +45,7 @@ class SignupSerializer(serializers.ModelSerializer):
                 email=validated_data['email'],
                 password=password,
                 gender=validated_data['gender'],
-                dateofbirth=validated_data['dateofbirth'],
+                # dateofbirth=validated_data['dateofbirth'],
             )
             return user
 
