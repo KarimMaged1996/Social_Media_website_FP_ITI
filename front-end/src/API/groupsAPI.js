@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = 'http://127.0.0.1:8000/'
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MDU0MTgzLCJpYXQiOjE2ODgwNDgxODMsImp0aSI6IjA4MDA4YTZkMDFhMTQ2ZjJhN2I0ZDhlMWE2N2MyZjQxIiwidXNlcl9pZCI6MX0.yJY7ZVGITp4osMK-PH582RhEGpxNM_Bum6YSc0N86EA'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MDY1ODcyLCJpYXQiOjE2ODgwNTk4NzIsImp0aSI6ImY0OGIzNjgyZDhhZjQ2NTM5NTlhZmI3Yzk5ODc2YTFlIiwidXNlcl9pZCI6MX0.fMXI4X-obsIswjzF7k3HPd_oR6hGdPLgqnAQYiWyVPs'
 const headers = { Authorization: `Bearer ${token}` };
 
 const Categories = async () => {
@@ -11,8 +11,8 @@ const Categories = async () => {
         let res = await axios.get(url, { headers });
         if(res.status === 200){
             content = {
-                'status': res.data.status,
-                'data': res.data.data
+                'status': res.status,
+                'data': res.data
             }
             console.log("Success")
         }
