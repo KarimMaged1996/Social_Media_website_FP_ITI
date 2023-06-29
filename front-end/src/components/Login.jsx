@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 let email, password;
 export function LoginPage() {
+  const { setTokens } = useContext(AuthContext);
   let [invalid, setInvalid] = useState(false);
   let navigate = useNavigate();
   function getInfo(e) {
@@ -21,6 +23,7 @@ export function LoginPage() {
         password: password,
       })
       .then((response) => {
+        setTokens(localStorage.setItem('access_token', response.data.access));
         localStorage.clear();
         localStorage.setItem('access_token', response.data.access);
         localStorage.setItem('refresh_token', response.data.refresh);
