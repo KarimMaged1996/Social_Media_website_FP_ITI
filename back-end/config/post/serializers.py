@@ -1,8 +1,19 @@
 from rest_framework import serializers
-from .models import Post, Vote
+from .models import Post, Vote, User
 from comment.serializers import CommentSerializer
-from comment.models import Comment
+from user.serializers import UserSerializer
 
+
+class UserSerializerForPosts(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'firstname', 'avatar', 'username', 'techbin']
+
+class PostSerializer2(serializers.ModelSerializer):
+    author = UserSerializerForPosts()
+    class Meta:
+        model = Post
+        fields = "__all__"
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .serializers import PostSerializer, VoteSerializer
+from .serializers import PostSerializer, VoteSerializer, PostSerializer2
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions, AllowAny, IsAuthenticated
 from .permissions import IsAuthorOrReadOnly
 from rest_framework.response import Response
@@ -11,26 +11,28 @@ from rest_framework.decorators import api_view,permission_classes
 
 # ListCreateAPIView
 class Post_list(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 # RetrieveUpdateDestroyAPIView
 class Post_details(generics.RetrieveAPIView):
     # premission_classes = [IsAuthorOrReadOnly]
-    permission_classes =  (IsAuthenticated, )
+    permission_classes =  (AllowAny, )
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostSerializer2
 
 class PostCreate(generics.CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class PostUpdate(generics.UpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    permission_classes = [AllowAny]
+
 
 class PostDelete(generics.DestroyAPIView):
     queryset = Post.objects.all()

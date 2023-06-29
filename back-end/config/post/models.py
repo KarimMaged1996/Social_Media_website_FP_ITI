@@ -14,11 +14,11 @@ class Post(models.Model):
     author = models.ForeignKey(User , on_delete=models.CASCADE, related_name='author_posts') # The author of the post
     created_at = models.DateTimeField(auto_now_add=True) # The date and time the post was created
     updated_at = models.DateTimeField(auto_now=True) # The date and time the post was last updated
-    image1 = models.ImageField(upload_to='media/post_images/', null=True, blank=True) # An optional image for the post
-    image2 = models.ImageField(upload_to='media/post_images/', null=True, blank=True) # An optional image for the post
-    image3 = models.ImageField(upload_to='media/post_images/', null=True, blank=True) # An optional image for the post
-    image4 = models.ImageField(upload_to='media/post_images/', null=True, blank=True) # An optional image for the post
-    video = models.FileField(upload_to='media/post_videos/', null=True, blank=True) # An optional video for the post
+    image1 = models.ImageField(upload_to='post_images/', null=True, blank=True) # An optional image for the post
+    image2 = models.ImageField(upload_to='post_images/', null=True, blank=True) # An optional image for the post
+    image3 = models.ImageField(upload_to='post_images/', null=True, blank=True) # An optional image for the post
+    image4 = models.ImageField(upload_to='post_images/', null=True, blank=True) # An optional image for the post
+    video = models.FileField(upload_to='post_videos/', null=True, blank=True) # An optional video for the post
     score = models.IntegerField(default=0) # score which upvotes - downvotes 
     
     def update_score(self):
