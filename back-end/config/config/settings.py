@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 
 
     # apps
-    # 'post.apps.PostConfig',
+    'post.apps.PostConfig',
     'comment.apps.CommentConfig',
     'user.apps.UserConfig',
     'groups.apps.GroupsConfig',

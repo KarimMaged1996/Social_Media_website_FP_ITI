@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "../css/editProfile.css";
 import { AuthContext } from "../context/AuthContext";
-import { UserApi } from "../API/userAPI";
+import { PostApi } from "../API/PostAPI";
 
 
 
@@ -10,15 +10,25 @@ export function AddPost() {
     const [images, setImages] = useState([
         "1"
     ])
+    const admin_id = 1
 
     const [formValues, setFormValues] = useState({
         title:"",
         content: "",
-        Author: 1,
+        author: admin_id,
         video: "",
     });
 
-    const [submitValues, setSubmitValues] = useState({})
+    const [submitValues, setSubmitValues] = useState({
+        title:"",
+        content: "",
+        author: admin_id,
+        video: null,
+        image1: null,
+        image2: null,
+        image3: null,
+        image4: null,
+    })
     const [checkbox1, setCheckbox1] = useState(true);
     const [checkbox2, setCheckbox2] = useState(false);
     const [error, setError] = useState({
@@ -123,7 +133,7 @@ export function AddPost() {
         for(let ele in submitValues){
             formData.append(ele, submitValues[ele])
         }
-        let res = await UserApi.editMyProfile(formData)
+        let res = await PostApi.createpost(formData)
         window.location.reload()
     };
 
@@ -141,32 +151,8 @@ export function AddPost() {
                 </div>
     
                 <div className="settings layout__body">
-                    {/* <div className="settings__avatar">
-                        <div className="avatar avatar--large active">
-                            <img
-                            src={
-                                formValues.avatar
-                                ? formValues.avatar
-                                : null
-                            }
-                            id="preview-avatar"
-                            />
-                        </div>
-                    </div>
-     */}
-                    {/* Profile Form */}
+                    {/* Post Form */}
                     <form onSubmit={onSubmitHandler} encType="multipart/form-data" className="form" >
-                    {/* <div className="form__group form__avatar">
-                        <label htmlFor="avatar">Upload Avatar</label>
-                        <input
-                        className="form__hide"
-                        type="file"
-                        name="avatar"
-                        id="avatar"
-                        accept="image/png, image/gif, image/jpeg"
-                        onChange={inputHandler}
-                        />
-                    </div> */}
     
                     {/* Post Title */}
                     <div className="form__group">
