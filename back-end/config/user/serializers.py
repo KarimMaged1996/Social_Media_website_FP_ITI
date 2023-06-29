@@ -3,6 +3,9 @@ from .models import User
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
 
+# JWT imports
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,9 +17,10 @@ class UserSerializer(serializers.ModelSerializer):
     
 
     def update(self, instance, validated_data):
-
+        print(validated_data)
         for key, value in validated_data.items():
             setattr(instance, key, value)
+            print(key, value)
 
         instance.save()
     
@@ -62,3 +66,17 @@ class PasswordUpdateSerializer(serializers.ModelSerializer):
             instance.is_reset = False
             instance.save()
             return instance
+        
+
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        token['username'] = user.username
+        token['avatar'] = user.avatar.url
+
+        return token
