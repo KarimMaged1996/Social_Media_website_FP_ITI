@@ -1,9 +1,11 @@
 import React from "react";
+import { Topics } from "./Topics";
 
 export function Home() {
 	return (
 		<main class="layout layout--3">
 		<div class="container">
+      
         <div class="topics">
           <div class="topics__header">
             <h2>Your Communities</h2>
@@ -33,7 +35,7 @@ export function Home() {
             </svg>
           </a>
         </div>
-        
+        {/* <Topics /> */}
         <div class="roomList">
           <div class="mobile-menu">
             <form class="header__search">
