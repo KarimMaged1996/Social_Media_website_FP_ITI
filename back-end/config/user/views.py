@@ -19,8 +19,13 @@ from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSeriali
 from rest_framework.decorators import api_view, permission_classes
 
 
+# JWT imports
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
 # app Imports
 from .models import User
+from .serializers import MyTokenObtainPairSerializer
 
 
 
@@ -41,7 +46,7 @@ class HomePage(APIView):
 
     def post(self, request):
         print(request.data['image'])
-       
+    
         user = User.objects.get(pk=request.user.id)
         print(user)
         user.avatar = request.FILES['image']
@@ -157,7 +162,7 @@ def getResetPasswordLink(request):
 @api_view(['POST', 'GET'])
 def resetPassword(request, uid, token):
     
- 
+
     try:
         id = urlsafe_base64_decode(uid).decode('utf-8')
 
@@ -165,7 +170,7 @@ def resetPassword(request, uid, token):
         passowrd = request.data.get('password', None)
         confrim_password = request.data.get('confirm_password', None)
 
-       
+    
         if not password_reset_token.check_token(user, token):
             return Response({'msg': 'invalid link'}, status.HTTP_400_BAD_REQUEST)
         if not passowrd or not confrim_password:
@@ -186,7 +191,7 @@ def resetPassword(request, uid, token):
 
 
     
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def myProfile(request):
 
@@ -201,12 +206,10 @@ def myProfile(request):
         }
         return Response(data, status.HTTP_200_OK)
     
-    if request.method == 'POST':
+    if request.method == 'PUT':
         try:
             user = User.objects.get(pk=request.user.pk)
-       
-            
-          
+            print(request.data)
             serializer = UserSerializer(instance=user, data=request.data, partial=True, 
                     context={'current_site': get_current_site(request), 'request': request})
             serializer.is_valid(raise_exception=True)
@@ -220,3 +223,11 @@ def myProfile(request):
 
         except Exception as e:
             return Response({"status": "fail", "msg": e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
