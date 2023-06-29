@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -9,10 +9,13 @@ import logo from '../assets/xml.svg';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-export function MyNav({ isLoggedIn }) {
-  const { user } = useContext(AuthContext);
+export function MyNav() {
+  const { user, setTokens } = useContext(AuthContext);
+
   let navigate = useNavigate();
+
   function logout() {
     axios
       .post(
@@ -27,6 +30,7 @@ export function MyNav({ isLoggedIn }) {
         }
       )
       .then((response) => {
+        setTokens(null);
         localStorage.clear();
         navigate('/login');
       })
@@ -78,6 +82,9 @@ export function MyNav({ isLoggedIn }) {
                 </div>
                 {/* ... */}
               </Nav.Link>
+              <Nav.Link className=" text-white" onClick={logout}>
+                Log Out
+              </Nav.Link>
             </Nav>
           ) : (
             <Nav className="header__menu text-white">
@@ -87,9 +94,6 @@ export function MyNav({ isLoggedIn }) {
               <Nav.Link href="/login" className=" text-white">
                 Log In
               </Nav.Link>
-              <div className=" text-white" onClick={logout}>
-                Log Out
-              </div>
             </Nav>
           )}
         </Navbar.Collapse>
