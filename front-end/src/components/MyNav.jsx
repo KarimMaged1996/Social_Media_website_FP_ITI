@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -7,10 +7,37 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import logo from '../assets/xml.svg';
 import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-export function MyNav({ isLoggedIn }) {
+export function MyNav() {
+  const { user, setTokens } = useContext(AuthContext);
 
-  const {user} = useContext(AuthContext)
+  let navigate = useNavigate();
+
+  function logout() {
+    axios
+      .post(
+        'http://127.0.0.1:8000/api/logout/',
+        {
+          refresh: localStorage.getItem('refresh_token'),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        }
+      )
+      .then((response) => {
+        setTokens(null);
+        localStorage.clear();
+        navigate('/login');
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+  }
 
   return (
     <Navbar expand="lg" className="header">
@@ -37,22 +64,36 @@ export function MyNav({ isLoggedIn }) {
         ) : null}
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
-          <Nav className="header__menu me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
+          <Nav
+            className="header__menu me-auto my-2 my-lg-0"
+            style={{ maxHeight: '100px' }}
+            navbarScroll
+          >
             {/* ... */}
           </Nav>
           {user ? (
             <Nav className="header__menu">
               <Nav.Link href="#">
                 <div className="avatar avatar--medium active">
-                  <img src="https://randomuser.me/api/portraits/men/37.jpg" alt="Avatar" />
+                  <img
+                    src="https://randomuser.me/api/portraits/men/37.jpg"
+                    alt="Avatar"
+                  />
                 </div>
                 {/* ... */}
+              </Nav.Link>
+              <Nav.Link className=" text-white" onClick={logout}>
+                Log Out
               </Nav.Link>
             </Nav>
           ) : (
             <Nav className="header__menu text-white">
-              <Nav.Link href="/signup" className=" text-white">Sign Up</Nav.Link>
-              <Nav.Link href="/login" className=" text-white">Log In</Nav.Link>
+              <Nav.Link href="/signup" className=" text-white">
+                Sign Up
+              </Nav.Link>
+              <Nav.Link href="/login" className=" text-white">
+                Log In
+              </Nav.Link>
             </Nav>
           )}
         </Navbar.Collapse>
