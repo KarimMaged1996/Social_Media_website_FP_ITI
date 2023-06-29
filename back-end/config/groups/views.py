@@ -1,10 +1,10 @@
 from rest_framework import generics,permissions,status
 from .models import Group,GroupCategory,UserInGroup
-from .serializers import GroupCategorySerializer,GroupSerializer,UserInGroupSerializer,UserSerializer,RegUserInGroupSerializer
+from .serializers import GroupCategorySerializer,GroupSerializer,UserInGroupSerializer,RegUserInGroupSerializer,UserGroupsSerializer
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import  Response
 from .permissions import IsAuthenticatedAndGroupOwner,IsAuthenticatedAndGroupMember
-
+from user.models import User
 
 # Create your views here.
 
@@ -77,3 +77,12 @@ def leaveGroup(request,pk):
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
 
+# endpoint to list all groups of a member
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def userGroups(request,pk):
+    if request.method == 'GET':
+        user = User.objects.get(id = pk)
+        usergroups = user.joined_groups.all()
+        serializer = UserGroupsSerializer(usergroups, many=True)
+    return Response(serializer.data)
