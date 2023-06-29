@@ -62,7 +62,7 @@ class Register(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         data = serializer.data
-
+        
         current_site = get_current_site(request)  
         mail_subject = 'account activation'  
         message = render_to_string('acc_active_email.html', {  
@@ -178,7 +178,7 @@ def resetPassword(request, uid, token):
     
 
     
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def myProfile(request):
     if request.method == 'GET':
@@ -192,7 +192,7 @@ def myProfile(request):
         }
         return Response(data, status.HTTP_200_OK)
     
-    if request.method == 'POST':
+    if request.method == 'PUT':
         try:
             user = User.objects.get(pk=request.user.pk)
             
