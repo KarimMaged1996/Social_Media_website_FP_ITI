@@ -1,24 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../css/editProfile.css";
 import { AuthContext } from "../context/AuthContext";
 import { PostApi } from "../API/PostAPI";
 import axios from "axios";
 
 
-export function AddPost() {
+export function EditPost() {
+
+    let { id } = useParams();
+    id= 2
+    let post_id = id
     const [images, setImages] = useState([
         "1"
     ])
     const admin_id = 1
-
-    const [formValues, setFormValues] = useState({
-        title:"",
-        content: "",
-        author: admin_id,
-        video: "",
-    });
-
+    const [formValues, setFormValues] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
     const [submitValues, setSubmitValues] = useState({
         title:"",
         content: "",
@@ -29,13 +28,42 @@ export function AddPost() {
         image3: null,
         image4: null,
     })
-    const [checkbox1, setCheckbox1] = useState(true);
+    const [checkbox1, setCheckbox1] = useState(false);
     const [checkbox2, setCheckbox2] = useState(false);
     const [error, setError] = useState({
         title: "",
         content: "",
         image: ""
     })
+
+    useEffect(() => {
+            axios
+            .get(`http://127.0.0.1:8000/post/${post_id}`,
+            {
+                headers: 
+                {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                }
+            })
+            .then(res => {
+                console.log(res.data)
+                setFormValues(res.data);
+                if (formValues.image1){
+                    setCheckbox1(true)
+                }
+                else if (formValues.video){
+                    setCheckbox2(true)
+                }
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        // };
+    }, []);
+    
+
     // ****** Handle form input changes
     const inputHandler = (e) => {
     if (e.target.name == "image1" || e.target.name == "image2" || e.target.name == "image3" || e.target.name == "image4" || e.target.name == "video") {
@@ -140,11 +168,14 @@ export function AddPost() {
         //         console.log("done!");
         //     });
         
-        let res = await PostApi.createpost(submitValues)
-        window.location.reload()
+        let res = await PostApi.editpost(post_id,submitValues)
+        // window.location.reload()
     };
 
-
+    // if (isLoading) {
+    //     return <div className="d-flex jsutify-content-center m-5 align-items-center"><h1>Loading...</h1></div>;
+    // }
+    
 
     return (
         <div >
@@ -274,7 +305,7 @@ export function AddPost() {
                     </div> : null}
                     { error.image? <div className="text-danger d-flex justify-content-center">{error.image}</div> : null}
                     <div className="form__action m-5 d-flex justify-content-center">
-                        <input className="btn btn--main" type="submit" value='Add Post' />
+                        <input className="btn btn--main" type="submit" value='Save Post' />
                     </div>
                     </form>
                     {/* End Profile Form */}
