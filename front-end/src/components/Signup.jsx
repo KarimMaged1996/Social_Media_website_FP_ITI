@@ -42,7 +42,7 @@ export function SignupPage() {
       setNotMatchErr(false);
       setWrongPass(false);
       axios
-        .post('http://192.168.1.14:8000/api/register/', {
+        .post('http://127.0.0.1:8000/api/register/', {
           firstname: fname,
           lastname: lname,
           username: username,
