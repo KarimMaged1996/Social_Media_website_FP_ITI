@@ -77,6 +77,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
 
         token['username'] = user.username
-        token['avatar'] = user.avatar.url
+        if user.avatar:
+            token['avatar'] = user.avatar.url
 
         return token
