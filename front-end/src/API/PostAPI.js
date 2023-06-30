@@ -36,9 +36,9 @@ const createpost = async (formData) => {
    let content = {}
     try{
         
-        let res = await axios.post(`${BASE_URL}/post/create/`, formData,{
+        let res = await axios.post(`${BASE_URL}/post/create`, formData,{
             headers: {
-                'Authorization': `Bearer ${token}`,
+                // 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data'
             }
         })
@@ -56,9 +56,64 @@ const createpost = async (formData) => {
     return content
 }
 
+const editpost = async (id, formData) => {
+    let content = {}
+        try{
+            
+            let res = await axios.put(`${BASE_URL}/post/update/${id}`, formData,{
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            
+            if(res.status === 200){
+                console.log(res.data)
+            }
+            
+        }catch(e){
+            content = {
+                'data': e
+            }
+        }
+    
+        return content
+}
+ 
+
+
+// const postdetails = async () => {
+//     let content = {}
+//     try{
+//         let res = await axios.get(`${BASE_URL}/api/myProfile/`, {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`,
+//                 // 'Content-Type': 'Application/json'
+//             }
+//         })
+//         if(res.status === 200){
+//             res.data.data['avatar'] = `${BASE_URL}${res.data.data['avatar']}`
+//             // res.data.data['avatar'] = null
+//             content = {
+//                 'status': res.data.status,
+//                 'data': res.data.data
+//             }
+//         }
+//     }catch(e){
+//         content = {
+//             'data': e
+//         }
+//     }
+
+//     return content
+// }
+
 
 
 export const PostApi = {
     AllPosts,
     createpost,
+    editpost
 }
+
+

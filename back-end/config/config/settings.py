@@ -89,9 +89,10 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = (
 'http://localhost:3000',
 'http://localhost:8000',
-
-
+'http://192.168.1.14:8000'
 )
+
+
 
 ROOT_URLCONF = 'config.urls'
 
