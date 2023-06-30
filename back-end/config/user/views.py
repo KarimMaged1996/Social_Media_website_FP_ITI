@@ -67,7 +67,7 @@ class Register(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         data = serializer.data
-
+        
         current_site = get_current_site(request)  
         mail_subject = 'account activation'  
         message = render_to_string('acc_active_email.html', {  
@@ -78,11 +78,8 @@ class Register(APIView):
         })  
         to_email = [user.email]
         email = EmailMessage(mail_subject, message, to=to_email)
-    
         email.send()
     
-        
-        
         return Response(data, status=status.HTTP_201_CREATED)
 
 
@@ -104,7 +101,6 @@ class Logout(APIView):
 
 
 class activate(APIView):
-
     def get(self, request, uidb64, token):
         id = urlsafe_base64_decode(uidb64)
         id = id.decode('utf-8')
@@ -162,7 +158,6 @@ def getResetPasswordLink(request):
 @api_view(['POST', 'GET'])
 def resetPassword(request, uid, token):
     
-
     try:
         id = urlsafe_base64_decode(uid).decode('utf-8')
 
@@ -188,13 +183,10 @@ def resetPassword(request, uid, token):
         return Response({"msg": e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
-
-
     
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def myProfile(request):
-
     if request.method == 'GET':
 
         user = User.objects.get(pk=request.user.pk)

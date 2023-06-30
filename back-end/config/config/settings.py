@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 
 
     # apps
-    # 'post.apps.PostConfig',
+    'post.apps.PostConfig',
     'comment.apps.CommentConfig',
     'user.apps.UserConfig',
     'groups.apps.GroupsConfig',
@@ -122,8 +122,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'techster',
-        'USER': 'postgres',
-        'PASSWORD': '18501900',
+        'USER': 'dewidar',
+        'PASSWORD': '953751',
         'HOST': 'localhost',
         'PORT': '5432'
     }
