@@ -22,7 +22,7 @@ export  function Post() {
             <div className="room__topRight">
               <a href="#">
                 <svg
-                  enable-background="new 0 0 24 24"
+                  enable-background="new 0 0 50 50"
                   height="32"
                   viewBox="0 0 24 24"
                   width="32"
