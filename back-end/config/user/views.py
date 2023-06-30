@@ -19,6 +19,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
 
 
+# JWT imports
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
 # app Imports
 from .models import User
 from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer
@@ -46,7 +50,7 @@ class HomePage(APIView):
 
     def post(self, request):
         print(request.data['image'])
-       
+    
         user = User.objects.get(pk=request.user.id)
         print(user)
         user.avatar = request.FILES['image']
@@ -164,7 +168,7 @@ def resetPassword(request, uid, token):
         user = User.objects.get(pk=id)   
         passowrd = request.data.get('password', None)
         confrim_password = request.data.get('confirm_password', None)
-
+    
         if not password_reset_token.check_token(user, token):
             return Response({'msg': 'invalid link'}, status.HTTP_400_BAD_REQUEST)
         if not passowrd or not confrim_password:
@@ -200,7 +204,7 @@ def myProfile(request):
     if request.method == 'PUT':
         try:
             user = User.objects.get(pk=request.user.pk)
-            
+            print(request.data)
             serializer = UserSerializer(instance=user, data=request.data, partial=True, 
                     context={'current_site': get_current_site(request), 'request': request})
             serializer.is_valid(raise_exception=True)

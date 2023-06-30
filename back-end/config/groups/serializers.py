@@ -24,3 +24,10 @@ class RegUserInGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInGroup
         fields = '__all__'
+
+class UserGroupsSerializer(serializers.ModelSerializer):
+    group_id = GroupSerializer()
+    
+    class Meta:
+        model = UserInGroup
+        fields = ['group_id']
