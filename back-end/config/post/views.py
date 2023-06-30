@@ -13,7 +13,7 @@ from rest_framework.decorators import api_view,permission_classes
 class Post_list(generics.ListAPIView):
     permission_classes = [AllowAny]
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostSerializer2
 
 # RetrieveUpdateDestroyAPIView
 class Post_details(generics.RetrieveAPIView):
@@ -54,7 +54,7 @@ def UserPosts(request,pk):
             owner = User.objects.get(id = pk)
             userPosts = owner.author_posts.all()
             print(request.data)
-            serializer = PostSerializer (userPosts, many = True)
+            serializer = PostSerializer2 (userPosts, many = True)
         except User.DoesNotExist:
             raise Http404("User not found")
     return Response(serializer.data, status=status.HTTP_200_OK)
