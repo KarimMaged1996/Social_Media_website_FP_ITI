@@ -82,7 +82,7 @@ class Register(APIView):
         })  
         to_email = [user.email]
         email = EmailMessage(mail_subject, message, to=to_email)
-        email.send()
+        # email.send()
     
         return Response(data, status=status.HTTP_201_CREATED)
 
