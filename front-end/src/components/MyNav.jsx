@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import logo from '../assets/xml.svg';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 export function MyNav() {
@@ -19,7 +19,7 @@ export function MyNav() {
   function logout() {
     axios
       .post(
-        'http://127.0.0.1:8000/api/logout/',
+        'http://192.168.1.14:8000/api/logout/',
         {
           refresh: localStorage.getItem('refresh_token'),
         },
@@ -73,7 +73,7 @@ export function MyNav() {
           </Nav>
           {user ? (
             <Nav className="header__menu">
-              <Nav.Link href="#">
+              <NavLink to="/profile">
                 <div className="avatar avatar--medium active">
                   <img
                     src="https://randomuser.me/api/portraits/men/37.jpg"
@@ -81,7 +81,7 @@ export function MyNav() {
                   />
                 </div>
                 {/* ... */}
-              </Nav.Link>
+              </NavLink>
               <Nav.Link className=" text-white" onClick={logout}>
                 Log Out
               </Nav.Link>
