@@ -18,11 +18,12 @@ export function LoginPage() {
   function login(e) {
     e.preventDefault();
     axios
-      .post('http://192.168.1.14:8000/api/token/', {
+      .post('http://127.0.0.1:8000/api/token/', {
         email: email,
         password: password,
       })
       .then((response) => {
+        console.log(response);
         setTokens(localStorage.setItem('access_token', response.data.access));
         localStorage.clear();
         localStorage.setItem('access_token', response.data.access);
@@ -33,6 +34,7 @@ export function LoginPage() {
         navigate('/');
       })
       .catch((errors) => {
+        console.log(errors);
         setInvalid(true);
       });
   }
@@ -91,7 +93,7 @@ export function LoginPage() {
 
             <div className="auth__action">
               <p>Haven't signed up yet?</p>
-              <NavLink to='/signup' className="btn btn--link text-white">
+              <NavLink to="/signup" className="btn btn--link text-white">
                 Sign Up
               </NavLink>
             </div>

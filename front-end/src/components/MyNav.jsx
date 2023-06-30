@@ -13,13 +13,13 @@ import { useEffect } from 'react';
 
 export function MyNav() {
   const { user, setTokens } = useContext(AuthContext);
-
+  console.log('dddddddd', user);
   let navigate = useNavigate();
 
   function logout() {
     axios
       .post(
-        'http://192.168.1.14:8000/api/logout/',
+        'http://127.0.0.1:8000/api/logout/',
         {
           refresh: localStorage.getItem('refresh_token'),
         },
