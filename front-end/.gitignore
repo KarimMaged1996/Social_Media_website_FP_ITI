@@ -21,3 +21,46 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# Dependency directories
+node_modules/
+
+# Build directory
+build/
+
+# Environment variables
+.env
+
+# Compiled output
+dist/
+
+# Log files
+*.log
+
+# Other
+.DS_Store
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+
+# Virtual environment
+venv/
+.env
+
+# Database
+db.sqlite3
+
+# Static files
+staticfiles/
+
+# Media files
+media/
+
+# Compiled Python files
+*.pyc
+
+# Other
+.DS_Store
