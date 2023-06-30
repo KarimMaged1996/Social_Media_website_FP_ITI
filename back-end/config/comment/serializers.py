@@ -9,7 +9,7 @@ class UserSerializerForcomments(serializers.ModelSerializer):
 class PostSerializerForComments(serializers.ModelSerializer):
     class Meta:
         model = Post 
-        fields = ['id', 'title', 'content', 'username', 'techbin']
+        fields = ['id', 'title', 'content']
 
 class CommentSerializer(serializers.ModelSerializer):
     author = UserSerializerForcomments()
