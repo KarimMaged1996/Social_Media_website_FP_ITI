@@ -25,7 +25,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 # app Imports
 from .models import User
-from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer
+from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer, MyTokenObtainPairSerializer
 from post.models import Post
 from post.serializers import PostSerializer
 from groups.models import Group
@@ -252,3 +252,6 @@ def search(request):
         return Response({'msg': e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
