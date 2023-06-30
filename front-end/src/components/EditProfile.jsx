@@ -44,6 +44,7 @@ export default function EditProfile() {
   // ***** On submit form
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    console.log(submitValues)
     const formData = new FormData()
     for(let ele in submitValues){
         formData.append(ele, submitValues[ele])

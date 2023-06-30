@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 let email, password;
@@ -18,7 +18,7 @@ export function LoginPage() {
   function login(e) {
     e.preventDefault();
     axios
-      .post('http://127.0.0.1:8000/api/token/', {
+      .post('http://192.168.1.14:8000/api/token/', {
         email: email,
         password: password,
       })
@@ -91,9 +91,9 @@ export function LoginPage() {
 
             <div className="auth__action">
               <p>Haven't signed up yet?</p>
-              <a href="signup.html" className="btn btn--link text-white">
+              <NavLink to='/signup' className="btn btn--link text-white">
                 Sign Up
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>
