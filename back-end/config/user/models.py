@@ -20,7 +20,7 @@ class User(AbstractBaseUser):
     lastname = models.CharField(max_length=20)
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=90, unique=True)
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True, blank=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     dateofbirth = models.DateField(null = True, blank=True)
     techbin = models.IntegerField(default=0)

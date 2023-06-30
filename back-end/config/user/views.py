@@ -7,6 +7,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string  
 from .tokens import account_activation_token  , password_reset_token
 from django.core.mail import EmailMessage 
+from django.db.models import Q
 
 
 # DRF imports
@@ -15,7 +16,6 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer
 from rest_framework.decorators import api_view, permission_classes
 
 
@@ -25,7 +25,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 # app Imports
 from .models import User
-from .serializers import MyTokenObtainPairSerializer
+from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer, MyTokenObtainPairSerializer
+from post.models import Post
+from post.serializers import PostSerializer
+from groups.models import Group
+from groups.serializers import GroupSerializer
 
 
 
@@ -164,7 +168,6 @@ def resetPassword(request, uid, token):
         user = User.objects.get(pk=id)   
         passowrd = request.data.get('password', None)
         confrim_password = request.data.get('confirm_password', None)
-
     
         if not password_reset_token.check_token(user, token):
             return Response({'msg': 'invalid link'}, status.HTTP_400_BAD_REQUEST)
@@ -218,8 +221,37 @@ def myProfile(request):
 
 
 
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def search(request):
+    
+    param = request.query_params.get('s')
+
+    if param == None:
+        return Response({'status': 'fail', 'msg': 'no params where sent'}, status.HTTP_204_NO_CONTENT)
+
+    try:
+        usersList = User.objects.filter(Q(username__icontains=param))
+        users = UserSerializer(usersList, many=True)
+
+        postList = Post.objects.filter(Q(title__icontains=param) | Q(content__icontains=param))
+        posts = PostSerializer(postList, many=True)
+
+        groupList = Group.objects.filter(Q(name__icontains=param))
+        groups = GroupSerializer(groupList, many=True)
+
+        result = {
+            'status': 'success',
+            'users': users.data,
+            'posts': posts.data,
+            'groups': groups.data
+        }
+
+        return Response({"msg":result})
+    except Exception as e:
+        return Response({'msg': e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-
-
