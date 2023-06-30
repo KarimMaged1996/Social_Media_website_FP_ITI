@@ -7,6 +7,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string  
 from .tokens import account_activation_token  , password_reset_token
 from django.core.mail import EmailMessage 
+from django.db.models import Q
 
 
 # DRF imports
@@ -15,12 +16,20 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer
 from rest_framework.decorators import api_view, permission_classes
+
+
+# JWT imports
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 # app Imports
 from .models import User
+from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer
+from post.models import Post
+from post.serializers import PostSerializer
+from groups.models import Group
+from groups.serializers import GroupSerializer
 
 
 
@@ -41,7 +50,7 @@ class HomePage(APIView):
 
     def post(self, request):
         print(request.data['image'])
-       
+    
         user = User.objects.get(pk=request.user.id)
         print(user)
         user.avatar = request.FILES['image']
@@ -62,7 +71,7 @@ class Register(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         data = serializer.data
-
+        
         current_site = get_current_site(request)  
         mail_subject = 'account activation'  
         message = render_to_string('acc_active_email.html', {  
@@ -73,11 +82,8 @@ class Register(APIView):
         })  
         to_email = [user.email]
         email = EmailMessage(mail_subject, message, to=to_email)
-    
         email.send()
     
-        
-        
         return Response(data, status=status.HTTP_201_CREATED)
 
 
@@ -99,7 +105,6 @@ class Logout(APIView):
 
 
 class activate(APIView):
-
     def get(self, request, uidb64, token):
         id = urlsafe_base64_decode(uidb64)
         id = id.decode('utf-8')
@@ -157,15 +162,13 @@ def getResetPasswordLink(request):
 @api_view(['POST', 'GET'])
 def resetPassword(request, uid, token):
     
- 
     try:
         id = urlsafe_base64_decode(uid).decode('utf-8')
 
         user = User.objects.get(pk=id)   
         passowrd = request.data.get('password', None)
         confrim_password = request.data.get('confirm_password', None)
-
-       
+    
         if not password_reset_token.check_token(user, token):
             return Response({'msg': 'invalid link'}, status.HTTP_400_BAD_REQUEST)
         if not passowrd or not confrim_password:
@@ -183,13 +186,10 @@ def resetPassword(request, uid, token):
         return Response({"msg": e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
-
-
     
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def myProfile(request):
-
     if request.method == 'GET':
 
         user = User.objects.get(pk=request.user.pk)
@@ -201,12 +201,10 @@ def myProfile(request):
         }
         return Response(data, status.HTTP_200_OK)
     
-    if request.method == 'POST':
+    if request.method == 'PUT':
         try:
             user = User.objects.get(pk=request.user.pk)
-       
-            
-          
+            print(request.data)
             serializer = UserSerializer(instance=user, data=request.data, partial=True, 
                     context={'current_site': get_current_site(request), 'request': request})
             serializer.is_valid(raise_exception=True)
@@ -220,3 +218,37 @@ def myProfile(request):
 
         except Exception as e:
             return Response({"status": "fail", "msg": e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def search(request):
+    
+    param = request.query_params.get('s')
+
+    if param == None:
+        return Response({'status': 'fail', 'msg': 'no params where sent'}, status.HTTP_204_NO_CONTENT)
+
+    try:
+        usersList = User.objects.filter(Q(username__icontains=param))
+        users = UserSerializer(usersList, many=True)
+
+        postList = Post.objects.filter(Q(title__icontains=param) | Q(content__icontains=param))
+        posts = PostSerializer(postList, many=True)
+
+        groupList = Group.objects.filter(Q(name__icontains=param))
+        groups = GroupSerializer(groupList, many=True)
+
+        result = {
+            'status': 'success',
+            'users': users.data,
+            'posts': posts.data,
+            'groups': groups.data
+        }
+
+        return Response({"msg":result})
+    except Exception as e:
+        return Response({'msg': e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    

@@ -14,6 +14,9 @@ import { ProfileSettings } from "./components/ProfileSettings";
 import { Activity } from "./components/Activity";
 import { CreatePost } from "./components/CreatePost";
 import { Post } from "./components/Post";
+import { Mypost } from "./components/Mypost";
+import { AddPost } from "./components/AddPost";
+import { EditPost } from "./components/EditPost";
 import { Profile } from "./components/Profile";
 import privateRoute from "./utils/privateRoute";
 import PrivateRoute from "./utils/privateRoute";
@@ -28,6 +31,8 @@ function App() {
         <Routes>
           <Route path="" element={<PrivateRoute component={Home} />} />
           <Route path="home" element={<Home />} />
+          <Route path="post" element={<Post />} />
+          <Route path="mypost" element={<Mypost />} />
           <Route path="signup" element={<SignupPage />} />
 
           <Route path="Login" element={<LoginPage />} />
@@ -37,7 +42,9 @@ function App() {
           <Route path="profile-settings" element={<ProfileSettings />} />
 
           <Route path="activity" element={<Activity />} />
-          <Route path="create-post" element={<CreatePost />} />
+
+          <Route path="addpost" element={<AddPost />} />
+          <Route path="editpost/:id" element={<EditPost />} />
           <Route path="post" element={<Post />} />
           <Route
             path="profile"
