@@ -80,9 +80,9 @@ def leaveGroup(request,pk):
 # endpoint to list all groups of a member
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
-def userGroups(request,pk):
+def userGroups(request):
     if request.method == 'GET':
-        user = User.objects.get(id = pk)
+        user = request.user
         usergroups = user.joined_groups.all()
         serializer = UserGroupsSerializer(usergroups, many=True)
     return Response(serializer.data)
