@@ -10,12 +10,33 @@ import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { SearchContext } from '../context/SearchContext';
 
 export function MyNav() {
   const { user, setTokens } = useContext(AuthContext);
-  console.log('dddddddd', user);
+  const { searchResults, setSearchResults } = useContext(SearchContext);
   let navigate = useNavigate();
 
+  function search(e) {
+    let params = {
+      s: e.target.value,
+    };
+    let token = localStorage.getItem('access_token');
+    let headers = { Authorization: `Bearer ${token}` };
+
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      axios
+        .post('http://127.0.0.1:8000/api/search/', {}, { params, headers })
+        .then((response) => {
+          setSearchResults(response.data.msg);
+          navigate('/search');
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    }
+  }
   function logout() {
     axios
       .post(
@@ -58,7 +79,7 @@ export function MyNav() {
               >
                 {/* ... */}
               </svg>
-              <input placeholder="Search Techster" />
+              <input placeholder="Search Techster" onKeyDown={search} />
             </label>
           </Form>
         ) : null}
