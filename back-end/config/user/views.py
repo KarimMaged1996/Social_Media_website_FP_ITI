@@ -219,7 +219,15 @@ def myProfile(request):
         except Exception as e:
             return Response({"status": "fail", "msg": e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def UserProfileAPIView(request, username):
+    try:
+        user = User.objects.get(username=username)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=404)
 
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
