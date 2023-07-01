@@ -82,38 +82,39 @@ const editpost = async (id, formData) => {
  
 
 
-// const postdetails = async () => {
-//     let content = {}
-//     try{
-//         let res = await axios.get(`${BASE_URL}/api/myProfile/`, {
-//             headers: {
-//                 'Authorization': `Bearer ${token}`,
-//                 // 'Content-Type': 'Application/json'
-//             }
-//         })
-//         if(res.status === 200){
-//             res.data.data['avatar'] = `${BASE_URL}${res.data.data['avatar']}`
-//             // res.data.data['avatar'] = null
-//             content = {
-//                 'status': res.data.status,
-//                 'data': res.data.data
-//             }
-//         }
-//     }catch(e){
-//         content = {
-//             'data': e
-//         }
-//     }
+const homePosts = async () => {
+    let content = {}
+    try{
+        let res = await axios.get(`${BASE_URL}/post/`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                // 'Content-Type': 'Application/json'
+            }
+        })
+        if(res.status === 200){
+            res.data.data['avatar'] = `${BASE_URL}${res.data.data['avatar']}`
+            // res.data.data['avatar'] = null
+            content = {
+                'status': res.data.status,
+                'data': res.data.data
+            }
+        }
+    }catch(e){
+        content = {
+            'data': e
+        }
+    }
 
-//     return content
-// }
+    return content
+}
 
 
 
 export const PostApi = {
     AllPosts,
     createpost,
-    editpost
+    editpost,
+    homePosts
 }
 
 

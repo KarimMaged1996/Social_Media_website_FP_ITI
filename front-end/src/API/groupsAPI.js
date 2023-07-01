@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = 'http://127.0.0.1:8000/'
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MDY1ODcyLCJpYXQiOjE2ODgwNTk4NzIsImp0aSI6ImY0OGIzNjgyZDhhZjQ2NTM5NTlhZmI3Yzk5ODc2YTFlIiwidXNlcl9pZCI6MX0.fMXI4X-obsIswjzF7k3HPd_oR6hGdPLgqnAQYiWyVPs'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MTQ1NzM3LCJpYXQiOjE2ODgxMzk3MzcsImp0aSI6IjEwMTRlYjBhZGQ2MzQ2OThhNTlkYmViMzZmMTk2MjA2IiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJzaGVyaWYifQ._Q7CIUf817yL6vYEtQWmngShIVBlc0t566M-dcga92I'
 const headers = { Authorization: `Bearer ${token}` };
 
 const Categories = async () => {
