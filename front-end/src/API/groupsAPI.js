@@ -107,10 +107,32 @@ const getGroupMembers = async (groupId) => {
   return content;
 };
 
+const getUserGroups = async () => {
+  const url = `${BASE_URL}/groups/user_groups/`;
+  let content = {};
+  try {
+    let res = await axios.get(url, { headers });
+    if (res.status === 200) {
+      console.log('sssssssssss', res.data);
+      content = {
+        status: res.data.status,
+        data: res.data,
+      };
+    }
+  } catch (e) {
+    content = {
+      data: e,
+    };
+  }
+
+  return content;
+};
+
 export const GroupApi = {
   Categories,
   singleCategory,
   getCategoryGroups,
   getSingleGroup,
   getGroupMembers,
+  getUserGroups,
 };
