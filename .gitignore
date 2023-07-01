@@ -43,3 +43,5 @@ dist/
 
 # Other
 .DS_Store
+back-end/config/groups/migrations/0006_alter_group_date_created.py
+back-end/config/groups/migrations/0007_alter_group_date_created.py

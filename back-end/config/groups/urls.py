@@ -9,5 +9,5 @@ urlpatterns = [
     path('group_members/<int:pk>/', views.groupMembers),
     path('join_group/<int:pk>/',views.joinGroup),
     path('leave_group/<int:pk>/',views.leaveGroup),
-    path('user_groups/<int:pk>/', views.userGroups)
+    path('user_groups/', views.userGroups)
 ]
