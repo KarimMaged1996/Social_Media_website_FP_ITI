@@ -9,12 +9,12 @@ from rest_framework import  generics
 from django.http import Http404
 from rest_framework.decorators import api_view,permission_classes
 
-class Comment_list(generics.ListCreateAPIView):
+class Comment_list(generics.ListAPIView):
     permission_classes = [IsAuthorOrReadOnly]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
-class Comment_details(generics.RetrieveUpdateDestroyAPIView):
+class Comment_details(generics.RetrieveAPIView):
     permission_classes = [IsAuthorOrReadOnly]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -56,7 +56,7 @@ def postcomments(request,pk):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-# endpoint to list the post comments 
+# endpoint to list the user comments 
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def usercomments(request,pk):

@@ -5,65 +5,36 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { NavLink } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 
-export function Mypost() {
+export function Mypost(props) {
 
-    let post_id = 2
-    console.log("start")
-    const [post, setPost] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    let {post} = props
+    let DeleteAPIUrl = `http://127.0.0.1:8000/post/delete/${post.id}`
+    let navigate = useNavigate()
 
 
-    async function getData() {
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/post/${post_id}`, {
-                headers: {
-                'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-                },
-            });
-            console.log(response.data);
-            setPost(response.data);
-            setIsLoading(false);
-            } catch (error) {
-            console.error(error);
-            }
-        }
-        
-
-    useEffect(() => {
-        // if(localStorage.getItem('access_token') === null){                   
-        //     // window.location.href = '/login'
-        //     console.log("dadwwd")
+    // async function getData() {
+    //     try {
+    //         const response = await axios.get(`http://127.0.0.1:8000/post/${post_id}`, {
+    //             headers: {
+    //             'Content-Type': 'application/json',
+    //             // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    //             },
+    //         });
+    //         console.log(response.data);
+    //         setPost(response.data);
+    //         setIsLoading(false);
+    //         } catch (error) {
+    //         console.error(error);
+    //         }
         // }
-        // else{
-        // getData()
-            // console.log("here ")
-            axios
-            .get(`http://127.0.0.1:8000/post/${post_id}`,
-            {
-                headers: 
-                {
-                    'Content-Type': 'application/json',
-                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-                }
-            })
-            .then(res => {
-                console.log(res.data)
-                setPost(res.data);
-                setIsLoading(false);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-        // };
-    }, []);
+        
 
     const sinceWhen = (created_at) => {
         const date = new Date(created_at);
         const now = new Date();
-
         const diff = now.getTime() - date.getTime();
         const diffSeconds = Math.round(diff / 1000);
         const diffMinutes = Math.round(diffSeconds / 60);
@@ -81,34 +52,45 @@ export function Mypost() {
         }
     }
     
-
-
-    if (isLoading) {
-        return <div className="d-flex jsutify-content-center m-5 align-items-center"><h1>Loading...</h1></div>;
-    }
-    
     
     let NumOfImages = 0
     
     if (post.image4)
-    {
-        NumOfImages = 4
-    }
+        {
+            NumOfImages = 4
+        }
     else if (post.image3)
-    {
-        NumOfImages = 3
-    }
+        {
+            NumOfImages = 3
+        }
     else if (post.image2)
-    {
-        NumOfImages = 2
-    }
+        {
+            NumOfImages = 2
+        }
     else if (post.image1)
-    {
-        NumOfImages = 1
+        {
+            NumOfImages = 1
+        }   
+
+
+    const deletepost = () =>{
+        axios
+        .delete(DeleteAPIUrl,
+            {
+            headers: 
+            {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            }
+            })
+        .then(res => {
+            console.log("deleted")
+            navigate('/')
+        })
+        .catch(err => {
+            console.log(err);
+        });
     }
-
-    console.log(NumOfImages)
-
 
     return (
     <div className='roomList container'>
@@ -123,7 +105,7 @@ export function Mypost() {
                 <div class="roomListRoom__header">
                     <a href="profile.html" class="roomListRoom__author">
                         <div class="avatar avatar--small">
-                        <img src={post.author.avatar} alt="pp" />
+                            <img src={post.author.avatar} alt="pp" />
                         </div>
                         <NavLink className="nav-link" to={`/author/addbook`}>
                             <span>@{post.author.username}</span>
@@ -134,7 +116,9 @@ export function Mypost() {
                         <span>{sinceWhen(post.created_at)}</span>
                     </div>
                     <div className="room__topRight">
-                        <a href="#">
+
+                        {/* edit button in the top right */}
+                        <a href={`/editpost/${post.id}`} >
                             <svg
                             enable-background="new 0 0 24 24"
                             height="20"
@@ -160,7 +144,9 @@ export function Mypost() {
                             </g>
                             </svg>
                         </a>
-                        <a href="#">
+
+                        {/* delete buttun in the top right */}
+                        <a href="#" onClick={deletepost}>
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
                                 <title>remove</title>
                                 <path
@@ -173,10 +159,10 @@ export function Mypost() {
                     
                 </div>
                 <div class="roomListRoom__content">
-                <a href="room.html">{post.title}</a>
-                <p>
-                    {post.content}
-                </p>
+                    <a href="room.html">{post.title}</a>
+                    <p>
+                        {post.content}
+                    </p>
                 </div>
                 
                 {NumOfImages>=1? <hr />: null}
@@ -196,7 +182,7 @@ export function Mypost() {
                                 <img src={post.image1} alt="" style={{ height: 'auto', width: '100%', margin:'10px' }}/>
                             </Col>
                             <Col xs={6}>
-                                <img src={post.image1} alt="" style={{ height: 'auto', width: '100%', margin:'10px' }}/>
+                                <img src={post.image2} alt="" style={{ height: 'auto', width: '100%', margin:'10px' }}/>
                             </Col>
                         </Row>
                         </Container>
@@ -209,10 +195,10 @@ export function Mypost() {
                                 <img src={post.image1} alt="" style={{ height: 'auto', width: '100%', margin:'10px' }}/>
                             </Col>
                             <Col xs={6} md={3}>
-                                <img src={post.image1} alt="" style={{ height: 'auto', width: '100%', margin:'10px' }}/>
+                                <img src={post.image2} alt="" style={{ height: 'auto', width: '100%', margin:'10px' }}/>
                             </Col>
                             <Col xs={6} md={3}> 
-                                <img src={post.image1} alt="" style={{ height: 'auto', width: '100%', margin:'10px'}}/>
+                                <img src={post.image3} alt="" style={{ height: 'auto', width: '100%', margin:'10px'}}/>
                             </Col>
                         </Row>
                         </Container>
@@ -248,7 +234,14 @@ export function Mypost() {
                         </Container>
                 : null} 
 
+                {/* up vote and down vote  */}
+                <div className="d-flex justify-content-around">
+                    <div>upvote</div>
+                    <div>downvotw</div>
+                </div>
+                
 
+                {/* post footer  */}
                 <div class=" m-3 roomListRoom__meta">
                 <a href="room.html" class="roomListRoom__joined">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
