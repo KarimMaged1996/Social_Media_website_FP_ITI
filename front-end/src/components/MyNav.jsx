@@ -16,7 +16,7 @@ export function MyNav() {
   const { user, setTokens } = useContext(AuthContext);
   const { searchResults, setSearchResults } = useContext(SearchContext);
   let navigate = useNavigate();
-
+  console.log(user);
   function search(e) {
     let params = {
       s: e.target.value,
@@ -94,12 +94,13 @@ export function MyNav() {
           </Nav>
           {user ? (
             <Nav className="header__menu">
-              <NavLink to="/profile">
+              <NavLink to={`/profile/${user.id}`}>
                 <div className="avatar avatar--medium active">
                   <img
-                    src="https://randomuser.me/api/portraits/men/37.jpg"
+                    src={user.avatar ? user.avatar : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
                     alt="Avatar"
                   />
+                  <span className="nav-link__username">{user.username}</span>
                 </div>
                 {/* ... */}
               </NavLink>
