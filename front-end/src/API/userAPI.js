@@ -31,11 +31,11 @@ const myProfile = async () => {
 
     return content
 }
-const userProfile = async ({username}) => {
+const userProfile = async ({id}) => {
     let content = {}
      try{
  
-         let res = await axios.get(`${BASE_URL}/api/profile/${username}/`, {
+         let res = await axios.get(`${BASE_URL}/api/profile/${id}/`, {
              headers: {
                  'Authorization': `Bearer ${token}`,
                  // 'Content-Type': 'Application/json'

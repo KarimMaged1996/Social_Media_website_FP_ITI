@@ -51,7 +51,7 @@ function App() {
             <Route path="editpost/:id" element={<EditPost />} />
             <Route path="post" element={<Post />} />
             <Route
-              path="profile"
+              path="profile/:id"
               element={<PrivateRoute component={Profile} />}
             />
             <Route
