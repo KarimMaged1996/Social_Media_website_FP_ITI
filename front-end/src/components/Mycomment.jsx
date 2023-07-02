@@ -57,15 +57,13 @@ export function Mycomment(props) {
     }
 
     return (
-    <div className='roomList container'>
+    <div className='roomList container' style={{ width:"75vw"}}>
 
         <div class="roomList__header m-2">
-        <div>
-            <h2>Recent Posts</h2>
-        </div>
+
         </div>
 
-        <div class="roomListRoom">
+        <div class="roomListRoom ">
                 <div class="roomListRoom__header">
                     <a href="profile.html" class="roomListRoom__author">
                         <div class="avatar avatar--small">

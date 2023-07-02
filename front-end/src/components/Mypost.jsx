@@ -95,10 +95,10 @@ export function Mypost(props) {
     return (
     <div className='roomList container'>
 
-        <div class="roomList__header m-2">
-        <div>
-            <h2>Recent Posts</h2>
-        </div>
+        <div class="roomList__header m-2 d-flex justify-content-center">
+            <div>
+                <h2>Recent Posts</h2>
+            </div>
         </div>
 
         <div class="roomListRoom">

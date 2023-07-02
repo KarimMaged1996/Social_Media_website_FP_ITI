@@ -105,9 +105,9 @@ return (
         :
         <div className='d-flex justify-content-center'>
 
-            <div className="d-flex justify-content-center">
-                <div className="container m-4 d-flex flex-wrap justify-content-center align-items-center">
-                        {comments.map((comment) =>  <div><Mycomment key={comment.id} post={comment} /></div>)}
+            <div className="d-flex justify-content-center w-100">
+                <div className="container flex-column m-4 d-flex flex-wrap justify-content-center align-items-center" style={{ width:"75vw"}}>
+                        {comments.map((comment) =>  <div><Mycomment key={comment.id} comment={comment} /></div>)}
                 </div>
             </div>
 
