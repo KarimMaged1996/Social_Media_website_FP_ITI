@@ -212,9 +212,9 @@ def myProfile(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def UserProfileAPIView(request, username):
+def UserProfileAPIView(request, user_id):
     try:
-        user = User.objects.get(username=username)
+        user = User.objects.get(id=user_id)
         serializer = UserSerializer(user)
         return Response(serializer.data)
     except User.DoesNotExist:

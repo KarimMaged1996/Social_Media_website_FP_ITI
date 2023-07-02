@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect ,useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Topics } from "./Topics";
 import { Activity } from "./Activity";
 import { UserApi } from '../API/userAPI';
-
+import { useParams } from "react-router-dom";
+import { AuthContext } from '../context/AuthContext';
 
 export  function Profile() {
+  const { user, setUser } = useContext(AuthContext);
   const [userInfo , setUserInfo] = useState({})
-
+  let { id } = useParams();
   const getUserInfo = async () => {
     try {
-      const username = 'sherif'
-      const res = await UserApi.userProfile({username});
+      const res = await UserApi.userProfile({id});
       console.log(res.data)
       setUserInfo({...res.data});
       console.log(res)
@@ -38,7 +39,9 @@ export  function Profile() {
  <div className="profile">
    <div className="profile__avatar">
      <div className="avatar avatar--large active">
-       <img src="https://randomuser.me/api/portraits/men/11.jpg" />
+       <img 
+          src={userInfo.avatar ? userInfo.avatar : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
+       />
      </div>
    </div>
    <div className="profile__info">
@@ -46,9 +49,12 @@ export  function Profile() {
 
      <div style={{ fontSize: '2rem' }}>Techbin: <span>{userInfo.techbin}</span></div>
 
-     <NavLink to='/editprofile'>
-      <p href="edit-user.html" className="btn btn--main btn--pill text-white">Edit Profile</p>
-      </NavLink>
+     {user?.id === userInfo.id && (
+  <NavLink to="/editprofile">
+    <p className="btn btn--main btn--pill text-white">Edit Profile</p>
+  </NavLink>
+)}
+
    </div>
    <div className="profile__about">
      <h3>About</h3>
