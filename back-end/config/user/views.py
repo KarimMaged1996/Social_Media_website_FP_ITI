@@ -72,17 +72,8 @@ class Register(APIView):
         user = serializer.save()
         data = serializer.data
         
-        current_site = get_current_site(request)  
-        mail_subject = 'account activation'  
-        message = render_to_string('acc_active_email.html', {  
-            'user': user,  
-            'domain': current_site.domain,  
-            'uid':urlsafe_base64_encode(bytes(str(user.pk),'utf-8')),  
-            'token':account_activation_token.make_token(user),  
-        })  
-        to_email = [user.email]
-        email = EmailMessage(mail_subject, message, to=to_email)
-        # email.send()
+        # current_site = get_current_site(request)  
+        sendEmail(user)
     
         return Response(data, status=status.HTTP_201_CREATED)
 
@@ -263,3 +254,26 @@ def search(request):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+
+
+        currUser = User.objects.filter(email=request.data.get('email', None)).first()
+        print(currUser.is_active)
+        if currUser and not currUser.is_active:
+            sendEmail(currUser)
+
+        response = super().post(request, *args, **kwargs)
+        return response
+
+def sendEmail(user):
+    mail_subject = 'account activation'  
+    message = render_to_string('acc_active_email.html', {  
+        'user': user,  
+        'domain': '127.0.0.1:3000',  
+        'uid':urlsafe_base64_encode(bytes(str(user.pk),'utf-8')),  
+        'token':account_activation_token.make_token(user),  
+    })  
+    to_email = [user.email]
+    email = EmailMessage(mail_subject, message, to=to_email)
+    email.send()
