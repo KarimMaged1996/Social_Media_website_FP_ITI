@@ -24,7 +24,7 @@ function Chat() {
     }
 
     // Connect to the WebSocket server with the username as a query parameter
-    const newSocket = new WebSocket("ws://localhost:8000/ws/chat/");
+    const newSocket = new WebSocket("ws://127.0.0.1:8000/ws/chat/");
     setSocket(newSocket);
 
     newSocket.onopen = () => console.log("WebSocket connected");
@@ -49,11 +49,6 @@ function Chat() {
     scrollToBottom();
   }, [messages]);
 
-
-
-
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (message && socket) {
@@ -63,24 +58,8 @@ function Chat() {
       };
       socket.send(JSON.stringify(data));
       setMessage("");
-      // scrollToBottom(); // Scroll to bottom after sending the message
     }
   };
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   const fetchChatHistory = async () => {
     try {
@@ -88,7 +67,8 @@ function Chat() {
       setMessages(
         response.data.map((message) => ({
           content: message.content,
-          timestamp: message.timestamp,
+          timestamp: new Date(message.timestamp).toLocaleString(),
+          username: message.username,
         }))
       );
     } catch (error) {
@@ -114,10 +94,13 @@ function Chat() {
               message.username === username ? "sent" : "received"
             }`}
           >
+            <div className="message-owner">{message.username}</div>
             <div className="message-content">
               {message.message || message.content}
             </div>
-            <div className="message-timestamp">{message.timestamp}</div>
+            <div className="message-timestamp">
+              {new Date(message.timestamp).toLocaleString()}
+            </div>
           </div>
         ))}
       </div>
@@ -162,6 +145,7 @@ function Chat() {
                       message.username === username ? "sent" : "received"
                     }`}
                   >
+                    <div className="message-owner">{message.username}</div>
                     <div className="message-content">
                       {message.message || message.content}
                     </div>
