@@ -25,6 +25,7 @@ import { AuthProvider } from './context/AuthContext';
 import Search from './components/Search';
 import { SearchProvider } from './context/SearchContext';
 import { ResetPassword } from './components/ResetPassword';
+import { NewPassword } from './components/NewPassword';
 
 function App() {
   return (
@@ -60,6 +61,8 @@ function App() {
             />
 
             <Route path='forgetpassword' element={<ResetPassword></ResetPassword>} />
+            <Route path='api/resetpassword/:uid/:token' element={<NewPassword></NewPassword>} />
+  
 
             <Route path="search" element={<Search />} />
             <Route path="*" element={<NotFound />} />
