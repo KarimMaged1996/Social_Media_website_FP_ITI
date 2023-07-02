@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom'
 import axios from "axios";
-import { Mycomment } from './Mycomment';
 import { Mypost } from './Mypost';
+import { Mycomment } from './Mycomment';
+import { AddComment } from './AddComment';
 import { useNavigate, useParams } from "react-router-dom";
-
 
 
 export function PostPage(props) {
@@ -58,8 +58,8 @@ export function PostPage(props) {
     // };
 }, []);
 
-console.log(post)
-console.log(comments)
+// console.log(post)
+// console.log(comments)
 
 if (isLoading1 || isLoading2) {
     return <div className="d-flex jsutify-content-center m-5 align-items-center"><h1>Loading.....</h1></div>;
@@ -81,7 +81,7 @@ return (
         :
         <div className='d-flex justify-content-center'>
 
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center w-100">
                 <div className="container m-4 d-flex flex-wrap justify-content-center align-items-center">
                         <Mypost key={post.id} post={post} />
                 </div>
@@ -113,6 +113,8 @@ return (
 
         </div> 
         }
+
+        <AddComment post_id={post_id}></AddComment>
 
     </div>
 );

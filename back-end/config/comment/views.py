@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import CommentSerializer, CommentLikesSerializer
-from rest_framework.permissions import SAFE_METHODS, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions, AllowAny, IsAuthenticated
+from .serializers import CommentSerializer, CommentLikesSerializer, CommentSerializer2
+from rest_framework.permissions import SAFE_METHODS, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions, AllowAny, IsAuthenticated 
 from post.permissions import IsAuthorOrReadOnly
 from .models import Comment, Comment_Vote, Post, User
 from rest_framework import  generics
@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view,permission_classes
 
 class Comment_list(generics.ListAPIView):
     permission_classes = [IsAuthorOrReadOnly]
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.all().order_by('-created_at')
     serializer_class = CommentSerializer
 
 class Comment_details(generics.RetrieveAPIView):
@@ -20,19 +20,23 @@ class Comment_details(generics.RetrieveAPIView):
     serializer_class = CommentSerializer
 
 class CommentCreate(generics.CreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer2
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
 
 class CommentUpdate(generics.UpdateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer2
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
 class CommentDelete(generics.DestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer2
+    permission_classes = [AllowAny]
+
+    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
 
 class CommentLike_list(generics.ListCreateAPIView):
@@ -48,7 +52,7 @@ def postcomments(request,pk):
     if request.method == 'GET':
         try:
             post = Post.objects.get(id = pk)
-            postcomments = post.post_comments.all()
+            postcomments = post.post_comments.all().order_by('-created_at')
             print(request.data)
             serializer = CommentSerializer (postcomments, many = True)
         except Post.DoesNotExist:

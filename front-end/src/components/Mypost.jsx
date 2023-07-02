@@ -85,7 +85,7 @@ export function Mypost(props) {
             })
         .then(res => {
             console.log("deleted")
-            navigate('/')
+            window.location.reload()
         })
         .catch(err => {
             console.log(err);
@@ -118,7 +118,7 @@ export function Mypost(props) {
                     <div className="room__topRight">
 
                         {/* edit button in the top right */}
-                        <a href={`/editpost/${post.id}`} >
+                        <a href={`/post/edit/${post.id}`} >
                             <svg
                             enable-background="new 0 0 24 24"
                             height="20"
@@ -237,7 +237,7 @@ export function Mypost(props) {
                 {/* up vote and down vote  */}
                 <div className="d-flex justify-content-around">
                     <div>upvote</div>
-                    <div>downvotw</div>
+                    <div>downvote</div>
                 </div>
                 
 

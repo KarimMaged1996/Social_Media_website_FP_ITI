@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 export function Mycomment(props) {
 
     let {comment} = props
-    console.log(comment)
     let DeleteAPIUrl = `http://127.0.0.1:8000/comment/delete/${comment.id}`
     let navigate = useNavigate()
         
@@ -37,19 +36,20 @@ export function Mycomment(props) {
     }
     
 
-    const deletecomment = () =>{
+    const deletecomment = () =>
+    {
         axios
         .delete(DeleteAPIUrl,
             {
             headers: 
             {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             }
             })
         .then(res => {
             console.log("deleted")
-            navigate('/')
+            window.location.reload()
         })
         .catch(err => {
             console.log(err);
@@ -58,10 +58,6 @@ export function Mycomment(props) {
 
     return (
     <div className='roomList container' style={{ width:"75vw"}}>
-
-        <div class="roomList__header m-2">
-
-        </div>
 
         <div class="roomListRoom ">
                 <div class="roomListRoom__header">
@@ -72,15 +68,15 @@ export function Mycomment(props) {
                         <NavLink className="nav-link" to={`/author/addbook`}>
                             <span>@{comment.author.username}</span>
                         </NavLink >
-
                     </a>
+
                     <div class="roomListRoom__actions">
                         <span>{sinceWhen(comment.created_at)}</span>
                     </div>
                     <div className="room__topRight">
 
                         {/* edit button in the top right */}
-                        <a href={`/editcomment/${comment.id}`} >
+                        <a href={`/comment/edit/${comment.id}`} >
                             <svg
                             enable-background="new 0 0 24 24"
                             height="20"
@@ -118,11 +114,11 @@ export function Mycomment(props) {
                         </a>
 
                     </div>
-                    
-                </div>
-                <div class="roomListRoom__content">
 
-                    <p>
+                </div>
+
+                <div class="roomListRoom__content">
+                    <p className="m-3">
                         {comment.content}
                     </p>
                 </div>
@@ -130,7 +126,7 @@ export function Mycomment(props) {
                 {/* up vote and down vote  */}
                 <div className="d-flex justify-content-around">
                     <div>upvote</div>
-                    <div>downvotw</div>
+                    <div>downvote</div>
                 </div>
 
             </div>

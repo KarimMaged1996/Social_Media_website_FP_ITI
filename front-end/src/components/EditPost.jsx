@@ -14,6 +14,7 @@ export function EditPost() {
     const [images, setImages] = useState([
         "1"
     ])
+    const navigate = useNavigate()
 
     const [imagesfile, setImagesfile] = useState([])
 
@@ -219,7 +220,7 @@ export function EditPost() {
 
         
         // let res = await PostApi.editpost(post_id,formValues)
-        // window.location.reload()
+        navigate (`/post/${post_id}`)
     };
 
     if (isLoading) {
@@ -228,12 +229,12 @@ export function EditPost() {
     
 
     return (
-        <div >
+        <div  style={{ width:"75vw"}} >
             <main className="create-room layout edit-profile-container">
             <div className="container">
                 <div className="layout__box">
                 <div className="layout__boxHeader d-flex justify-content-between ">
-                    <a href="#">
+                    <a href="/" onClick={()=>{navigate(`/post/${post_id}`)}}>
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
                         <title>arrow-left</title>
                         <path
@@ -242,7 +243,7 @@ export function EditPost() {
                     </svg>
                     </a>
                     <div className="layout__boxTitle">
-                        <h3>Add Post </h3>
+                        <h3>Edit Post </h3>
                     </div>
                 </div>
     
