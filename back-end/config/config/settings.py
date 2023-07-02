@@ -89,7 +89,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = (
 'http://localhost:3000',
 'http://localhost:8000',
-'http://192.168.1.14:8000'
+'http://192.168.1.14:8000',
+'http://127.0.0.1:3000'
 )
 
 
@@ -122,8 +123,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'techster',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
+        'USER': 'dewidar',
+        'PASSWORD': '953751',
         'HOST': 'localhost',
         'PORT': '5432'
     }
