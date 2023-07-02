@@ -86,3 +86,9 @@ def userGroups(request):
         usergroups = user.joined_groups.all()
         serializer = UserGroupsSerializer(usergroups, many=True)
     return Response(serializer.data)
+
+#  endpoint to get group
+class GETSingleGroup(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
