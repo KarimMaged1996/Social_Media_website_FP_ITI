@@ -24,6 +24,7 @@ import EditProfile from './components/EditProfile';
 import { AuthProvider } from './context/AuthContext';
 import Search from './components/Search';
 import { SearchProvider } from './context/SearchContext';
+import { ResetPassword } from './components/ResetPassword';
 
 function App() {
   return (
@@ -57,6 +58,8 @@ function App() {
               path="editprofile"
               element={<PrivateRoute component={EditProfile} />}
             />
+
+            <Route path='forgetpassword' element={<ResetPassword></ResetPassword>} />
 
             <Route path="search" element={<Search />} />
             <Route path="*" element={<NotFound />} />
