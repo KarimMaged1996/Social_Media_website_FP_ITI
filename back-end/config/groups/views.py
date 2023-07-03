@@ -93,5 +93,3 @@ class GETSingleGroup(generics.RetrieveAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
-
-class GETUsersInGroup()

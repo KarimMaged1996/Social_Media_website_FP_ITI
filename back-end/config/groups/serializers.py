@@ -31,4 +31,3 @@ class UserGroupsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInGroup
         fields = ['group_id']
-
