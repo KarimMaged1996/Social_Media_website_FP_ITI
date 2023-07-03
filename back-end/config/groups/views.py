@@ -61,7 +61,7 @@ def joinGroup(request,pk):
         group = Group.objects.get(id = pk)
         data = {"user_id":request.user.id, "group_id":group.id}
         serializer = RegUserInGroupSerializer(data=data)
-        if serializer.is_valid():
+        if serializer.is_valid() and request.user.techbin>= group.min_techbin:
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
