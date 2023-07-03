@@ -269,7 +269,7 @@ export function EditPost() {
             <div className="container">
                 <div className="layout__box">
                 <div className="layout__boxHeader d-flex justify-content-between ">
-                    <a href="/" >
+                    <a href={`/post/${post_id}`} >
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
                         <title>arrow-left</title>
                         <path

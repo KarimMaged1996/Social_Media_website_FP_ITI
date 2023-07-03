@@ -18,8 +18,8 @@ export function Mypost(props) {
 
     let {post} = props
     const [vote, setVote] = useState({"id":0,
-    "user": 1,
-    "post": 2,
+    "user": user_id,
+    "post": post.id,
     "value": 0,});
     const [score, setScore] = useState(post.score)
     const [techbin, setTechbin] = useState(post.author.techbin)
@@ -28,7 +28,7 @@ export function Mypost(props) {
 
     let didILikeitUrl = `http://127.0.0.1:8000/post/like/check/${post.id}/${user_id}`
 
-    let LikepostURL = `http://127.0.0.1:8000/post/like/create/`
+    let LikepostURL = `http://127.0.0.1:8000/post/like/create`
     let LikeUpdateURL = `http://127.0.0.1:8000/post/like/update/${vote.id}`
     let LikeDeleteURL = `http://127.0.0.1:8000/post/like/delete/${vote.id}`
 
@@ -154,6 +154,7 @@ export function Mypost(props) {
 
         // upvote 
         const upvote = () => {
+            console.log("trying to upvote")
 
             if (vote.value == 1)
             {
@@ -206,9 +207,7 @@ export function Mypost(props) {
                 })
             }
     
-    
             else if(vote.value == -1){
-    
     
                 // console.log("update the vote ")
                 axios
@@ -502,7 +501,7 @@ export function Mypost(props) {
                         <div class="avatar avatar--small">
                             <img src={post.author.avatar} alt="pp" />
                         </div>
-                        <NavLink className="nav-link" to={`/`}>
+                        <NavLink className="nav-link" to={`/profile/`}>
                             <span>@{post.author.username}</span>
                         </NavLink >
                         
