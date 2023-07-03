@@ -6,6 +6,8 @@ import { AuthContext } from "../context/AuthContext";
 import { PostApi } from "../API/PostAPI";
 import axios from "axios";
 
+import { useRef } from 'react';
+// import { useHistory } from 'react-router-dom';
 
 export function EditPost() {
 
@@ -39,6 +41,20 @@ export function EditPost() {
         content: "",
         image: ""
     })
+
+    
+    // const history = useHistory();
+
+    // function goback() {
+    //     history.goBack();
+    // }
+    // const location = useLocation();
+    // const previousLocation = useRef(null);
+
+    // useEffect(() => {
+    //     previousLocation.current = location;
+    // }, [location]);
+
 
     useEffect(() => {
             axios
@@ -234,7 +250,7 @@ export function EditPost() {
             <div className="container">
                 <div className="layout__box">
                 <div className="layout__boxHeader d-flex justify-content-between ">
-                    <a href="/" onClick={()=>{navigate(`/post/${post_id}`)}}>
+                    <a href="/" >
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
                         <title>arrow-left</title>
                         <path

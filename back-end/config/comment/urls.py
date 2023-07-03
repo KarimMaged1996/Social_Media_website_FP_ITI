@@ -1,5 +1,5 @@
 from django.urls import path 
-from .views import Comment_list,Comment_details,CommentLike_list, postcomments,usercomments, CommentCreate, CommentUpdate, CommentDelete
+from .views import Comment_list,Comment_details,CommentLike_list, postcomments,usercomments, CommentCreate, CommentUpdate, CommentDelete, CommentLikeCreate, CommentLikeUpdate, CommentLikeDelete
 
 
 urlpatterns=[
@@ -9,6 +9,11 @@ urlpatterns=[
     path('update/<int:pk>', CommentUpdate.as_view(), name='commentupdate'),
     path('delete/<int:pk>', CommentDelete.as_view(), name='commentdelete'),
     path('likes', CommentLike_list.as_view(), name='commentlikes'),
+
+    path('like/create', CommentLikeCreate.as_view(), name='commentlikecreate'),
+    path('like/update/<int:pk>', CommentLikeUpdate.as_view(), name='commentlikeupdate'),
+    path('like/delete/<int:pk>', CommentLikeDelete.as_view(), name='commentlikedelete'),
+
     path('post_comments/<int:pk>/', postcomments),
     path('user_comments/<int:pk>/', usercomments),
 ]

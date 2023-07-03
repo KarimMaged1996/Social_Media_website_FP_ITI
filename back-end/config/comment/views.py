@@ -35,14 +35,32 @@ class CommentDelete(generics.DestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer2
     permission_classes = [AllowAny]
-
     # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
+class CommentLikeCreate(generics.CreateAPIView):
+    queryset = Comment_Vote.objects.all()
+    serializer_class = CommentLikesSerializer
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
+
+class CommentLikeUpdate(generics.UpdateAPIView):
+    queryset = Comment_Vote.objects.all()
+    serializer_class = CommentLikesSerializer
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
+
+class CommentLikeDelete(generics.DestroyAPIView):
+    queryset = Comment_Vote.objects.all()
+    serializer_class = CommentLikesSerializer
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
 
 class CommentLike_list(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Comment_Vote.objects.all()
     serializer_class = CommentLikesSerializer
+
+
 
 
 # endpoint to list the post comments 
