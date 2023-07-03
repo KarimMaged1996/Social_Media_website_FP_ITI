@@ -1,7 +1,7 @@
 import React from 'react';
 import { Topics } from './Topics';
 import { Activity } from './Activity';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { GroupApi } from '../API/groupsAPI';
 import { useEffect, useState, useContext } from 'react';
@@ -10,12 +10,22 @@ import axios from 'axios';
 import { Mypost } from './Mypost';
 
 export default function Group() {
+  let token = localStorage.getItem('access_token');
+  let headers = { Authorization: `Bearer ${token}` };
   let param = useParams('id');
   const { user } = useContext(AuthContext);
   let [group, setGroup] = useState({});
   let [isMember, setIsMember] = useState(false);
   let [isOwner, setIsOwner] = useState(false);
   let [posts, setPosts] = useState([]);
+  let [joinErr, setJoinErr] = useState(false);
+  let buttonStyles = {
+    backgroundColor: '#6c757d',
+    padding: '5px',
+    borderRadius: '15px',
+    cursor: 'pointer',
+    marginTop: '5px',
+  };
 
   // function to get the group and the userjoinedgroups
   // and set the isMember and isOwner states
@@ -37,9 +47,8 @@ export default function Group() {
     }
   };
   function getPosts() {
-    let token = localStorage.getItem('access_token');
     let url = `http://127.0.0.1:8000/post/group_posts/${param.id}/`;
-    let headers = { Authorization: `Bearer ${token}` };
+
     console.log(token);
     axios
       .get(url, { headers })
@@ -54,6 +63,24 @@ export default function Group() {
     getGroupContent();
     getPosts();
   }, [isMember, isOwner]);
+
+  function leaveGroup() {
+    let url = `http://127.0.0.1:8000/groups/leave_group/${param.id}/`;
+    axios.delete(url, { headers });
+    setIsMember(false);
+  }
+  function joinGroup() {
+    let url = `http://127.0.0.1:8000/groups/join_group/${param.id}/`;
+    axios
+      .post(url, {}, { headers })
+      .then((response) => {
+        setIsMember(true);
+      })
+      .catch((errors) => {
+        // setJoinErr(true);
+        console.log(errors);
+      });
+  }
   return (
     <main className="profile-page layout layout--3 text-white ">
       <div className="container">
@@ -79,27 +106,23 @@ export default function Group() {
                   </NavLink>
                 )}
                 {isMember && !isOwner && (
-                  <div
-                    style={{
-                      backgroundColor: '#6c757d',
-                      padding: '5px',
-                      borderRadius: '15px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Leave
+                  <div>
+                    <div style={buttonStyles} onClick={leaveGroup}>
+                      Leave
+                    </div>
+                    <div style={buttonStyles}>Add Post</div>
                   </div>
                 )}
                 {!isMember && (
-                  <div
-                    style={{
-                      backgroundColor: '#6c757d',
-                      padding: '5px',
-                      borderRadius: '15px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Join
+                  <div>
+                    <div style={buttonStyles} onClick={joinGroup}>
+                      Join
+                    </div>
+                    {joinErr && (
+                      <div style={{ color: 'red' }}>
+                        Your techbin doesn't satisfy the group minimum techbin
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -109,11 +132,13 @@ export default function Group() {
               </div>
             </div>
           </div>
-          <div className="roomListRoom">
-            {posts.map((post) => {
-              return <Mypost post={post} />;
-            })}
-          </div>
+          {isMember && (
+            <div className="roomListRoom">
+              {posts.map((post) => {
+                return <Mypost post={post} />;
+              })}
+            </div>
+          )}
         </div>
         <Activity />
       </div>
