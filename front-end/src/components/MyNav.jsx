@@ -16,7 +16,7 @@ export function MyNav() {
   const { user, setTokens } = useContext(AuthContext);
   const { searchResults, setSearchResults } = useContext(SearchContext);
   let navigate = useNavigate();
-  console.log('user', user);
+  console.log('user1', user);
   function search(e) {
     let params = {
       s: e.target.value,
@@ -97,24 +97,32 @@ export function MyNav() {
               <NavLink to={`/profile/${user.id}`}>
                 <div className="avatar avatar--medium active">
                   <img
-        src={user.Avatar? `http://127.0.0.1:8000${user.Avatar}`
-        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-        }
-        alt="Avatar"/>
+                    src={
+                      user.avatar
+                        ? `http://127.0.0.1:8000${user.avatar}`
+                        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                    }
+                    alt="Avatar"
+                  />
                   <span className="nav-link__username">{user.username}</span>
                 </div>
                 {/* ... */}
               </NavLink>
-              <Dropdown className='mx-3'>
-              <Dropdown.Toggle variant="success"  id="dropdown-basic" className='fs-4'>{user.userName}
-              </Dropdown.Toggle>
-              <Dropdown.Menu style={{ minWidth: '160px' }}>
+              <Dropdown className="mx-3">
+                <Dropdown.Toggle
+                  variant="success"
+                  id="dropdown-basic"
+                  className="fs-4"
+                >
+                  {user.userName}
+                </Dropdown.Toggle>
+                <Dropdown.Menu style={{ minWidth: '160px' }}>
                   <NavLink to="/editprofile">
                     <p className="text-white">Edit Profile</p>
                   </NavLink>
-                <Dropdown.Item  onClick={logout}>Log out</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+                  <Dropdown.Item onClick={logout}>Log out</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Nav>
           ) : (
             <Nav className="header__menu text-white">
