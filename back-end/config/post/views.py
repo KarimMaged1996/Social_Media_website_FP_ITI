@@ -8,7 +8,7 @@ from .models import Post, Vote, User
 from rest_framework import  generics
 from django.http import Http404
 from rest_framework.decorators import api_view,permission_classes
-
+from groups.models import UserInGroup
 # ListCreateAPIView
 class Post_list(generics.ListAPIView):
     permission_classes = [AllowAny]
@@ -83,4 +83,16 @@ class ListGroupPosts(generics.ListCreateAPIView):
         group_id = self.kwargs['pk']
         return Post.objects.filter(group = group_id )
 
-
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def CurrentUserGroupsPosts(request):
+    if request.method == 'GET':
+        try:
+            user = request.user
+            user_member_groups = UserInGroup.objects.filter(user_id=user.id)
+            user_groups = [group.group_id for group in user_member_groups]
+            user_groups_posts = Post.objects.filter(group__in=user_groups).order_by('-created_at')
+            serializer = PostSerializer2(user_groups_posts, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            raise Http404("User not found")
