@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
         userName: decoded.username,
         avatar: decoded.avatar,
       };
+      console.log(userObj);
       setUser(userObj);
       setTokens(access);
     } else {
