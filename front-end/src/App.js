@@ -12,11 +12,16 @@ import { Topics } from './components/Topics';
 import { ProfileSettings } from './components/ProfileSettings';
 
 import { Activity } from './components/Activity';
-import { CreatePost } from './components/CreatePost';
+
+
 import { Post } from './components/Post';
-import { Mypost } from './components/Mypost';
+import { PostPage } from './components/PostPage';
+import { AllPosts } from './components/AllPosts';
 import { AddPost } from './components/AddPost';
 import { EditPost } from './components/EditPost';
+import { AddComment } from './components/AddComment';
+import { EditComment } from './components/EditComment';
+
 import { Profile } from './components/Profile';
 import privateRoute from './utils/privateRoute';
 import PrivateRoute from './utils/privateRoute';
@@ -38,7 +43,6 @@ function App() {
             <Route path="" element={<PrivateRoute component={Home} />} />
             <Route path="home" element={<Home />} />
             <Route path="post" element={<Post />} />
-            <Route path="mypost" element={<Mypost />} />
             <Route path="signup" element={<SignupPage />} />
 
             <Route path="Login" element={<LoginPage />} />
@@ -49,9 +53,13 @@ function App() {
 
             <Route path="activity" element={<Activity />} />
 
+            <Route path="allposts" element={<AllPosts />} />
             <Route path="addpost" element={<AddPost />} />
-            <Route path="editpost/:id" element={<EditPost />} />
-            <Route path="post" element={<Post />} />
+            <Route path="post/edit/:id" element={<EditPost />} />
+            <Route path="post/:post_id" element={<PostPage />} />
+      
+            <Route path="comment/edit/:id" element={<EditComment />} />
+
             <Route
               path="profile/:id"
               element={<PrivateRoute component={Profile} />}
