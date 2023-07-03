@@ -81,7 +81,11 @@ export  function Profile() {
   <div className="roomListRoom__header">
     <a href="profile.html" className="roomListRoom__author text-decoration-none">
       <div className="avatar avatar--small active">
-        <img src="https://randomuser.me/api/portraits/men/11.jpg" />
+      <img
+        src={userInfo.avatar? `http://127.0.0.1:8000${userInfo.avatar}`
+        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+        }
+        alt="Avatar"/>
       </div>
       <span>@{userInfo.username}</span>
     </a>
