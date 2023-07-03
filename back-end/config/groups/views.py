@@ -64,6 +64,8 @@ def joinGroup(request,pk):
         if serializer.is_valid() and request.user.techbin>= group.min_techbin:
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        elif request.user.techbin < group.min_techbin:
+            return Response('techbin error', status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
     
 @api_view(['DELETE'])
