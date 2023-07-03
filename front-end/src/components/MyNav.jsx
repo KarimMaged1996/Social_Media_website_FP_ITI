@@ -16,7 +16,7 @@ export function MyNav() {
   const { user, setTokens } = useContext(AuthContext);
   const { searchResults, setSearchResults } = useContext(SearchContext);
   let navigate = useNavigate();
-  console.log(user);
+  console.log('user', user);
   function search(e) {
     let params = {
       s: e.target.value,
