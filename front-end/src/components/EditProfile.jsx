@@ -4,12 +4,13 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "../css/editProfile.css";
 import { AuthContext } from "../context/AuthContext";
 import { UserApi } from "../API/userAPI";
+import { PostApi } from "../API/PostAPI";
 
 export default function EditProfile() {
   const { user, setUser } = useContext(AuthContext);
   const [formValues, setFormValues] = useState({});
   const [submitValues, setSubmitValues] = useState({})
-
+  console.log(user)
 
   // ****** Call my profile api to get use data
   const getUserProfileData = async () => {
@@ -17,6 +18,7 @@ export default function EditProfile() {
     setFormValues({ ...res.data });
   };
 
+  
   useEffect(() => {
     getUserProfileData();
   }, []);
@@ -61,7 +63,7 @@ export default function EditProfile() {
           <div className="layout__box">
             <div className="layout__boxHeader">
               <div className="layout__boxTitle">
-                <NavLink to="/profile">
+                <NavLink to={`/home`}>
                   <svg
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"

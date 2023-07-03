@@ -11,7 +11,7 @@ import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { SearchContext } from '../context/SearchContext';
-
+import Dropdown from 'react-bootstrap/Dropdown';
 export function MyNav() {
   const { user, setTokens } = useContext(AuthContext);
   const { searchResults, setSearchResults } = useContext(SearchContext);
@@ -108,9 +108,16 @@ export function MyNav() {
                 </div>
                 {/* ... */}
               </NavLink>
-              <Nav.Link className=" text-white" onClick={logout}>
-                Log Out
-              </Nav.Link>
+              <Dropdown className='mx-3'>
+              <Dropdown.Toggle variant="success"  id="dropdown-basic" className='fs-4'>{user.userName}
+              </Dropdown.Toggle>
+              <Dropdown.Menu style={{ minWidth: '160px' }}>
+                  <NavLink to="/editprofile">
+                    <p className="text-white">Edit Profile</p>
+                  </NavLink>
+                <Dropdown.Item  onClick={logout}>Log out</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             </Nav>
           ) : (
             <Nav className="header__menu text-white">
