@@ -1,44 +1,66 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import CommentSerializer, CommentLikesSerializer
-from rest_framework.permissions import SAFE_METHODS, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions, AllowAny, IsAuthenticated
+from .serializers import CommentSerializer, CommentLikesSerializer, CommentSerializer2
+from rest_framework.permissions import SAFE_METHODS, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions, AllowAny, IsAuthenticated 
 from post.permissions import IsAuthorOrReadOnly
 from .models import Comment, Comment_Vote, Post, User
 from rest_framework import  generics
 from django.http import Http404
 from rest_framework.decorators import api_view,permission_classes
 
-class Comment_list(generics.ListCreateAPIView):
+class Comment_list(generics.ListAPIView):
     permission_classes = [IsAuthorOrReadOnly]
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.all().order_by('-created_at')
     serializer_class = CommentSerializer
 
-class Comment_details(generics.RetrieveUpdateDestroyAPIView):
+class Comment_details(generics.RetrieveAPIView):
     permission_classes = [IsAuthorOrReadOnly]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
 class CommentCreate(generics.CreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer2
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
 
 class CommentUpdate(generics.UpdateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer2
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
 class CommentDelete(generics.DestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer2
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
+class CommentLikeCreate(generics.CreateAPIView):
+    queryset = Comment_Vote.objects.all()
+    serializer_class = CommentLikesSerializer
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
+
+class CommentLikeUpdate(generics.UpdateAPIView):
+    queryset = Comment_Vote.objects.all()
+    serializer_class = CommentLikesSerializer
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
+
+class CommentLikeDelete(generics.DestroyAPIView):
+    queryset = Comment_Vote.objects.all()
+    serializer_class = CommentLikesSerializer
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
 
 class CommentLike_list(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Comment_Vote.objects.all()
     serializer_class = CommentLikesSerializer
+
+
 
 
 # endpoint to list the post comments 
@@ -48,7 +70,7 @@ def postcomments(request,pk):
     if request.method == 'GET':
         try:
             post = Post.objects.get(id = pk)
-            postcomments = post.post_comments.all()
+            postcomments = post.post_comments.all().order_by('-created_at')
             print(request.data)
             serializer = CommentSerializer (postcomments, many = True)
         except Post.DoesNotExist:
@@ -56,7 +78,7 @@ def postcomments(request,pk):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-# endpoint to list the post comments 
+# endpoint to list the user comments 
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def usercomments(request,pk):

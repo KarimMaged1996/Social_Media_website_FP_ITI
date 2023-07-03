@@ -6,28 +6,34 @@ import { AuthContext } from "../context/AuthContext";
 import { PostApi } from "../API/PostAPI";
 import axios from "axios";
 
+import { useRef } from 'react';
+// import { useHistory } from 'react-router-dom';
 
 export function EditPost() {
 
     let { id } = useParams();
-    id= 2
     let post_id = id
     const [images, setImages] = useState([
         "1"
     ])
+    const navigate = useNavigate()
+
+    const [imagesfile, setImagesfile] = useState([])
+
     const admin_id = 1
     const [formValues, setFormValues] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const [submitValues, setSubmitValues] = useState({
-        title:"",
-        content: "",
-        author: admin_id,
-        video: null,
-        image1: null,
-        image2: null,
-        image3: null,
-        image4: null,
-    })
+    // const [submitValues, setSubmitValues] = useState({
+    //     title:"",
+    //     content: "",
+    //     author: admin_id,
+    //     video: null,
+    //     image1: null,
+    //     image2: null,
+    //     image3: null,
+    //     image4: null,
+    // })
+    const [submitValues, setSubmitValues] = useState({})
     const [checkbox1, setCheckbox1] = useState(false);
     const [checkbox2, setCheckbox2] = useState(false);
     const [error, setError] = useState({
@@ -35,6 +41,20 @@ export function EditPost() {
         content: "",
         image: ""
     })
+
+    
+    // const history = useHistory();
+
+    // function goback() {
+    //     history.goBack();
+    // }
+    // const location = useLocation();
+    // const previousLocation = useRef(null);
+
+    // useEffect(() => {
+    //     previousLocation.current = location;
+    // }, [location]);
+
 
     useEffect(() => {
             axios
@@ -47,14 +67,29 @@ export function EditPost() {
                 }
             })
             .then(res => {
-                console.log(res.data)
                 setFormValues(res.data);
-                if (formValues.image1){
-                    setCheckbox1(true)
+                // console.log(formValues)
+                if (res.data.image1) {
+                    setCheckbox1(true);
+                    setImagesfile([
+                        {"image": res.data.image1},
+                        {"image": res.data.image2},
+                        {"image": res.data.image3},
+                        {"image": res.data.image4},
+                    ])
+
+                } else if (res.data.video) {
+                    setCheckbox2(true);
+                    setImagesfile([
+                        {"video": res.data.video},
+                    ])
                 }
-                else if (formValues.video){
-                    setCheckbox2(true)
+                else {
+                    setImagesfile([
+                        {"image": null},
+                    ])
                 }
+
                 setIsLoading(false);
             })
             .catch(err => {
@@ -62,7 +97,14 @@ export function EditPost() {
             });
         // };
     }, []);
+    console.log(imagesfile)
+    // console.log(formValues)
     
+
+
+    if (isLoading) {
+        return <div className="d-flex jsutify-content-center m-5 align-items-center"><h1>Loading.....</h1></div>;
+    }
 
     // ****** Handle form input changes
     const inputHandler = (e) => {
@@ -75,15 +117,16 @@ export function EditPost() {
     } else {
         
         setSubmitValues({
-            ...submitValues,
+        ...submitValues,
+        [e.target.name]: e.target.value,
+        });
+
+        setFormValues({
+            ...formValues,
             [e.target.name]: e.target.value,
         });
-        setFormValues({
-        ...formValues,
-        [   e.target.name]: e.target.value,
-        });
     }
-    console.log(submitValues)
+    console.log(formValues)
     console.log(formValues)
     };
 
@@ -142,48 +185,72 @@ export function EditPost() {
 
     // REMOVING AN IMAGE
     const removeimage = (e) => {
+        let name = e.target.name
+        const imagenumber = parseInt(name.slice(-1), 10);
         setError({
             image : ""
         })
 
         let copy = images
         copy.pop()
-        console.log(copy);
         setImages([...copy])
 
-
+        setFormValues({
+            ...formValues,
+            [e.target.name]:null,
+        });
+        setSubmitValues({
+            ...submitValues,
+            [e.target.name]:"",
+        });
+        
+        setImagesfile(imagesfile.map((obj, index) => {
+            if (index === (imagenumber-1)) {
+                return { image: null };
+            }
+            return obj;
+        }));
     }
+
+    console.log(formValues)
+    console.log(imagesfile)
+    console.log(submitValues)
 
   // ***** On submit form
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-        // axios
-        //     .post(`http://127.0.0.1:8000/post/create`, submitValues,{
-        //         headers: {
-        //             // 'Authorization': `Bearer ${token}`,
-        //             'Content-Type': 'multipart/form-data'
-        //         }
-        //     })
-        //     .then((response) => {
-        //         console.log("done!");
-        //     });
+        axios
+            .patch(`http://127.0.0.1:8000/post/update/${post_id}`, submitValues,{
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+                console.log(response)
+                console.log("done!");
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
         
-        let res = await PostApi.editpost(post_id,submitValues)
-        // window.location.reload()
+        // let res = await PostApi.editpost(post_id,formValues)
+        navigate (`/post/${post_id}`)
     };
 
-    // if (isLoading) {
-    //     return <div className="d-flex jsutify-content-center m-5 align-items-center"><h1>Loading...</h1></div>;
-    // }
+    if (isLoading) {
+        return <div className="d-flex jsutify-content-center m-5 align-items-center"><h1>Loading...</h1></div>;
+    }
     
 
     return (
-        <div >
+        <div  style={{ width:"75vw"}} >
             <main className="create-room layout edit-profile-container">
             <div className="container">
                 <div className="layout__box">
                 <div className="layout__boxHeader d-flex justify-content-between ">
-                    <a href="#">
+                    <a href="/" >
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
                         <title>arrow-left</title>
                         <path
@@ -192,7 +259,7 @@ export function EditPost() {
                     </svg>
                     </a>
                     <div className="layout__boxTitle">
-                        <h3>Add Post </h3>
+                        <h3>Edit Post </h3>
                     </div>
                 </div>
     
@@ -264,10 +331,20 @@ export function EditPost() {
 
                     { checkbox1 ?  
                     <div className="d-flex justify-content-between">
+
                         <div className="form__group d-flex flex-column ">
                             <label htmlFor="avatar">Upload Images </label>
+
+
+                            {/* for each existing image  */}
                             {images.map((image) => (
                                 <div key={`${admin_id}${image}`} className="d-flex align-items-center">
+
+                                    {/* image */}
+                                    {imagesfile[parseInt(image)-1].image? <div class="avatar avatar--small">
+                                        <img src={`${imagesfile[parseInt(image)-1].image}`} alt="pp" />
+                                    </div> :null}
+                                    {/* input field  */}
                                     <div className="m-2">{`Image ${image}: `}</div>
                                     <input
                                     className="w-75 m-2"
@@ -278,12 +355,15 @@ export function EditPost() {
                                     accept="image/png, image/gif, image/jpeg"
                                     onChange={inputHandler}
                                     />
-                                    { image == images.length && image != 1 ? <div className="p-1" onClick={removeimage}>
-                                        <input className="btn bg-danger fs-3  " type="button" name={`image${image}`} value="x" />
+                                    {/* delete button */}
+                                    { image == images.length && image != 1 ? <div className="p-1" >
+                                        <input className="btn bg-danger fs-3  " type="button" name={`image${image}`} value="x" onClick={removeimage} />
                                     </div> : null}
                                 </div>
                             ))}
+
                         </div>
+
                         <div className="d-flex align-items-center m-2">
                             <i
                                 className="btn btn--main fs-2 bi bi-plus-square-fill m-1"
