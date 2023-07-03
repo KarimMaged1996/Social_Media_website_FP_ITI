@@ -7,6 +7,7 @@ from django.dispatch import receiver
 from django .conf import settings
 from rest_framework.authtoken.models import Token
 from django.db.models import Sum
+from groups.models import Group
 
 class Post(models.Model):
     title = models.CharField(max_length=255,null=True,blank=True) # The title of the post
@@ -20,7 +21,8 @@ class Post(models.Model):
     image4 = models.ImageField(upload_to='post_images/', null=True, blank=True) # An optional image for the post
     video = models.FileField(upload_to='post_videos/', null=True, blank=True) # An optional video for the post
     score = models.IntegerField(default=0) # score which upvotes - downvotes 
-    
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='posts', null=True)
+
     def update_score(self):
         # gett the votes related to the post 
         self.score = Vote.objects.filter(post=self) # => this will result on a queryset of all the votes 
