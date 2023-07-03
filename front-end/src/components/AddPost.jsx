@@ -13,7 +13,8 @@ export function AddPost() {
     ])
 
     const{user}= useContext(AuthContext);
-    const admin_id = user.id
+    // const admin_id = user.id
+    const admin_id = 1
 
     const [formValues, setFormValues] = useState({
         title:"",
@@ -31,6 +32,7 @@ export function AddPost() {
         image2: null,
         image3: null,
         image4: null,
+        group: 1,
     })
     const [checkbox1, setCheckbox1] = useState(true);
     const [checkbox2, setCheckbox2] = useState(false);
@@ -76,6 +78,13 @@ export function AddPost() {
             setImages([
                 "1"
             ])
+            setFormValues({
+                ...formValues,
+                image1:"",
+                image2:"",
+                image3:"",
+                image4:"",
+                });
             setCheckbox1(event.target.checked);
         }
     };

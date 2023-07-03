@@ -12,7 +12,7 @@ import { useRef } from 'react';
 export function EditPost() {
 
     const{user}= useContext(AuthContext);
-    console.log(user)
+    // console.log(user)
 
     let { id } = useParams();
     let post_id = id
@@ -100,14 +100,12 @@ export function EditPost() {
             });
         // };
     }, []);
-    console.log(imagesfile)
+    // console.log(imagesfile)
     // console.log(formValues)
     
 
 
-    if (isLoading) {
-        return <div className="d-flex jsutify-content-center m-5 align-items-center"><h1>Loading.....</h1></div>;
-    }
+
 
     // ****** Handle form input changes
     const inputHandler = (e) => {
@@ -147,6 +145,21 @@ export function EditPost() {
             setImages([
                 "1"
             ])
+            // setFormValues({
+            //     ...formValues,
+            //     image1:"",
+            //     image2:"",
+            //     image3:"",
+            //     image4:"",
+            //     });
+            setSubmitValues({
+                ...submitValues,
+                image1:"",
+                image2:"",
+                image3:"",
+                image4:"",
+            })
+
             setCheckbox1(event.target.checked);
         }
     };
@@ -170,7 +183,9 @@ export function EditPost() {
     const addimage = () => 
     {
         let length = images.length;
+
         let next = (length + 1).toString()
+        console.log(next)
         if (images.length+1 <= 4)
         {
             setImages([
@@ -186,6 +201,7 @@ export function EditPost() {
         }
     }
 
+    console.log(images)
     // REMOVING AN IMAGE
     const removeimage = (e) => {
         let name = e.target.name
@@ -215,9 +231,9 @@ export function EditPost() {
         }));
     }
 
-    console.log(formValues)
-    console.log(imagesfile)
-    console.log(submitValues)
+    // console.log(formValues)
+    // console.log(imagesfile)
+    // console.log(submitValues)
 
   // ***** On submit form
     const onSubmitHandler = async (e) => {
@@ -341,12 +357,12 @@ export function EditPost() {
 
                             {/* for each existing image  */}
                             {images.map((image) => (
-                                <div key={`${image}`} className="d-flex align-items-center">
+                                <div key={`${admin_id}${image}`} className="d-flex align-items-center">
 
                                     {/* image */}
-                                    {imagesfile[parseInt(image)-1].image? <div class="avatar avatar--small">
+                                    {/* {imagesfile[parseInt(image)-1].image? <div class="avatar avatar--small">
                                         <img src={`${imagesfile[parseInt(image)-1].image}`} alt="pp" />
-                                    </div> :null}
+                                    </div> :null} */}
                                     {/* input field  */}
                                     <div className="m-2">{`Image ${image}: `}</div>
                                     <input
