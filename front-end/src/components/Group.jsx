@@ -77,7 +77,7 @@ export default function Group() {
         setIsMember(true);
       })
       .catch((errors) => {
-        // setJoinErr(true);
+        setJoinErr(true);
         console.log(errors);
       });
   }
