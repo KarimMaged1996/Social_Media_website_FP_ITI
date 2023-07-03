@@ -9,7 +9,7 @@ export function Topics() {
     try {
       const res = await GroupApi.getUserGroups();
       setUserGroups(res.data);
-      console.log('wwwwwww', userGroups);
+      console.log('wwwwww', userGroups);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
@@ -30,13 +30,13 @@ export function Topics() {
             All <span>553</span>
           </a>
         </li>
-        {/* {userGroups.map((element) => (
+        {userGroups.map((element) => (
           <li key={element.group_id.id}>
             <a href="/">
               {element.group_id.name} <span>232</span>
             </a>
           </li>
-        ))} */}
+        ))}
       </ul>
       <a class="btn btn--link" href="topics.html">
         More
