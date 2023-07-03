@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { BASE_URL } from '../Constants';
 
 let email, password;
 export function LoginPage() {
@@ -18,7 +19,7 @@ export function LoginPage() {
   function login(e) {
     e.preventDefault();
     axios
-      .post('http://127.0.0.1:8000/api/token/', {
+      .post(`${BASE_URL}/api/token/`, {
         email: email,
         password: password,
       })
@@ -97,6 +98,7 @@ export function LoginPage() {
                 Sign Up
               </NavLink>
             </div>
+            <NavLink to='/forgetpassword'><p>forgot your password !</p></NavLink>
           </div>
         </div>
       </div>

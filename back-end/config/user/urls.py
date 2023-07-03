@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from rest_framework_simplejwt import views as jwt_views
 from . import views as user_views
 
@@ -13,7 +13,7 @@ urlpatterns = [
     path('resetpassword/(?P<uid>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', user_views.resetPassword, name='resetpassword'),
     path('resetpasswordlink/', user_views.getResetPasswordLink, name='resetpasswordlink'),
     path('myProfile/', user_views.myProfile, name='myProfile'),
-    path('profile/<str:username>/', user_views.UserProfileAPIView, name='userprofile'),
+    path('profile/<int:user_id>/', user_views.UserProfileAPIView, name='userprofile'),
     path('search/', user_views.search, name='search'),
     
 ]

@@ -24,6 +24,8 @@ import EditProfile from './components/EditProfile';
 import { AuthProvider } from './context/AuthContext';
 import Search from './components/Search';
 import { SearchProvider } from './context/SearchContext';
+import { ResetPassword } from './components/ResetPassword';
+import { NewPassword } from './components/NewPassword';
 import Group from './components/Group';
 
 function App() {
@@ -51,12 +53,21 @@ function App() {
             <Route path="editpost/:id" element={<EditPost />} />
             <Route path="post" element={<Post />} />
             <Route
-              path="profile"
+              path="profile/:id"
               element={<PrivateRoute component={Profile} />}
             />
             <Route
               path="editprofile"
               element={<PrivateRoute component={EditProfile} />}
+            />
+
+            <Route
+              path="forgetpassword"
+              element={<ResetPassword></ResetPassword>}
+            />
+            <Route
+              path="api/resetpassword/:uid/:token"
+              element={<NewPassword></NewPassword>}
             />
 
             <Route path="search" element={<Search />} />

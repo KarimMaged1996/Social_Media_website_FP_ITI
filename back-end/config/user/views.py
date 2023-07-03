@@ -72,17 +72,8 @@ class Register(APIView):
         user = serializer.save()
         data = serializer.data
         
-        current_site = get_current_site(request)  
-        mail_subject = 'account activation'  
-        message = render_to_string('acc_active_email.html', {  
-            'user': user,  
-            'domain': current_site.domain,  
-            'uid':urlsafe_base64_encode(bytes(str(user.pk),'utf-8')),  
-            'token':account_activation_token.make_token(user),  
-        })  
-        to_email = [user.email]
-        email = EmailMessage(mail_subject, message, to=to_email)
-        # email.send()
+        # current_site = get_current_site(request)  
+        sendEmail(user)
     
         return Response(data, status=status.HTTP_201_CREATED)
 
@@ -141,13 +132,13 @@ def getResetPasswordLink(request):
         mail_subject = 'Password Reset'  
         message = render_to_string('password_reset.html', {  
             'user': user,
-            'domain': current_site.domain,  
+            'domain': '127.0.0.1:3000',  
             'uid':urlsafe_base64_encode(bytes(str(user.pk),'utf-8')),  
             'token': token  
         })  
         to_email = [user.email]
         email = EmailMessage(mail_subject, message, to=to_email)
-
+        print(token)
         email.send()
         print(user.pk)
         uid = urlsafe_base64_encode(bytes(str(7),'utf-8'))
@@ -161,6 +152,7 @@ def getResetPasswordLink(request):
 
 @api_view(['POST', 'GET'])
 def resetPassword(request, uid, token):
+    print('here')
     
     try:
         id = urlsafe_base64_decode(uid).decode('utf-8')
@@ -168,7 +160,6 @@ def resetPassword(request, uid, token):
         user = User.objects.get(pk=id)   
         passowrd = request.data.get('password', None)
         confrim_password = request.data.get('confirm_password', None)
-    
         if not password_reset_token.check_token(user, token):
             return Response({'msg': 'invalid link'}, status.HTTP_400_BAD_REQUEST)
         if not passowrd or not confrim_password:
@@ -221,9 +212,9 @@ def myProfile(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def UserProfileAPIView(request, username):
+def UserProfileAPIView(request, user_id):
     try:
-        user = User.objects.get(username=username)
+        user = User.objects.get(id=user_id)
         serializer = UserSerializer(user)
         return Response(serializer.data)
     except User.DoesNotExist:
@@ -263,3 +254,26 @@ def search(request):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+
+
+        currUser = User.objects.filter(email=request.data.get('email', None)).first()
+        print(currUser.is_active)
+        if currUser and not currUser.is_active:
+            sendEmail(currUser)
+
+        response = super().post(request, *args, **kwargs)
+        return response
+
+def sendEmail(user):
+    mail_subject = 'account activation'  
+    message = render_to_string('acc_active_email.html', {  
+        'user': user,  
+        'domain': '127.0.0.1:3000',  
+        'uid':urlsafe_base64_encode(bytes(str(user.pk),'utf-8')),  
+        'token':account_activation_token.make_token(user),  
+    })  
+    to_email = [user.email]
+    email = EmailMessage(mail_subject, message, to=to_email)
+    email.send()
