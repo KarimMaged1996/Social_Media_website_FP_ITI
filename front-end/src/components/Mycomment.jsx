@@ -12,6 +12,9 @@ export function Mycomment(props) {
 
     let {comment} = props
     let DeleteAPIUrl = `http://127.0.0.1:8000/comment/delete/${comment.id}`
+    let LikeCommentURL = `http://127.0.0.1:8000/like/comment/create`
+    let LikeUpdateURL = `http://127.0.0.1:8000/like/comment/update/`
+    let LikeDeleteURL = `http://127.0.0.1:8000/like/comment/delete`
     let navigate = useNavigate()
         
 
@@ -55,6 +58,10 @@ export function Mycomment(props) {
             console.log(err);
         });
     }
+
+    const upvote = ( => {
+        axios.post 
+    })
 
     return (
     <div className='roomList container' style={{ width:"75vw"}}>
@@ -125,7 +132,7 @@ export function Mycomment(props) {
                 
                 {/* up vote and down vote  */}
                 <div className="d-flex justify-content-around">
-                    <div>upvote</div>
+                    <div onClick={upvote} >upvote</div>
                     <div>downvote</div>
                 </div>
 

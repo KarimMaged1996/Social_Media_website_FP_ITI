@@ -33,7 +33,6 @@ class PostUpdate(generics.UpdateAPIView):
     # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     permission_classes = [AllowAny]
 
-
 class PostDelete(generics.DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -44,6 +43,23 @@ class Like_list(generics.ListAPIView):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
 
+class PostLikeCreate(generics.CreateAPIView):
+    queryset = Vote.objects.all()
+    serializer_class = VoteSerializer
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
+
+class PostLikeUpdate(generics.UpdateAPIView):
+    queryset = Vote.objects.all()
+    serializer_class = VoteSerializer
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
+
+class PostLikeDelete(generics.DestroyAPIView):
+    queryset = Vote.objects.all()
+    serializer_class = VoteSerializer
+    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
 
 # endpoint to list all tha author posts
 @api_view(['GET'])
