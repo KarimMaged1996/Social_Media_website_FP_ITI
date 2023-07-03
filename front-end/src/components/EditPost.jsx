@@ -11,6 +11,9 @@ import { useRef } from 'react';
 
 export function EditPost() {
 
+    const{user}= useContext(AuthContext);
+    console.log(user)
+
     let { id } = useParams();
     let post_id = id
     const [images, setImages] = useState([
@@ -63,7 +66,7 @@ export function EditPost() {
                 headers: 
                 {
                     'Content-Type': 'application/json',
-                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 }
             })
             .then(res => {
@@ -222,7 +225,7 @@ export function EditPost() {
         axios
             .patch(`http://127.0.0.1:8000/post/update/${post_id}`, submitValues,{
                 headers: {
-                    // 'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                     'Content-Type': 'multipart/form-data'
                 }
             })
@@ -338,7 +341,7 @@ export function EditPost() {
 
                             {/* for each existing image  */}
                             {images.map((image) => (
-                                <div key={`${admin_id}${image}`} className="d-flex align-items-center">
+                                <div key={`${image}`} className="d-flex align-items-center">
 
                                     {/* image */}
                                     {imagesfile[parseInt(image)-1].image? <div class="avatar avatar--small">

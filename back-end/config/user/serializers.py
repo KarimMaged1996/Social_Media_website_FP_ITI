@@ -81,3 +81,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             token['avatar'] = user.avatar.url
 
         return token
+
+
+
+
+class UserSerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"

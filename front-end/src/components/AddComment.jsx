@@ -7,8 +7,12 @@ import axios from "axios";
 
 
 export function AddComment(props) {
+
+    const{user}= useContext(AuthContext);
+    console.log(user)
     
-    const admin_id = 1
+    const admin_id = user.id
+    
     let {post_id} = props
 
     const [formValues, setFormValues] = useState({
@@ -53,7 +57,7 @@ export function AddComment(props) {
             .then((response) => {
                 console.log(response)
                 console.log("done!");
-                // window.location.reload();
+                window.location.reload();
             })
             .catch((err) => {
                 console.log("error");

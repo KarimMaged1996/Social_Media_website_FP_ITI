@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "../css/editProfile.css";
-import { AuthContext } from "../context/AuthContext";
 import { PostApi } from "../API/PostAPI";
 import axios from "axios";
-
-
+import { AuthContext } from "../context/AuthContext";
 export function AddPost() {
+
+    // const {group} = props
+    const navigate =useNavigate()
     const [images, setImages] = useState([
         "1"
     ])
-    const admin_id = 1
+
+    const{user}= useContext(AuthContext);
+    const admin_id = user.id
 
     const [formValues, setFormValues] = useState({
         title:"",
@@ -141,7 +144,7 @@ export function AddPost() {
         //     });
         
         let res = await PostApi.createpost(submitValues)
-        window.location.reload()
+        navigate("/")
     };
 
 
@@ -282,6 +285,6 @@ export function AddPost() {
                 </div>
             </div>
             </main>
-      </div>
+    </div>
     )
 }

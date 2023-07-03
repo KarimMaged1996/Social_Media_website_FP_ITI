@@ -10,13 +10,76 @@ import { useNavigate } from "react-router-dom";
 
 export function Mycomment(props) {
 
+    let user_id = 1
+    
     let {comment} = props
+    const [vote, setVote] = useState({"id":0,
+                                    "user": 1,
+                                    "comment": 2,
+                                    "value": 0,});
+                                    
+    const [isLoading1, setIsLoading1] = useState(true);
+    const [score, setScore] = useState(comment.score)
+    const [techbin, setTechbin] = useState(comment.author.techbin)
     let DeleteAPIUrl = `http://127.0.0.1:8000/comment/delete/${comment.id}`
-    let LikeCommentURL = `http://127.0.0.1:8000/like/comment/create`
-    let LikeUpdateURL = `http://127.0.0.1:8000/like/comment/update/`
-    let LikeDeleteURL = `http://127.0.0.1:8000/like/comment/delete`
+    let didILikeitUrl = `http://127.0.0.1:8000/comment/like/check/${comment.id}/${user_id}`
+
+    let LikeCommentURL = `http://127.0.0.1:8000/comment/like/create/`
+    let LikeUpdateURL = `http://127.0.0.1:8000/comment/like/update/${vote.id}`
+    let LikeDeleteURL = `http://127.0.0.1:8000/comment/like/delete/${vote.id}`
+
+    let updatecommentUrl = `http://127.0.0.1:8000/comment/${comment.id}`
+
+
+
+    
+
+
     let navigate = useNavigate()
         
+    useEffect(() => {
+        // if(localStorage.getItem('access_token') === null){                   
+        //     window.locatiLikeDeleteURLon.href = '/login'
+        // }
+        // else{
+
+
+            // get the comment_vote 
+            axios
+            .get(didILikeitUrl,
+            {
+                headers: 
+                {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                }
+            })
+            .then(res => {
+                if (res.status === 200) {
+                    console.log(res.data);
+                    setVote(res.data);
+                    setIsLoading1(false);
+                } 
+                else {
+                    console.log('Error: Response status is not 200');
+                    setIsLoading1(false);
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                console.log(err);
+            });
+
+
+    // };
+}, []);
+
+if (isLoading1) {
+    return <div className="d-flex jsutify-content-center m-5 align-items-center"><h1></h1></div>;
+}
+
+console.log(vote)
+
 
     const sinceWhen = (created_at) => {
         const date = new Date(created_at);
@@ -59,9 +122,337 @@ export function Mycomment(props) {
         });
     }
 
-    const upvote = ( => {
-        axios.post 
-    })
+
+    // upvote 
+    const upvote = () => {
+
+        if (vote.value == 1)
+        {
+            // remove the vote d
+            axios
+            .delete(LikeDeleteURL,
+            {
+                headers: 
+                {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                }
+            })
+            .then(res => {
+                setVote({})
+                console.log(res)
+            })
+            .catch(err => {
+            console.log(err);
+            });
+
+            // decrease the score 
+            axios
+            .patch(`http://127.0.0.1:8000/comment/update/${comment.id}`, {"score": score-1},{
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+                setScore(score-1)
+                setTechbin(techbin-1)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+            // decrease the techbin of the user
+            axios
+            .patch(`http://127.0.0.1:8000/api/update/${comment.author.id}`, {"techbin": techbin-1},{
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+
+
+        else if(vote.value == -1){
+
+
+            // console.log("update the vote ")
+            axios
+            .patch(LikeUpdateURL,{"value": 1},
+            {
+                headers: 
+                {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                }
+            })
+            .then(res => {
+                setVote({
+                    ...vote,
+                    "value" : 1
+                })
+                setScore(score+2)
+                setTechbin(techbin+2)
+                console.log(res)
+            })
+            .catch(err => {
+            console.log(err);
+            });
+
+            // decrease the score 
+            axios
+            .patch(`http://127.0.0.1:8000/comment/update/${comment.id}`, {"score": score+2},{
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+            
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+            // decrease the techbin of the user
+            axios
+            .patch(`http://127.0.0.1:8000/api/update/${comment.author.id}`, {"techbin": techbin+2},{
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+
+
+        }
+    else{
+        console.log("create the vote ")
+        axios
+        .post(LikeCommentURL,{"user": user_id,"comment": comment.id, "value": 1,},
+        {
+            headers: 
+            {
+                'Content-Type': 'application/json',
+                // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            }
+        })
+        .then(res => {
+            setVote({"user": user_id,"comment": comment.id, "value": 1,})
+            setScore(score+1)
+            setTechbin(techbin+1)
+            console.log(res)
+        })
+        .catch(err => {
+        console.log(err);
+        });
+
+        axios
+        .patch(`http://127.0.0.1:8000/comment/update/${comment.id}`, {"score": score+1},{
+            headers: {
+                // 'Authorization': `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response) => {
+        
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
+        // decrease the techbin of the user
+        axios
+        .patch(`http://127.0.0.1:8000/api/update/${comment.author.id}`, {"techbin": techbin+1},{
+            headers: {
+                // 'Authorization': `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response) => {
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
+    }
+
+    }
+
+    // downvote 
+    const downvote = () => {
+
+        
+        if (vote.value == -1)
+        {
+            // remove the vote d
+            axios
+            .delete(LikeDeleteURL,
+            {
+                headers: 
+                {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                }
+            })
+            .then(res => {
+                setVote({})
+                console.log(res)
+            })
+            .catch(err => {
+            console.log(err);
+            });
+
+            // decrease the score 
+            axios
+            .patch(`http://127.0.0.1:8000/comment/update/${comment.id}`, {"score": score+1},{
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+                setScore(score+1)
+                setTechbin(techbin+1)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+            // decrease the techbin of the user
+            axios
+            .patch(`http://127.0.0.1:8000/api/update/${comment.author.id}`, {"techbin": techbin+1},{
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+
+
+        else if(vote.value == 1){
+            // console.log("update the vote ")
+            axios
+            .patch(LikeUpdateURL,{"value": -1},
+            {
+                headers: 
+                {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                }
+            })
+            .then(res => {
+                setVote({
+                    ...vote,
+                    "value" : -1
+                })
+                setScore(score-2)
+                setTechbin(techbin-2)
+                console.log(res)
+            })
+            .catch(err => {
+            console.log(err);
+            });
+
+            // decrease the score 
+            axios
+            .patch(`http://127.0.0.1:8000/comment/update/${comment.id}`, {"score": score-2},{
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+            
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+            // decrease the techbin of the user
+            axios
+            .patch(`http://127.0.0.1:8000/api/update/${comment.author.id}`, {"techbin": techbin-2},{
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+        else{
+            console.log("create the vote ")
+            // 
+            axios
+                .post(LikeCommentURL,{"user": user_id,"comment": comment.id, "value": -1,},
+                {
+                    headers: 
+                    {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                    }
+                })
+                .then(res => {
+                    setVote({"user": user_id,"comment": comment.id, "value": -1,})
+                    setScore(score-1)
+                    setTechbin(techbin-1)
+                    console.log(res)
+                })
+                .catch(err => {
+                console.log(err);
+                });
+
+            axios
+                .patch(`http://127.0.0.1:8000/comment/update/${comment.id}`, {"score": score-1},{
+                    headers: {
+                        // 'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then((response) => {
+
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+
+            // decrease the techbin of the user
+            axios
+                .patch(`http://127.0.0.1:8000/api/update/${comment.author.id}`, {"techbin": techbin-1},{
+                    headers: {
+                        // 'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then((response) => {
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+
+        }
+
+    }
+
+
 
     return (
     <div className='roomList container' style={{ width:"75vw"}}>
@@ -70,11 +461,12 @@ export function Mycomment(props) {
                 <div class="roomListRoom__header">
                     <a href="profile.html" class="roomListRoom__author">
                         <div class="avatar avatar--small">
-                            <img src={comment.author.avatar} alt="pp" />
+                            <img src={`http://127.0.0.1:8000${comment.author.avatar}`} alt="pp" />
                         </div>
                         <NavLink className="nav-link" to={`/author/addbook`}>
                             <span>@{comment.author.username}</span>
                         </NavLink >
+                        <div> techbin:{techbin}</div>
                     </a>
 
                     <div class="roomListRoom__actions">
@@ -111,7 +503,7 @@ export function Mycomment(props) {
                         </a>
 
                         {/* delete buttun in the top right */}
-                        <a href="#" onClick={deletecomment}>
+                        <a href="" onClick={deletecomment}>
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
                                 <title>remove</title>
                                 <path
@@ -132,8 +524,36 @@ export function Mycomment(props) {
                 
                 {/* up vote and down vote  */}
                 <div className="d-flex justify-content-around">
-                    <div onClick={upvote} >upvote</div>
-                    <div>downvote</div>
+                    <div>{score}</div>
+
+                    {/* upvote */}
+                    {vote.value==1? 
+                    <div onClick={upvote}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                        </svg>
+                    </div>
+                    :
+                    <div onClick={upvote}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                        </svg>
+                    </div>
+                    }
+                    {/* downvote */}
+                    {vote.value==-1?
+                    <div onClick={downvote}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                        </svg>
+                    </div>
+                    :
+                    <div onClick={downvote}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                        </svg>
+                    </div>
+                    }
                 </div>
 
             </div>

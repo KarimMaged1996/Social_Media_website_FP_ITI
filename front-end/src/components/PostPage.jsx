@@ -5,9 +5,12 @@ import { Mypost } from './Mypost';
 import { Mycomment } from './Mycomment';
 import { AddComment } from './AddComment';
 import { useNavigate, useParams } from "react-router-dom";
-
+import { AuthContext } from "../context/AuthContext";
 
 export function PostPage(props) {
+
+    const{user}= useContext(AuthContext);
+    console.log(user)
 
     let { post_id } = useParams();
     const [isLoading1, setIsLoading1] = useState(true);
@@ -28,7 +31,7 @@ export function PostPage(props) {
                 headers: 
                 {
                     'Content-Type': 'application/json',
-                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 }
             })
             .then(res => {
@@ -45,7 +48,7 @@ export function PostPage(props) {
                 headers: 
                 {
                     'Content-Type': 'application/json',
-                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 }
             })
             .then(res => {
@@ -94,13 +97,16 @@ return (
 
         {comments.length === 0 
         ? 
-        <div>
-        <h1>No Comments </h1>
-        <NavLink className="nav-link m-5 text-success" to={`/addpost`}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-            </svg>
-        </NavLink >
+        <div className='d-flex justify-content-center'>
+            <h1> No Comments Yet </h1>
+            {/* <div>
+                
+                <NavLink className="nav-link m-5 text-success" to={`/addpost`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                    </svg>
+                </NavLink >
+            </div> */}
         </div>
         :
         <div className='d-flex justify-content-center'>

@@ -32,7 +32,7 @@ class PostUpdate(generics.UpdateAPIView):
     serializer_class = PostSerializer
     # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     permission_classes = [AllowAny]
-
+ 
 class PostDelete(generics.DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -75,7 +75,7 @@ def UserPosts(request,pk):
             raise Http404("User not found")
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-# endpoint to list all tha author posts
+# endpoint to list all tha group posts
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def GroupPosts(request,pk):
@@ -90,4 +90,32 @@ def GroupPosts(request,pk):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+# @api_view(['GET'])
+# def check_post_vote(request, post_id, user_id):
+#     try:
+#         # Try to retrieve the Comment_Vote record for the specified comment and user
+#         vote = Vote.objects.get(post_id=post_id, user_id=user_id)
 
+#         # If the value is 1, return 1 (upvote)
+#         if vote.value == 1:
+#             return Response({'result': 1})
+
+#         # If the value is -1, return -1 (downvote)
+#         elif vote.value == -1:
+#             return Response({'result': -1})
+
+#     except Vote.DoesNotExist:
+#         # If the record doesn't exist, return 0
+#         return Response({'result': 0})
+
+@api_view(['GET'])
+def check_post_vote(request, post_id, user_id):
+    post_vote = get_object_or_404(Vote, post_id=post_id, user_id=user_id)
+    data = {
+        'id': post_vote.id,
+        'user': post_vote.user.id,
+        'post': post_vote.post.id,
+        'value': post_vote.value,
+        'created_at': post_vote.created_at
+    }
+    return Response(data)

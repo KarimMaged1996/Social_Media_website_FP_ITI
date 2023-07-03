@@ -9,6 +9,7 @@ from rest_framework.authtoken.models import Token
 from django.db.models import Sum
 
 class Post(models.Model):
+    
     title = models.CharField(max_length=255,null=True,blank=True) # The title of the post
     content = models.TextField(null=True) # The main content of the post
     author = models.ForeignKey(User , on_delete=models.CASCADE, related_name='author_posts') # The author of the post
@@ -20,7 +21,7 @@ class Post(models.Model):
     image4 = models.ImageField(upload_to='post_images/', null=True, blank=True) # An optional image for the post
     video = models.FileField(upload_to='post_videos/', null=True, blank=True) # An optional video for the post
     score = models.IntegerField(default=0) # score which upvotes - downvotes 
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='group_posts')
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='posts')
     
     def update_score(self):
         # gett the votes related to the post 
