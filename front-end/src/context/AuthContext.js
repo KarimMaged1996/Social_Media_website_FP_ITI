@@ -9,8 +9,11 @@ export const AuthProvider = ({ children }) => {
     let access = localStorage.getItem('access_token');
     if (access) {
       let decoded = jwtDecode(access);
+      console.log('jashshs', decoded);
       let userObj = {
         id: decoded.user_id,
+        userName: decoded.username,
+        avatar: decoded.avatar,
       };
       setUser(userObj);
       setTokens(access);

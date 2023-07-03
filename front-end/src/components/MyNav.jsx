@@ -97,7 +97,11 @@ export function MyNav() {
               <NavLink to={`/profile/${user.id}`}>
                 <div className="avatar avatar--medium active">
                   <img
-                    src={user.avatar ? user.avatar : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
+                    src={
+                      user.avatar
+                        ? `http://127.0.0.1:8000${user.avatar}`
+                        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                    }
                     alt="Avatar"
                   />
                   <span className="nav-link__username">{user.username}</span>

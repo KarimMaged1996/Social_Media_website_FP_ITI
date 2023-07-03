@@ -29,7 +29,6 @@ export default function Group() {
       UserJoinedGroupsIds.includes(Number(param.id))
         ? setIsMember(true)
         : setIsMember(false);
-      console.log(user.id, group.owner);
       user?.id === group.owner ? setIsOwner(true) : setIsOwner(false);
       console.log(isMember, isOwner);
     } catch (error) {

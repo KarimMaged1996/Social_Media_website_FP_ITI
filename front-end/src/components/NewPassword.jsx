@@ -1,19 +1,15 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { BASE_URL } from "../Constants";
-import isEmail from "validator/lib/isEmail";
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import { BASE_URL } from '../Constants';
+import isEmail from 'validator/lib/isEmail';
 
 export function NewPassword() {
   const [formValues, setFormValues] = useState({});
   const [formErrors, setFormErrors] = useState({});
-  const [resMsg, setResMsg] = useState({})
+  const [resMsg, setResMsg] = useState({});
   const location = useLocation();
   const { uid, token } = useParams();
-
-
-  
-
 
   const inputHandler = (e) => {
     setFormValues({
@@ -30,7 +26,7 @@ export function NewPassword() {
     if (!PASSWORD) {
       setFormErrors({
         ...formErrors,
-        passwordErr: "Enter a valid Password",
+        passwordErr: 'Enter a valid Password',
       });
       return;
     }
@@ -47,7 +43,7 @@ export function NewPassword() {
     e.preventDefault();
     const encodeduid = encodeURIComponent(uid);
     const encodedtoken = encodeURIComponent(token);
-    validate()
+    validate();
     for (let e in formErrors) {
       if (formErrors[e]) {
         return;
@@ -55,10 +51,9 @@ export function NewPassword() {
     }
 
     try {
-        
       let body = {
-        "password" : formValues.password,
-        "confirm_password": formValues.confirm_password
+        password: formValues.password,
+        confirm_password: formValues.confirm_password,
       };
       let res = await axios.post(
         `${BASE_URL}/api/resetpassword/${encodeduid}/${encodedtoken}/`,
@@ -66,17 +61,16 @@ export function NewPassword() {
       );
       setResMsg({
         done: true,
-        msg: 'password reset complete'
-      })
+        msg: 'password reset complete',
+      });
     } catch (e) {
       setResMsg({
         done: true,
-        msg: 'Link expired'
-      })
+        msg: 'Link expired',
+      });
     }
   };
 
-    
   return (
     <main className="auth layout text-white">
       <div className="container">
@@ -91,14 +85,14 @@ export function NewPassword() {
             <form className="form" onSubmit={onSubmitHandler}>
               <div
                 className="form__group form__group"
-                style={{ display: "flex", justifyContent: "space-between" }}
+                style={{ display: 'flex', justifyContent: 'space-between' }}
               ></div>
               <div
                 className="form__group form__group flex-column"
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: "1em",
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  gap: '1em',
                 }}
               >
                 <div>
