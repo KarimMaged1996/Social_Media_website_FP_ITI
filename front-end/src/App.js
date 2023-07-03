@@ -24,6 +24,7 @@ import EditProfile from './components/EditProfile';
 import { AuthProvider } from './context/AuthContext';
 import Search from './components/Search';
 import { SearchProvider } from './context/SearchContext';
+import Group from './components/Group';
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
             />
 
             <Route path="search" element={<Search />} />
+            <Route path="group/:id" element={<Group />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SearchProvider>

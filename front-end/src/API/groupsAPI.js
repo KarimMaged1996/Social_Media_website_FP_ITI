@@ -68,14 +68,14 @@ const getCategoryGroups = async (categoryId) => {
 };
 
 const getSingleGroup = async (groupId) => {
-  const url = `${BASE_URL}/groups/single_group/${groupId}/`;
+  const url = `${BASE_URL}/groups/single_group_get/${groupId}/`;
   let content = {};
   try {
     let res = await axios.get(url, { headers });
     if (res.status === 200) {
       content = {
-        status: res.data.status,
-        data: res.data.data,
+        status: res.status,
+        data: res.data,
       };
     }
   } catch (e) {
@@ -115,7 +115,7 @@ const getUserGroups = async () => {
     if (res.status === 200) {
       console.log('sssssssssss', res.data);
       content = {
-        status: res.data.status,
+        status: res.status,
         data: res.data,
       };
     }
