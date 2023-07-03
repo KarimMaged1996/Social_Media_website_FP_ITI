@@ -37,6 +37,11 @@ class CommentDelete(generics.DestroyAPIView):
     permission_classes = [AllowAny]
     # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
+class CommentLike_list(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Comment_Vote.objects.all()
+    serializer_class = CommentLikesSerializer
+
 class CommentLikeCreate(generics.CreateAPIView):
     queryset = Comment_Vote.objects.all()
     serializer_class = CommentLikesSerializer
@@ -54,11 +59,6 @@ class CommentLikeDelete(generics.DestroyAPIView):
     serializer_class = CommentLikesSerializer
     permission_classes = [AllowAny]
     # permission_classes = [IsAuthenticated]
-
-class CommentLike_list(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Comment_Vote.objects.all()
-    serializer_class = CommentLikesSerializer
 
 
 

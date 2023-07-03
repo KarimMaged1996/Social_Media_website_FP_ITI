@@ -1,6 +1,6 @@
 from django.db import models
 from user.models import User
-# from group.models import Group
+from groups.models import Group  
 from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -20,6 +20,7 @@ class Post(models.Model):
     image4 = models.ImageField(upload_to='post_images/', null=True, blank=True) # An optional image for the post
     video = models.FileField(upload_to='post_videos/', null=True, blank=True) # An optional video for the post
     score = models.IntegerField(default=0) # score which upvotes - downvotes 
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='group_posts')
     
     def update_score(self):
         # gett the votes related to the post 

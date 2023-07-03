@@ -4,7 +4,7 @@ from rest_framework.permissions import SAFE_METHODS, IsAuthenticatedOrReadOnly, 
 from .permissions import IsAuthorOrReadOnly
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Post, Vote, User
+from .models import Post, Vote, User, Group
 from rest_framework import  generics
 from django.http import Http404
 from rest_framework.decorators import api_view,permission_classes
@@ -74,5 +74,20 @@ def UserPosts(request,pk):
         except User.DoesNotExist:
             raise Http404("User not found")
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+# endpoint to list all tha author posts
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def GroupPosts(request,pk):
+    if request.method == 'GET':
+        try:
+            group = Group.objects.get(id = pk)
+            groupPosts = group.group_posts.all().order_by('-created_at')
+            print(request.data)
+            serializer = PostSerializer2 (groupPosts, many = True)
+        except User.DoesNotExist:
+            raise Http404("User not found")
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 
