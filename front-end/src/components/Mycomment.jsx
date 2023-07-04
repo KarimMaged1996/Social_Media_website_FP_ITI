@@ -6,24 +6,35 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import {BASE_URL} from '../Constants'
 
 export function Mycomment(props) {
   let user_id = 1;
 
+
   let { comment } = props;
+
+  let profileimageurl = comment.author.avatar
+  if (profileimageurl != null)
+  {
+      if(!profileimageurl.includes("http")){
+        profileimageurl=BASE_URL+profileimageurl
+      }
+  }
+
   const [vote, setVote] = useState({ id: 0, user: 1, comment: 2, value: 0 });
 
   const [isLoading1, setIsLoading1] = useState(true);
   const [score, setScore] = useState(comment.score);
   const [techbin, setTechbin] = useState(comment.author.techbin);
-  let DeleteAPIUrl = `http://127.0.0.1:8000/comment/delete/${comment.id}`;
-  let didILikeitUrl = `http://127.0.0.1:8000/comment/like/check/${comment.id}/${user_id}`;
+  let DeleteAPIUrl = `${BASE_URL}/comment/delete/${comment.id}`;
+  let didILikeitUrl = `${BASE_URL}/comment/like/check/${comment.id}/${user_id}`;
 
-  let LikeCommentURL = `http://127.0.0.1:8000/comment/like/create/`;
-  let LikeUpdateURL = `http://127.0.0.1:8000/comment/like/update/${vote.id}`;
-  let LikeDeleteURL = `http://127.0.0.1:8000/comment/like/delete/${vote.id}`;
+  let LikeCommentURL = `${BASE_URL}/comment/like/create/`;
+  let LikeUpdateURL = `${BASE_URL}/comment/like/update/${vote.id}`;
+  let LikeDeleteURL = `${BASE_URL}/comment/like/delete/${vote.id}`;
 
-  let updatecommentUrl = `http://127.0.0.1:8000/comment/${comment.id}`;
+  let updatecommentUrl = `${BASE_URL}/comment/${comment.id}`;
 
   let navigate = useNavigate();
 
@@ -152,7 +163,7 @@ export function Mycomment(props) {
           { techbin: techbin - 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -170,7 +181,7 @@ export function Mycomment(props) {
           {
             headers: {
               'Content-Type': 'application/json',
-              // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             },
           }
         )
@@ -194,7 +205,7 @@ export function Mycomment(props) {
           { score: score + 2 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -211,7 +222,7 @@ export function Mycomment(props) {
           { techbin: techbin + 2 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -229,7 +240,7 @@ export function Mycomment(props) {
           {
             headers: {
               'Content-Type': 'application/json',
-              // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             },
           }
         )
@@ -249,7 +260,7 @@ export function Mycomment(props) {
           { score: score + 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -266,7 +277,7 @@ export function Mycomment(props) {
           { techbin: techbin + 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -286,7 +297,7 @@ export function Mycomment(props) {
         .delete(LikeDeleteURL, {
           headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           },
         })
         .then((res) => {
@@ -304,7 +315,7 @@ export function Mycomment(props) {
           { score: score + 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -324,7 +335,7 @@ export function Mycomment(props) {
           { techbin: techbin + 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -342,7 +353,7 @@ export function Mycomment(props) {
           {
             headers: {
               'Content-Type': 'application/json',
-              // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             },
           }
         )
@@ -366,7 +377,7 @@ export function Mycomment(props) {
           { score: score - 2 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -383,7 +394,7 @@ export function Mycomment(props) {
           { techbin: techbin - 2 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -422,7 +433,7 @@ export function Mycomment(props) {
           { score: score - 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -439,7 +450,7 @@ export function Mycomment(props) {
           { techbin: techbin - 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -458,7 +469,7 @@ export function Mycomment(props) {
           <a href="profile.html" class="roomListRoom__author">
             <div class="avatar avatar--small">
               <img
-                src={`http://127.0.0.1:8000${comment.author.avatar}`}
+                src={profileimageurl}
                 alt="pp"
               />
             </div>
@@ -515,10 +526,9 @@ export function Mycomment(props) {
         <div class="roomListRoom__content">
           <p className="m-3">{comment.content}</p>
         </div>
-
         {/* up vote and down vote  */}
+        <div className="d-flex justify-content-around ">score: {score}</div>
         <div className="d-flex justify-content-around">
-          <div>{score}</div>
 
           {/* upvote */}
           {vote.value == 1 ? (

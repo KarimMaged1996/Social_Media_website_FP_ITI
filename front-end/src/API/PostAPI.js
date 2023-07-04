@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const BASE_URL = 'http://127.0.0.1:8000/';
+import {BASE_URL} from '../Constants'
+// const BASE_URL = 'http://127.0.0.1:8000/';
 let token = localStorage.getItem('access_token');
 console.log(token);
 let headers = { Authorization: `Bearer ${token}` };

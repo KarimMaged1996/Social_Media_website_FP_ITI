@@ -5,6 +5,8 @@ import { PostApi } from '../API/PostAPI';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useParams } from 'react-router-dom';
+import {BASE_URL} from '../Constants'
+
 export function AddPost() {
   // const {group} = props
   let param = useParams();
@@ -71,10 +73,11 @@ export function AddPost() {
     if (checkbox2 && event.target.checked) {
       setCheckbox1(event.target.checked);
       setCheckbox2(!event.target.checked);
-    } else {
+    }
+    else {
       setImages(['1']);
-      setFormValues({
-        ...formValues,
+      setSubmitValues({
+        ...submitValues,
         image1: '',
         image2: '',
         image3: '',
@@ -89,8 +92,13 @@ export function AddPost() {
     if (checkbox1 && event.target.checked) {
       setCheckbox2(event.target.checked);
       setCheckbox1(!event.target.checked);
-      setImages(['1']);
+      setImages([]);
     } else {
+      setImages([]);
+      setSubmitValues({
+        ...submitValues,
+        video: '',
+      });
       setCheckbox2(event.target.checked);
     }
   };
@@ -123,19 +131,20 @@ export function AddPost() {
   // ***** On submit form
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    // axios
-    //     .post(`http://127.0.0.1:8000/post/create`, submitValues,{
-    //         headers: {
-    //             // 'Authorization': `Bearer ${token}`,
-    //             'Content-Type': 'multipart/form-data'
-    //         }
-    //     })
-    //     .then((response) => {
-    //         console.log("done!");
-    //     });
+    axios
+        .post(`${BASE_URL}/post/create`, submitValues,{
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response) => {
+            console.log(response)
+            console.log("done!");
+        });
 
-    let res = await PostApi.createpost(submitValues);
-    navigate(`/group/${param.id}`);
+    // let res = await PostApi.createpost(submitValues);
+    // navigate(`/group/${param.id}`);
   };
 
   return (
@@ -144,7 +153,7 @@ export function AddPost() {
         <div className="container">
           <div className="layout__box">
             <div className="layout__boxHeader d-flex justify-content-between ">
-              <a href="#">
+              <a href={`/group/${param.id}`}>
                 <svg
                   version="1.1"
                   xmlns="http://www.w3.org/2000/svg"
@@ -273,13 +282,13 @@ export function AddPost() {
 
                 {checkbox2 ? (
                   <div className="form__group form__avatar">
-                    <label htmlFor="avatar">Upload Video</label>
+                    <label htmlFor="video">Upload Video</label>
                     <input
                       className=""
                       type="file"
-                      name="avatar"
-                      id="avatar"
-                      accept="image/png, image/gif, image/jpeg"
+                      name="video"
+                      id="video"
+                      accept="video/mp4, video/webm, video/ogg"
                       onChange={inputHandler}
                     />
                   </div>

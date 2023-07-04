@@ -6,7 +6,7 @@ import { Mycomment } from './Mycomment';
 import { AddComment } from './AddComment';
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-
+import {BASE_URL} from '../Constants'
 export function PostPage(props) {
 
     const{user}= useContext(AuthContext);
@@ -17,8 +17,8 @@ export function PostPage(props) {
     const [isLoading2, setIsLoading2] = useState(true);
     const [comments, setComments] = useState([]);
     const [post, setPost] = useState({});
-    let postapiUrl = `http://127.0.0.1:8000/post/${post_id}`
-    let commentsapiUrl = `http://127.0.0.1:8000/comment/post_comments/${post_id}/`
+    let postapiUrl = `${BASE_URL}/post/${post_id}`
+    let commentsapiUrl = `${BASE_URL}/comment/post_comments/${post_id}/`
 
     useEffect(() => {
         // if(localStorage.getItem('access_token') === null){                   

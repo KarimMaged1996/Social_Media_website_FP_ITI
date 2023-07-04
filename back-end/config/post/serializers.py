@@ -16,7 +16,7 @@ class GroupSerializerForPosts(serializers.ModelSerializer):
 
 class PostSerializer2(serializers.ModelSerializer):
     author = UserSerializerForPosts()
-
+    group = GroupSerializerForPosts()
     class Meta:
         model = Post
         fields = "__all__"

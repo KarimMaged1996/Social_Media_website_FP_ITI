@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom'
 import axios from "axios";
 import { Mycomment } from './Mycomment';
-
+import {BASE_URL} from '../Constants'
 
 export function PostComments(props) {
     post_id = {props}
     const [isLoading, setIsLoading] = useState(true);
     const [comments, setComments] = useState([]);
-    let apiUrl = `http://127.0.0.1:8000/comment/post_comments/${post_id}`
+    let apiUrl = `${BASE_URL}/comment/post_comments/${post_id}`
 
     useEffect(() => {
         // if(localStorage.getItem('access_token') === null){                   

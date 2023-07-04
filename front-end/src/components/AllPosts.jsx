@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom'
 import axios from "axios";
 import { Mypost } from './Mypost';
-
+import {BASE_URL} from '../Constants'
 
 
 export function AllPosts() {
@@ -10,7 +10,7 @@ export function AllPosts() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState([]);
-    let apiUrl = "http://127.0.0.1:8000/post/"
+    let apiUrl = `${BASE_URL}/post/`
 
     useEffect(() => {
         // if(localStorage.getItem('access_token') === null){                   
@@ -42,7 +42,7 @@ if (isLoading) {
 
 return (
     <div>
-        {posts.length === 0 
+        {/* {posts.length === 0 
         ? 
         (<div>
         <h1>Write your first post?</h1>
@@ -62,7 +62,8 @@ return (
             </div>
 
         </div> 
-        }
+        } */}
+        allposts
     </div>
 );
 }

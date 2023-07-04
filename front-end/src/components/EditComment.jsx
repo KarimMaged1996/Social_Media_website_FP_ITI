@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import {  useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {BASE_URL} from '../Constants'
 
 export function EditComment() {
 
@@ -19,7 +20,7 @@ export function EditComment() {
 
     useEffect(() => {
             axios
-            .get(`http://127.0.0.1:8000/comment/${comment_id}`,
+            .get(`${BASE_URL}BASE_URL/comment/${comment_id}`,
             {
                 headers: 
                 {
@@ -64,7 +65,7 @@ export function EditComment() {
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         axios
-            .patch(`http://127.0.0.1:8000/comment/update/${comment_id}`, submitValues,{
+            .patch(`${BASE_URL}/comment/update/${comment_id}`, submitValues,{
                 headers: {
                     // 'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'

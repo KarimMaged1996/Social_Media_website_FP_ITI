@@ -4,7 +4,7 @@ import "../css/editProfile.css";
 import { AuthContext } from "../context/AuthContext";
 import { PostApi } from "../API/PostAPI";
 import axios from "axios";
-
+import {BASE_URL} from '../Constants'
 
 export function AddComment(props) {
 
@@ -48,7 +48,7 @@ export function AddComment(props) {
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         axios
-            .post(`http://127.0.0.1:8000/comment/create`, submitValues,{
+            .post(`${BASE_URL}/comment/create`, submitValues,{
                 headers: {
                     // 'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'

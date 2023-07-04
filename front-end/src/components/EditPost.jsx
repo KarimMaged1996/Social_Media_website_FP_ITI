@@ -5,7 +5,7 @@ import "../css/editProfile.css";
 import { AuthContext } from "../context/AuthContext";
 import { PostApi } from "../API/PostAPI";
 import axios from "axios";
-
+import {BASE_URL} from '../Constants'
 import { useRef } from 'react';
 // import { useHistory } from 'react-router-dom';
 
@@ -61,7 +61,7 @@ export function EditPost() {
 
     useEffect(() => {
             axios
-            .get(`http://127.0.0.1:8000/post/${post_id}`,
+            .get(`${BASE_URL}/post/${post_id}`,
             {
                 headers: 
                 {
@@ -135,11 +135,8 @@ export function EditPost() {
     const handleCheckbox1Change = (event) => {
         if (checkbox2 && event.target.checked)
         {
-
             setCheckbox1(event.target.checked);
             setCheckbox2(!event.target.checked);
-            
-
         }
         else {
             setImages([
@@ -165,16 +162,21 @@ export function EditPost() {
     };
     
     // checkbox two handeler 
-    const handleCheckbox2Change = (event) => {
+    const handleCheckbox2Change = (event) => 
+    {
         if (checkbox1 && event.target.checked)
         {
             setCheckbox2(event.target.checked);
             setCheckbox1(!event.target.checked);
-            setImages([
-                "1"
-            ])
+            setImages([])
         }
-        else{
+        else
+        {
+            setImages([]);
+            setSubmitValues({
+                ...submitValues,
+                video: '',
+            });
             setCheckbox2(event.target.checked);
         }
     };
@@ -239,7 +241,7 @@ export function EditPost() {
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         axios
-            .patch(`http://127.0.0.1:8000/post/update/${post_id}`, submitValues,{
+            .patch(`${BASE_URL}/post/update/${post_id}`, submitValues,{
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                     'Content-Type': 'multipart/form-data'
@@ -391,17 +393,19 @@ export function EditPost() {
                         </div>
                     </div> : null}
 
-                    { checkbox2 ?  <div className="form__group form__avatar">
-                        <label htmlFor="avatar">Upload Video</label>
-                        <input
-                        className=""
-                        type="file"
-                        name="avatar"
-                        id="avatar"
-                        accept="image/png, image/gif, image/jpeg"
-                        onChange={inputHandler}
-                        />
-                    </div> : null}
+                    { checkbox2 ?
+                        <div className="form__group form__avatar">
+                            <label htmlFor="video">Upload Video</label>
+                            <input
+                                className=""
+                                type="file"
+                                name="video"
+                                id="video"
+                                accept="video/mp4, video/webm, video/ogg"
+                                onChange={inputHandler}
+                                />
+                        </div>
+                    : null}
                     { error.image? <div className="text-danger d-flex justify-content-center">{error.image}</div> : null}
                     <div className="form__action m-5 d-flex justify-content-center">
                         <input className="btn btn--main" type="submit" value='Save Post' />

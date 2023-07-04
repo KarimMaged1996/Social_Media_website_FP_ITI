@@ -7,14 +7,66 @@ import Col from 'react-bootstrap/Col';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-
+import {BASE_URL} from '../Constants'
 export function Mypost(props) {
+
   const { user } = useContext(AuthContext);
   console.log(user);
 
   let user_id = user.id;
 
   let { post } = props;
+
+
+  let profileimageurl = post.author.avatar
+  if (profileimageurl != null)
+  {
+      if(!profileimageurl.includes("http")){
+        profileimageurl=BASE_URL+profileimageurl
+      }
+  }
+
+  let image1url = post.image1
+  if (image1url != null)
+  {
+      if(!image1url.includes("http")){
+        image1url=BASE_URL+image1url
+      }
+  }
+
+  let image2url = post.image2
+  if (image2url != null)
+  {
+      if(!image2url.includes("http")){
+        image2url=BASE_URL+image2url
+      }
+  }
+
+  let image3url = post.image3
+  if (image3url != null)
+  {
+      if(!image3url.includes("http")){
+        image3url=BASE_URL+image3url
+      }
+  }
+
+  let image4url = post.image4
+  if (image4url != null)
+  {
+      if(!image4url.includes("http")){
+        image4url=BASE_URL+image4url
+      }
+  }
+
+  let videourl = post.video
+  if (videourl != null)
+  {
+      if(!videourl.includes("http")){
+        videourl=BASE_URL+videourl
+      }
+  }
+
+
   const [vote, setVote] = useState({
     id: 0,
     user: user_id,
@@ -24,19 +76,19 @@ export function Mypost(props) {
   const [score, setScore] = useState(post.score);
   const [techbin, setTechbin] = useState(post.author.techbin);
   const [isLoading1, setIsLoading1] = useState(true);
-  let DeleteAPIUrl = `http://127.0.0.1:8000/post/delete/${post.id}`;
+  let DeleteAPIUrl = `${BASE_URL}/post/delete/${post.id}`;
 
-  let didILikeitUrl = `http://127.0.0.1:8000/post/like/check/${post.id}/${user_id}`;
+  let didILikeitUrl = `${BASE_URL}/post/like/check/${post.id}/${user_id}`;
 
-  let LikepostURL = `http://127.0.0.1:8000/post/like/create`;
-  let LikeUpdateURL = `http://127.0.0.1:8000/post/like/update/${vote.id}`;
-  let LikeDeleteURL = `http://127.0.0.1:8000/post/like/delete/${vote.id}`;
+  let LikepostURL = `${BASE_URL}/post/like/create`;
+  let LikeUpdateURL = `${BASE_URL}/post/like/update/${vote.id}`;
+  let LikeDeleteURL = `${BASE_URL}/post/like/delete/${vote.id}`;
 
   let navigate = useNavigate();
 
   // async function getData() {
   //     try {
-  //         const response = await axios.get(`http://127.0.0.1:8000/post/${post_id}`, {
+  //         const response = await axios.get(`${BASE_URL}/post/${post_id}`, {
   //             headers: {
   //             'Content-Type': 'application/json',
   //             // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
@@ -163,7 +215,7 @@ export function Mypost(props) {
       // decrease the score
       axios
         .patch(
-          `http://127.0.0.1:8000/post/update/${post.id}`,
+          `${BASE_URL}/post/update/${post.id}`,
           { score: score - 1 },
           {
             headers: {
@@ -183,7 +235,7 @@ export function Mypost(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${post.author.id}`,
+          `${BASE_URL}/api/update/${post.author.id}`,
           { techbin: techbin - 1 },
           {
             headers: {
@@ -225,7 +277,7 @@ export function Mypost(props) {
       // decrease the score
       axios
         .patch(
-          `http://127.0.0.1:8000/post/update/${post.id}`,
+          `${BASE_URL}/post/update/${post.id}`,
           { score: score + 2 },
           {
             headers: {
@@ -242,7 +294,7 @@ export function Mypost(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${post.author.id}`,
+          `${BASE_URL}/api/update/${post.author.id}`,
           { techbin: techbin + 2 },
           {
             headers: {
@@ -280,7 +332,7 @@ export function Mypost(props) {
 
       axios
         .patch(
-          `http://127.0.0.1:8000/post/update/${post.id}`,
+          `${BASE_URL}/post/update/${post.id}`,
           { score: score + 1 },
           {
             headers: {
@@ -297,7 +349,7 @@ export function Mypost(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${post.author.id}`,
+          `${BASE_URL}/api/update/${post.author.id}`,
           { techbin: techbin + 1 },
           {
             headers: {
@@ -335,7 +387,7 @@ export function Mypost(props) {
       // decrease the score
       axios
         .patch(
-          `http://127.0.0.1:8000/post/update/${post.id}`,
+          `${BASE_URL}/post/update/${post.id}`,
           { score: score + 1 },
           {
             headers: {
@@ -355,7 +407,7 @@ export function Mypost(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${post.author.id}`,
+          `${BASE_URL}/api/update/${post.author.id}`,
           { techbin: techbin + 1 },
           {
             headers: {
@@ -397,7 +449,7 @@ export function Mypost(props) {
       // decrease the score
       axios
         .patch(
-          `http://127.0.0.1:8000/post/update/${post.id}`,
+          `${BASE_URL}/post/update/${post.id}`,
           { score: score - 2 },
           {
             headers: {
@@ -414,7 +466,7 @@ export function Mypost(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${post.author.id}`,
+          `${BASE_URL}/api/update/${post.author.id}`,
           { techbin: techbin - 2 },
           {
             headers: {
@@ -452,7 +504,7 @@ export function Mypost(props) {
 
       axios
         .patch(
-          `http://127.0.0.1:8000/post/update/${post.id}`,
+          `${BASE_URL}/post/update/${post.id}`,
           { score: score - 1 },
           {
             headers: {
@@ -469,7 +521,7 @@ export function Mypost(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${post.author.id}`,
+          `${BASE_URL}/api/update/${post.author.id}`,
           { techbin: techbin - 1 },
           {
             headers: {
@@ -488,18 +540,15 @@ export function Mypost(props) {
   return (
     <div className="roomList container">
       <div class="roomList__header m-2 d-flex justify-content-center">
-        <div>
-          <h2>Recent Posts</h2>
-        </div>
       </div>
 
       <div class="roomListRoom">
         <div class="roomListRoom__header">
           <a href="profile.html" class="roomListRoom__author">
             <div class="avatar avatar--small">
-              <img src={post.author.avatar} alt="pp" />
+              <img src={profileimageurl} alt="pp" />
             </div>
-            <NavLink className="nav-link" to={`/profile/`}>
+            <NavLink className="nav-link" to={`/profile/${post.author.id}`}>
               <span>@{post.author.username}</span>
             </NavLink>
           </a>
@@ -557,7 +606,10 @@ export function Mypost(props) {
               navigate(`/post/${post.id}`);
             }}
           >
-            <a>{post.title}</a>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <a href={`/post/${post.id}`} style={{ textDecoration: 'underline' }}>{post.title}</a>
+          </div>
+
           </div>
           <p>{post.content}</p>
         </div>
@@ -571,7 +623,7 @@ export function Mypost(props) {
               style={{ width: '50%', overflow: 'hidden' }}
             >
               <img
-                src={post.image1}
+                src={image1url}
                 alt=""
                 style={{ height: 'auto', width: '100%' }}
               />
@@ -581,19 +633,19 @@ export function Mypost(props) {
 
         {NumOfImages == 2 ? (
           <Container>
-            <Row className="d-flex justify-content-center">
-              <Col xs={6}>
+            <Row style={{ display: 'flex', justifyContent: 'center' }}>
+              <Col xs={12} md={6}>
                 <img
-                  src={post.image1}
+                  src={image1url}
                   alt=""
-                  style={{ height: 'auto', width: '100%', margin: '10px' }}
+                  style={{ height: '400px', width: '100%', margin: '10px', objectFit: 'contain' }}
                 />
               </Col>
-              <Col xs={6}>
+              <Col xs={12} md={6}>
                 <img
-                  src={post.image2}
+                  src={image2url}
                   alt=""
-                  style={{ height: 'auto', width: '100%', margin: '10px' }}
+                  style={{ height: '400px', width: '100%', margin: '10px', objectFit: 'contain' }}
                 />
               </Col>
             </Row>
@@ -601,31 +653,29 @@ export function Mypost(props) {
         ) : null}
 
         {NumOfImages == 3 ? (
-          <Container>
-            <Row className="d-flex justify-content-center">
-              <Col xs={6} md={3}>
+            <Row style={{ display: 'flex', justifyContent: 'center' }}>
+              <Col xs={12} md={4}>
                 <img
-                  src={post.image1}
+                  src={image1url}
                   alt=""
-                  style={{ height: 'auto', width: '100%', margin: '10px' }}
+                  style={{ height: '400px', width: '100%', margin: '10px', objectFit: 'contain' }}
                 />
               </Col>
-              <Col xs={6} md={3}>
+              <Col xs={12} md={4}>
                 <img
-                  src={post.image2}
+                  src={image2url}
                   alt=""
-                  style={{ height: 'auto', width: '100%', margin: '10px' }}
+                  style={{ height: '400px', width: '100%', margin: '10px', objectFit: 'contain' }}
                 />
               </Col>
-              <Col xs={6} md={3}>
+              <Col xs={12} md={4}>
                 <img
-                  src={post.image3}
+                  src={image3url}
                   alt=""
-                  style={{ height: 'auto', width: '100%', margin: '10px' }}
+                  style={{ height: '400px', width: '100%', margin: '10px', objectFit: 'contain' }}
                 />
               </Col>
             </Row>
-          </Container>
         ) : null}
 
         {NumOfImages == 4 ? (
@@ -633,28 +683,28 @@ export function Mypost(props) {
             <Row>
               <Col xs={6} md={3}>
                 <img
-                  src={post.image1}
+                  src={image1url}
                   alt=""
                   style={{ height: 'auto', width: '100%', margin: '10px' }}
                 />
               </Col>
               <Col xs={6} md={3}>
                 <img
-                  src={post.image2}
+                  src={image2url}
                   alt=""
                   style={{ height: 'auto', width: '100%', margin: '10px' }}
                 />
               </Col>
               <Col xs={6} md={3}>
                 <img
-                  src={post.image3}
+                  src={image3url}
                   alt=""
                   style={{ height: 'auto', width: '100%', margin: '10px' }}
                 />
               </Col>
               <Col xs={6} md={3}>
                 <img
-                  src={post.image4}
+                  src={image4url}
                   alt=""
                   style={{ height: 'auto', width: '100%', margin: '10px' }}
                 />
@@ -665,21 +715,21 @@ export function Mypost(props) {
 
         {post.video ? (
           <Container>
-            <Row>
-              <Col xs={6} md={3}>
-                <img
-                  src={post.video}
-                  alt=""
-                  style={{ height: 'auto', width: '100%', margin: '10px' }}
-                />
-              </Col>
-            </Row>
-          </Container>
+          <Row style={{ display: 'flex', justifyContent: 'start' }}>
+            <Col xs={6} md={3}>
+            <video controls style={{ height: '300px', width: '500px', margin: '10px' }}>
+              <source src={videourl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            </Col>
+          </Row>
+        </Container>
         ) : null}
 
         {/* up vote and down vote  */}
-        <div className="d-flex justify-content-around m-5">
-          <div>score: {score}</div>
+        {NumOfImages >= 1 ? <hr /> : null}
+        <div className="d-flex justify-content-around ">score: {score}</div>
+        <div className="d-flex justify-content-around m-2">
 
           {/* upvote */}
           {vote.value == 1 ? (
@@ -746,9 +796,12 @@ export function Mypost(props) {
         </div>
 
         {/* post footer  */}
-        <div class=" m-3 roomListRoom__meta d-flex justify-content-center">
-          <p class="roomListRoom__topic">{post.group}</p>
+        <div class=" m-3 roomListRoom__meta d-flex justify-content-center" >
+          <a href={`/group/${post.group.id}`}>
+            <p class="roomListRoom__topic">{post.group.name}</p>
+          </a>
         </div>
+        
       </div>
     </div>
   );

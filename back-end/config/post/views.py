@@ -97,7 +97,7 @@ def UserPosts(request, pk):
 
 class ListGroupPosts(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = PostSerializer
+    serializer_class = PostSerializer2
 
     def get_queryset(self):
         group_id = self.kwargs["pk"]
