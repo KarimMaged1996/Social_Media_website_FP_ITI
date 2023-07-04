@@ -13,7 +13,6 @@ import { ProfileSettings } from './components/ProfileSettings';
 
 import { Activity } from './components/Activity';
 
-
 import { Post } from './components/Post';
 import { PostPage } from './components/PostPage';
 import { AllPosts } from './components/AllPosts';
@@ -54,10 +53,9 @@ function App() {
             <Route path="activity" element={<Activity />} />
 
             <Route path="allposts" element={<AllPosts />} />
-            <Route path="addpost" element={<AddPost />} />
             <Route path="post/edit/:id" element={<EditPost />} />
             <Route path="post/:post_id" element={<PostPage />} />
-      
+
             <Route path="comment/edit/:id" element={<EditComment />} />
 
             <Route
@@ -80,6 +78,7 @@ function App() {
 
             <Route path="search" element={<Search />} />
             <Route path="group/:id" element={<Group />} />
+            <Route path="addpost/:id" element={<AddPost />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SearchProvider>

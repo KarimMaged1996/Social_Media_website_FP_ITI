@@ -13,6 +13,7 @@ export default function Group() {
   let token = localStorage.getItem('access_token');
   let headers = { Authorization: `Bearer ${token}` };
   let param = useParams('id');
+  let navigate = useNavigate();
   const { user } = useContext(AuthContext);
   let [group, setGroup] = useState({});
   let [isMember, setIsMember] = useState(false);
@@ -110,7 +111,14 @@ export default function Group() {
                     <div style={buttonStyles} onClick={leaveGroup}>
                       Leave
                     </div>
-                    <div style={buttonStyles}>Add Post</div>
+                    <div
+                      style={buttonStyles}
+                      onClick={() => {
+                        navigate(`/addpost/${param.id}`);
+                      }}
+                    >
+                      Add Post
+                    </div>
                   </div>
                 )}
                 {!isMember && (
