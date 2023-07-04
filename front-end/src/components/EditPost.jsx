@@ -11,6 +11,9 @@ import { useRef } from 'react';
 
 export function EditPost() {
 
+    const{user}= useContext(AuthContext);
+    // console.log(user)
+
     let { id } = useParams();
     let post_id = id
     const [images, setImages] = useState([
@@ -63,7 +66,7 @@ export function EditPost() {
                 headers: 
                 {
                     'Content-Type': 'application/json',
-                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 }
             })
             .then(res => {
@@ -97,14 +100,12 @@ export function EditPost() {
             });
         // };
     }, []);
-    console.log(imagesfile)
+    // console.log(imagesfile)
     // console.log(formValues)
     
 
 
-    if (isLoading) {
-        return <div className="d-flex jsutify-content-center m-5 align-items-center"><h1>Loading.....</h1></div>;
-    }
+
 
     // ****** Handle form input changes
     const inputHandler = (e) => {
@@ -144,6 +145,21 @@ export function EditPost() {
             setImages([
                 "1"
             ])
+            // setFormValues({
+            //     ...formValues,
+            //     image1:"",
+            //     image2:"",
+            //     image3:"",
+            //     image4:"",
+            //     });
+            setSubmitValues({
+                ...submitValues,
+                image1:"",
+                image2:"",
+                image3:"",
+                image4:"",
+            })
+
             setCheckbox1(event.target.checked);
         }
     };
@@ -167,7 +183,9 @@ export function EditPost() {
     const addimage = () => 
     {
         let length = images.length;
+
         let next = (length + 1).toString()
+        console.log(next)
         if (images.length+1 <= 4)
         {
             setImages([
@@ -183,6 +201,7 @@ export function EditPost() {
         }
     }
 
+    console.log(images)
     // REMOVING AN IMAGE
     const removeimage = (e) => {
         let name = e.target.name
@@ -212,9 +231,9 @@ export function EditPost() {
         }));
     }
 
-    console.log(formValues)
-    console.log(imagesfile)
-    console.log(submitValues)
+    // console.log(formValues)
+    // console.log(imagesfile)
+    // console.log(submitValues)
 
   // ***** On submit form
     const onSubmitHandler = async (e) => {
@@ -222,7 +241,7 @@ export function EditPost() {
         axios
             .patch(`http://127.0.0.1:8000/post/update/${post_id}`, submitValues,{
                 headers: {
-                    // 'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                     'Content-Type': 'multipart/form-data'
                 }
             })
@@ -250,7 +269,7 @@ export function EditPost() {
             <div className="container">
                 <div className="layout__box">
                 <div className="layout__boxHeader d-flex justify-content-between ">
-                    <a href="/" >
+                    <a href={`/post/${post_id}`} >
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
                         <title>arrow-left</title>
                         <path
@@ -341,9 +360,9 @@ export function EditPost() {
                                 <div key={`${admin_id}${image}`} className="d-flex align-items-center">
 
                                     {/* image */}
-                                    {imagesfile[parseInt(image)-1].image? <div class="avatar avatar--small">
+                                    {/* {imagesfile[parseInt(image)-1].image? <div class="avatar avatar--small">
                                         <img src={`${imagesfile[parseInt(image)-1].image}`} alt="pp" />
-                                    </div> :null}
+                                    </div> :null} */}
                                     {/* input field  */}
                                     <div className="m-2">{`Image ${image}: `}</div>
                                     <input

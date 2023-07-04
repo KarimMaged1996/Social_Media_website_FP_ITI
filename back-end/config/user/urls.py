@@ -15,5 +15,6 @@ urlpatterns = [
     path('myProfile/', user_views.myProfile, name='myProfile'),
     path('profile/<int:user_id>/', user_views.UserProfileAPIView, name='userprofile'),
     path('search/', user_views.search, name='search'),
+    path('update/<int:pk>', user_views.UserUpdate.as_view(), name='userupdate'),
     
 ]

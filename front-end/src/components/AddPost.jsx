@@ -1,15 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "../css/editProfile.css";
-import { AuthContext } from "../context/AuthContext";
 import { PostApi } from "../API/PostAPI";
 import axios from "axios";
-
-
+import { AuthContext } from "../context/AuthContext";
 export function AddPost() {
+
+    // const {group} = props
+    const navigate =useNavigate()
     const [images, setImages] = useState([
         "1"
     ])
+
+    const{user}= useContext(AuthContext);
+    // const admin_id = user.id
     const admin_id = 1
 
     const [formValues, setFormValues] = useState({
@@ -28,6 +32,7 @@ export function AddPost() {
         image2: null,
         image3: null,
         image4: null,
+        group: 1,
     })
     const [checkbox1, setCheckbox1] = useState(true);
     const [checkbox2, setCheckbox2] = useState(false);
@@ -73,6 +78,13 @@ export function AddPost() {
             setImages([
                 "1"
             ])
+            setFormValues({
+                ...formValues,
+                image1:"",
+                image2:"",
+                image3:"",
+                image4:"",
+                });
             setCheckbox1(event.target.checked);
         }
     };
@@ -141,7 +153,7 @@ export function AddPost() {
         //     });
         
         let res = await PostApi.createpost(submitValues)
-        window.location.reload()
+        navigate("/")
     };
 
 
@@ -282,6 +294,6 @@ export function AddPost() {
                 </div>
             </div>
             </main>
-      </div>
+    </div>
     )
 }

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import CommentSerializer, CommentLikesSerializer, CommentSerializer2
@@ -37,6 +38,12 @@ class CommentDelete(generics.DestroyAPIView):
     permission_classes = [AllowAny]
     # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
+class CommentLike_list(generics.ListCreateAPIView):
+    # permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    queryset = Comment_Vote.objects.all()
+    serializer_class = CommentLikesSerializer
+
 class CommentLikeCreate(generics.CreateAPIView):
     queryset = Comment_Vote.objects.all()
     serializer_class = CommentLikesSerializer
@@ -55,12 +62,8 @@ class CommentLikeDelete(generics.DestroyAPIView):
     permission_classes = [AllowAny]
     # permission_classes = [IsAuthenticated]
 
-class CommentLike_list(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Comment_Vote.objects.all()
-    serializer_class = CommentLikesSerializer
 
-
+# endpoint to list the comment votes 
 
 
 # endpoint to list the post comments 
@@ -92,3 +95,33 @@ def usercomments(request,pk):
             raise Http404("User not found")
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+# @api_view(['GET'])
+# def check_comment_vote(request, comment_id, user_id):
+#     try:
+#         # Try to retrieve the Comment_Vote record for the specified comment and user
+#         vote = Comment_Vote.objects.get(comment_id=comment_id, user_id=user_id)
+
+#         # If the value is 1, return 1 (upvote)
+#         if vote.value == 1:
+#             return Response({'result': 1})
+
+#         # If the value is -1, return -1 (downvote)
+#         elif vote.value == -1:
+#             return Response({'result': -1})
+
+#     except Comment_Vote.DoesNotExist:
+#         # If the record doesn't exist, return 0
+#         return Response({'result': 0})
+    
+@api_view(['GET'])
+def check_comment_vote(request, comment_id, user_id):
+    comment_vote = get_object_or_404(Comment_Vote, comment_id=comment_id, user_id=user_id)
+    data = {
+        'id': comment_vote.id,
+        'user': comment_vote.user.id,
+        'comment': comment_vote.comment.id,
+        'value': comment_vote.value,
+        'created_at': comment_vote.created_at
+    }
+    return Response(data)

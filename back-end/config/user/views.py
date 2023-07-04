@@ -13,7 +13,7 @@ from django.db.models import Q
 # DRF imports
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
@@ -25,13 +25,14 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 # app Imports
 from .models import User
-from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer, MyTokenObtainPairSerializer
+from .serializers import SignupSerializer, UserSerializer, PasswordUpdateSerializer, MyTokenObtainPairSerializer, UserSerializer2
 from post.models import Post
 from post.serializers import PostSerializer
 from groups.models import Group
 from groups.serializers import GroupSerializer
 
 
+from rest_framework import  generics
 
 # Create your views here.
 
@@ -179,7 +180,8 @@ def resetPassword(request, uid, token):
 
     
 @api_view(['GET', 'PUT'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
+# @permission_classes([IsAuthenticated])
 def myProfile(request):
     if request.method == 'GET':
 
@@ -251,6 +253,13 @@ def search(request):
         return Response({'msg': e}, status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     
+
+class UserUpdate(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer2
+    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    permission_classes = [AllowAny]
+
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer

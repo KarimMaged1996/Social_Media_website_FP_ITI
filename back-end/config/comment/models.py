@@ -21,13 +21,13 @@ class Comment(models.Model):
 
     def update_score(self):
         # gett the votes related to the post 
-        self.score = Comment_Vote.objects.filter(post=self) # => this will result on a queryset of all the votes 
+        self.score = Comment_Vote.objects.filter(comment=self) # => this will result on a queryset of all the votes 
         print(self.score)
         # sum the column value 
-        self.score = Comment_Vote.objects.filter(post=self).aggregate(Sum('value')) # => a dictionary of the {'value_sum': sum of the colume}
+        self.score = Comment_Vote.objects.filter(comment=self).aggregate(Sum('value')) # => a dictionary of the {'value_sum': sum of the colume}
         print(self.score)
         #to get the value we have to bass the key which is ['value_sum']
-        self.score = Comment_Vote.objects.filter(post=self).aggregate(Sum('value'))['value__sum'] or 0
+        self.score = Comment_Vote.objects.filter(comment=self).aggregate(Sum('value'))['value__sum'] or 0
         print(self.score)   
         self.save()
 
@@ -37,22 +37,22 @@ class Comment(models.Model):
 
 class Comment_Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="post_comments")
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     value = models.IntegerField(choices=((1, 'Upvote'), (-1, 'Downvote')))
     created_at = models.DateTimeField(auto_now_add=True)
 
 
     # setting primary key
     class Meta:
-        unique_together = ('user', 'post')
+        unique_together = ('user', 'comment')
 
-    # overidding the default save to run the post.update_score 
+    # overidding the default save to run the comment.update_score 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.post.update_score()
+        self.comment.update_score()
 
     def __str__(self):
-        return f'{self.user.username} {self.value} {self.post}'
+        return f'{self.user.username} {self.value} {self.comment}'
     # def __str__(self):
     #     return self.title
 

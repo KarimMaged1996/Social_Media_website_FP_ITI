@@ -15,7 +15,7 @@ class User(AbstractBaseUser):
         ('f', 'Female'),
         ('notsay', 'Prefer Not to say')
     ]
- 
+
     firstname = models.CharField(max_length=20)
     lastname = models.CharField(max_length=20)
     username = models.CharField(max_length=20, unique=True)
