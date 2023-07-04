@@ -99,6 +99,10 @@ class ListGroupPosts(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
 
+    def get_queryset(self):
+        group_id = self.kwargs["pk"]
+        return Post.objects.filter(group=group_id)
+
 
 # endpoint to list all tha group posts
 @api_view(["GET"])
@@ -113,10 +117,6 @@ def GroupPosts(request, pk):
         except User.DoesNotExist:
             raise Http404("User not found")
     return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def get_queryset(self):
-        group_id = self.kwargs["pk"]
-        return Post.objects.filter(group=group_id)
 
 
 # @api_view(['GET'])

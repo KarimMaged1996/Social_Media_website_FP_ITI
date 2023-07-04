@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { Topics } from './Topics';
 import { Activity } from './Activity';
 import { PostApi } from '../API/PostAPI';
@@ -10,9 +10,9 @@ export function Home() {
   const getActivity = async () => {
     try {
       const res = await activityApi.userActivity();
-      console.log(res.data)
+      console.log(res.data);
       setActivity(res.data);
-      console.log(activity)
+      console.log(activity);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
@@ -25,10 +25,10 @@ export function Home() {
       <div class="container">
         <Topics />
         <div className="roomListRoom">
-    {activity.map((post) => {
-      return <Mypost post={post} />
-    })}
-</div>
+          {activity.map((post) => {
+            return <Mypost post={post} />;
+          })}
+        </div>
         <Activity />
       </div>
     </main>

@@ -12,6 +12,8 @@ from .views import (
     PostLikeDelete,
     GroupPosts,
     check_post_vote,
+    CurrentUserGroupsPosts,
+    ListGroupPosts,
 )
 
 
@@ -28,4 +30,6 @@ urlpatterns = [
     path("like/delete/<int:pk>", PostLikeDelete.as_view(), name="postlikedelete"),
     path("user_posts/<int:pk>/", UserPosts),
     path("group_posts/<int:pk>/", GroupPosts),
+    path("user_groups_posts/", CurrentUserGroupsPosts),
+    path("group_posts2/<int:pk>/", ListGroupPosts.as_view()),
 ]

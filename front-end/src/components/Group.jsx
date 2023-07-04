@@ -47,7 +47,7 @@ export default function Group() {
     }
   };
   function getPosts() {
-    let url = `http://127.0.0.1:8000/post/group_posts/${param.id}/`;
+    let url = `http://127.0.0.1:8000/post/group_posts2/${param.id}/`;
 
     console.log(token);
     axios
