@@ -13,6 +13,7 @@ export default function Group() {
   let token = localStorage.getItem('access_token');
   let headers = { Authorization: `Bearer ${token}` };
   let param = useParams('id');
+  let navigate = useNavigate();
   const { user } = useContext(AuthContext);
   let [group, setGroup] = useState({});
   let [isMember, setIsMember] = useState(false);
@@ -105,15 +106,24 @@ export default function Group() {
                     </p>
                   </NavLink>
                 )}
-                {isMember && !isOwner && (
+                {(isMember || isOwner) && (
                   <div>
-                    <div style={buttonStyles} onClick={leaveGroup}>
-                      Leave
+                    {!isOwner && (
+                      <div style={buttonStyles} onClick={leaveGroup}>
+                        Leave
+                      </div>
+                    )}
+                    <div
+                      style={buttonStyles}
+                      onClick={() => {
+                        navigate(`/addpost/${param.id}`);
+                      }}
+                    >
+                      Add Post
                     </div>
-                    <div style={buttonStyles}>Add Post</div>
                   </div>
                 )}
-                {!isMember && (
+                {!isMember && !isOwner && (
                   <div>
                     <div style={buttonStyles} onClick={joinGroup}>
                       Join
@@ -132,7 +142,7 @@ export default function Group() {
               </div>
             </div>
           </div>
-          {isMember && (
+          {(isMember || isOwner) && (
             <div className="roomListRoom">
               {posts.map((post) => {
                 return <Mypost post={post} />;
