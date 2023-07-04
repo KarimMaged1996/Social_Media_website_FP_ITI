@@ -79,7 +79,7 @@ export function Mypost(props) {
 
   return (
     <div className="roomList container">
-      <div class="">
+      <div class="roomListRoom">
         <div class="roomListRoom__header">
           <a href="profile.html" class="roomListRoom__author">
             <div class="avatar avatar--small">
