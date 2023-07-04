@@ -97,12 +97,12 @@ export default function Group() {
                 </div>
 
                 {isOwner && (
-                  <NavLink to="/editGroup">
+                  <NavLink to={`/editgroup/${param.id}`}>
                     <p
                       href="edit-user.html"
                       className="btn btn--main btn--pill text-white"
                     >
-                      Edit Profile
+                      Edit Group
                     </p>
                   </NavLink>
                 )}
