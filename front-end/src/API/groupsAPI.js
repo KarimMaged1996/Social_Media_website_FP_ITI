@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://127.0.0.1:8000/';
+const BASE_URL = 'http://127.0.0.1:8000';
 let token = localStorage.getItem('access_token');
 console.log(token);
 let headers = { Authorization: `Bearer ${token}` };
@@ -53,9 +53,10 @@ const getCategoryGroups = async (categoryId) => {
   try {
     let res = await axios.get(url, { headers });
     if (res.status === 200) {
+      console.log('Print the fucking things', res.data);
       content = {
-        status: res.data.status,
-        data: res.data.data,
+        status: res.status,
+        data: res.data
       };
     }
   } catch (e) {

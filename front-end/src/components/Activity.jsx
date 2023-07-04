@@ -44,8 +44,7 @@ export function Activity() {
           </div>
           <div class="activities__boxContent">
             <p>
-              {' '}
-              posted “<a href="room.html">{item.title}</a>”
+              posted “<a href={`/post/${item.id}`}>{item.title}</a>”
             </p>
             <div class="activities__boxRoomContent">
               {item.content.slice(0, 40)}...

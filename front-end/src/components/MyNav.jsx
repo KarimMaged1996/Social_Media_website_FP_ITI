@@ -93,37 +93,42 @@ export function MyNav() {
             {/* ... */}
           </Nav>
           {user ? (
-            <Nav className="header__menu">
-              <NavLink to={`/profile/${user.id}`}>
-                <div className="avatar avatar--medium active">
-                  <img
-                    src={
-                      user.avatar
-                        ? `http://127.0.0.1:8000${user.avatar}`
-                        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                    }
-                    alt="Avatar"
-                  />
-                  <span className="nav-link__username">{user.username}</span>
-                </div>
-                {/* ... */}
-              </NavLink>
-              <Dropdown className="mx-3">
-                <Dropdown.Toggle
-                  variant="success"
-                  id="dropdown-basic"
-                  className="fs-4"
-                >
-                  {user.userName}
-                </Dropdown.Toggle>
-                <Dropdown.Menu style={{ minWidth: '160px' }}>
-                  <NavLink to="/editprofile">
-                    <p className="text-white">Edit Profile</p>
-                  </NavLink>
-                  <Dropdown.Item onClick={logout}>Log out</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Nav>
+            <div>
+              <Nav className="header__menu">
+                <NavLink to={`/profile/${user.id}`}>
+                  <div className="avatar avatar--medium active">
+                    <img
+                      src={
+                        user.avatar
+                          ? `http://127.0.0.1:8000${user.avatar}`
+                          : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                      }
+                      alt="Avatar"
+                    />
+                    <span className="nav-link__username">{user.username}</span>
+                  </div>
+                  {/* ... */}
+                </NavLink>
+
+                <Dropdown className="mx-3">
+                  <Dropdown.Toggle
+                    variant="success"
+                    id="dropdown-basic"
+                    className="fs-4"
+                  >
+                    {user.userName}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu style={{ minWidth: '160px' }}>
+                    <NavLink to="/editprofile">
+                      <p className="text-white">Edit Profile</p>
+                    </NavLink>
+                    <Dropdown.Item onClick={logout}>Log out</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              <NavLink to="/explore" className="mx-5 text-white">Explore</NavLink>
+
+              </Nav>
+            </div>
           ) : (
             <Nav className="header__menu text-white">
               <Nav.Link href="/signup" className=" text-white">

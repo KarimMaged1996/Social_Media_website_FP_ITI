@@ -32,6 +32,8 @@ import { SearchProvider } from './context/SearchContext';
 import { ResetPassword } from './components/ResetPassword';
 import { NewPassword } from './components/NewPassword';
 import Group from './components/Group';
+import { Explore } from './components/Explore';
+import { AllGroups } from './components/AllGroups';
 
 function App() {
   return (
@@ -49,6 +51,13 @@ function App() {
 
             <Route path="Delete" element={<DeleteItem />} />
             <Route path="Topics" element={<Topics />} />
+            {/* Categories Start here */}
+            <Route path="explore" element={<Explore />} />
+            {/* Categories End here */}
+            {/* Category Groups Start Here */}
+            <Route path="category/:id" element={<AllGroups />} />
+            {/* Category Groups End Here */}
+
             <Route path="profile-settings" element={<ProfileSettings />} />
 
             <Route path="activity" element={<Activity />} />
