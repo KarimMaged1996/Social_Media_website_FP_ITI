@@ -31,6 +31,7 @@ import { SearchProvider } from './context/SearchContext';
 import { ResetPassword } from './components/ResetPassword';
 import { NewPassword } from './components/NewPassword';
 import Group from './components/Group';
+import EditGroup from './components/EditGroup';
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
             <Route path="search" element={<Search />} />
             <Route path="group/:id" element={<Group />} />
             <Route path="addpost/:id" element={<AddPost />} />
+            <Route path="editgroup/:id" element={<EditGroup />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SearchProvider>

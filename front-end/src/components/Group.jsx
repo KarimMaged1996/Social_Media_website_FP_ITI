@@ -106,11 +106,13 @@ export default function Group() {
                     </p>
                   </NavLink>
                 )}
-                {isMember && !isOwner && (
+                {(isMember || isOwner) && (
                   <div>
-                    <div style={buttonStyles} onClick={leaveGroup}>
-                      Leave
-                    </div>
+                    {!isOwner && (
+                      <div style={buttonStyles} onClick={leaveGroup}>
+                        Leave
+                      </div>
+                    )}
                     <div
                       style={buttonStyles}
                       onClick={() => {
@@ -121,7 +123,7 @@ export default function Group() {
                     </div>
                   </div>
                 )}
-                {!isMember && (
+                {!isMember && !isOwner && (
                   <div>
                     <div style={buttonStyles} onClick={joinGroup}>
                       Join
@@ -140,7 +142,7 @@ export default function Group() {
               </div>
             </div>
           </div>
-          {isMember && (
+          {(isMember || isOwner) && (
             <div className="roomListRoom">
               {posts.map((post) => {
                 return <Mypost post={post} />;
