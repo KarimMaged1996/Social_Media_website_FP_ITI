@@ -35,6 +35,7 @@ import EditGroup from './components/EditGroup';
 import { Explore } from './components/Explore';
 import { AllGroups } from './components/AllGroups';
 import CreateGroup from './components/CreateGroup';
+import { Activate } from './components/Activate';
 
 function App() {
   return (
@@ -86,6 +87,7 @@ function App() {
               path="api/resetpassword/:uid/:token"
               element={<NewPassword></NewPassword>}
             />
+            <Route path='api/activate/:uid/:token' element={<Activate />} />
 
             <Route path="search" element={<Search />} />
             <Route path="group/:id" element={<Group />} />
