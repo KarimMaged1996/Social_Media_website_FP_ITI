@@ -34,6 +34,7 @@ import Group from './components/Group';
 import EditGroup from './components/EditGroup';
 import { Explore } from './components/Explore';
 import { AllGroups } from './components/AllGroups';
+import CreateGroup from './components/CreateGroup';
 
 function App() {
   return (
@@ -90,6 +91,7 @@ function App() {
             <Route path="group/:id" element={<Group />} />
             <Route path="addpost/:id" element={<AddPost />} />
             <Route path="editgroup/:id" element={<EditGroup />} />
+            <Route path="creategroup/:id" element={<CreateGroup />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SearchProvider>
