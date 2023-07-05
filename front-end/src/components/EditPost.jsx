@@ -21,7 +21,12 @@ export function EditPost() {
     ])
     const navigate = useNavigate()
 
-    const [imagesfile, setImagesfile] = useState([])
+    const [imagesfile, setImagesfile] = useState([
+        {"image": null},
+        {"image": null},
+        {"image": null},
+        {"image": null},
+    ])
 
     const admin_id = 1
     const [formValues, setFormValues] = useState({});
@@ -85,13 +90,34 @@ export function EditPost() {
                     setCheckbox2(true);
                     setImagesfile([
                         {"video": res.data.video},
+                        {"image": null},
+                        {"image": null},
+                        {"image": null},
+                        {"image": null},
                     ])
                 }
                 else {
                     setImagesfile([
                         {"image": null},
+                        {"image": null},
+                        {"image": null},
+                        {"image": null},
                     ])
                 }
+
+                if(res.data.image2){
+                    setImages(["1","2"])
+                }
+
+                if(res.data.image3){
+                    setImages(["1","2","3"])
+                }
+
+                if(res.data.image4){
+                    setImages(["1","2","3","4"])
+                }
+
+
 
                 setIsLoading(false);
             })
@@ -100,7 +126,12 @@ export function EditPost() {
             });
         // };
     }, []);
-    // console.log(imagesfile)
+    console.log(imagesfile)
+    
+    console.log((imagesfile[2]).image!=null)
+    console.log((imagesfile[0]).image!=null)
+    console.log(imagesfile[1])
+
     // console.log(formValues)
     
 
@@ -184,6 +215,7 @@ export function EditPost() {
     // adding images 
     const addimage = () => 
     {
+        // setIsLoading(true)
         let length = images.length;
 
         let next = (length + 1).toString()
@@ -194,6 +226,7 @@ export function EditPost() {
                 ...images,
                 next
             ])
+            // setIsLoading(false)
         }
         else{
             
@@ -202,8 +235,8 @@ export function EditPost() {
             })
         }
     }
-
     console.log(images)
+    
     // REMOVING AN IMAGE
     const removeimage = (e) => {
         let name = e.target.name
@@ -255,7 +288,6 @@ export function EditPost() {
                 console.log(err);
             })
 
-        
         // let res = await PostApi.editpost(post_id,formValues)
         navigate (`/post/${post_id}`)
     };
@@ -358,30 +390,35 @@ export function EditPost() {
 
 
                             {/* for each existing image  */}
-                            {images.map((image) => (
-                                <div key={`${admin_id}${image}`} className="d-flex align-items-center">
+                            {images.map((imagenum) => 
+                                <div key={`${admin_id}${imagenum}`} className="d-flex align-items-center">
 
                                     {/* image */}
-                                    {/* {imagesfile[parseInt(image)-1].image? <div class="avatar avatar--small">
-                                        <img src={`${imagesfile[parseInt(image)-1].image}`} alt="pp" />
-                                    </div> :null} */}
+
+                                    {(imagesfile[parseInt(imagenum)-1]).image!=null? 
+                                        <div class="avatar avatar--small">
+ 
+                                            <img src={`${(imagesfile[parseInt(imagenum)-1]).image}`} alt="pp" />
+                                        </div> 
+                                    :null}
+
                                     {/* input field  */}
-                                    <div className="m-2">{`Image ${image}: `}</div>
+                                    <div className="m-2">{`Image ${imagenum}: `}</div>
                                     <input
                                     className="w-75 m-2"
                                     type="file"
-                                    name={`image${image}`}
+                                    name={`image${imagenum}`}
                                     id="avatar"
                                     placeholder="add image"
                                     accept="image/png, image/gif, image/jpeg"
                                     onChange={inputHandler}
                                     />
                                     {/* delete button */}
-                                    { image == images.length && image != 1 ? <div className="p-1" >
-                                        <input className="btn bg-danger fs-3  " type="button" name={`image${image}`} value="x" onClick={removeimage} />
+                                    { imagenum == images.length && imagenum != 1 ? <div className="p-1" >
+                                        <input className="btn bg-danger fs-3  " type="button" name={`image${imagenum}`} value="x" onClick={removeimage} />
                                     </div> : null}
                                 </div>
-                            ))}
+                            )}
 
                         </div>
 
