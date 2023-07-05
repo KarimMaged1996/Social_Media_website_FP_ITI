@@ -101,7 +101,7 @@ class ListGroupPosts(generics.ListCreateAPIView):
 
     def get_queryset(self):
         group_id = self.kwargs["pk"]
-        return Post.objects.filter(group=group_id)
+        return Post.objects.filter(group=group_id).order_by("-created_at")
 
 
 # endpoint to list all tha group posts

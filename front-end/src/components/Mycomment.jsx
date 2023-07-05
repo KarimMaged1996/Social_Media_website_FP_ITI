@@ -105,7 +105,7 @@ export function Mycomment(props) {
       .delete(DeleteAPIUrl, {
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },
       })
       .then((res) => {
@@ -466,6 +466,7 @@ export function Mycomment(props) {
     <div className="roomList container" style={{ width: '75vw' }}>
       <div class="roomListRoom ">
         <div class="roomListRoom__header">
+
           <a href={`/profile/${comment.author.id}`} class="roomListRoom__author">
             <div class="avatar avatar--small">
               <img

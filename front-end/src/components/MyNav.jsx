@@ -11,12 +11,25 @@ import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { SearchContext } from '../context/SearchContext';
+import {BASE_URL} from '../Constants'
 import Dropdown from 'react-bootstrap/Dropdown';
 export function MyNav() {
   const { user, setTokens } = useContext(AuthContext);
   const { searchResults, setSearchResults } = useContext(SearchContext);
   let navigate = useNavigate();
   console.log('user1', user);
+
+  // let image1url = ""
+  // if (user.avataer!=null)
+  // {
+  //   let image1url = user.avatar
+  //   {
+  //       if(!image1url.includes("http")){
+  //         image1url=BASE_URL+image1url
+  //       }
+  //   }
+  // }
+
   function search(e) {
     let params = {
       s: e.target.value,
@@ -27,7 +40,7 @@ export function MyNav() {
     if (e.keyCode === 13) {
       e.preventDefault();
       axios
-        .post('http://127.0.0.1:8000/api/search/', {}, { params, headers })
+        .post(`${BASE_URL}/api/search/`, {}, { params, headers })
         .then((response) => {
           setSearchResults(response.data.msg);
           navigate('/search');
@@ -40,7 +53,7 @@ export function MyNav() {
   function logout() {
     axios
       .post(
-        'http://127.0.0.1:8000/api/logout/',
+        `${BASE_URL}/api/logout/`,
         {
           refresh: localStorage.getItem('refresh_token'),
         },
@@ -100,7 +113,7 @@ export function MyNav() {
                     <img
                       src={
                         user.avatar
-                          ? `http://127.0.0.1:8000${user.avatar}`
+                          ? `${BASE_URL}${user.avatar}`
                           : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
                       }
                       alt="Avatar"

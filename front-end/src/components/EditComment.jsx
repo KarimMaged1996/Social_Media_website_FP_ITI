@@ -28,7 +28,7 @@ export function EditComment() {
         else{
 
             axios
-            .get(`${BASE_URL}BASE_URL/comment/${comment_id}`,
+            .get(`${BASE_URL}/comment/${comment_id}`,
             {
                 headers: 
                 {
@@ -93,10 +93,6 @@ export function EditComment() {
         // window.location.reload()
     };
 
-    if (isLoading) {
-        return <div className="d-flex jsutify-content-center m-5 align-items-center"><h1>Loading...</h1></div>;
-    }
-    
 
     return (
         <div >
