@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import '../css/editProfile.css';
 import { PostApi } from '../API/PostAPI';
@@ -41,6 +41,12 @@ export function AddPost() {
     content: '',
     image: '',
   });
+
+  useEffect(() => {
+    if(localStorage.getItem('access_token') === null){                   
+        window.location.href = '/login'
+    }
+}, []);
   // ****** Handle form input changes
   const inputHandler = (e) => {
     if (

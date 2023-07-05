@@ -65,6 +65,11 @@ export function EditPost() {
 
 
     useEffect(() => {
+
+        if(localStorage.getItem('access_token') === null){                   
+            window.location.href = '/login'
+        }
+        else{
             axios
             .get(`${BASE_URL}/post/${post_id}`,
             {
@@ -124,7 +129,7 @@ export function EditPost() {
             .catch(err => {
                 console.log(err);
             });
-        // };
+        };
     }, []);
 
 

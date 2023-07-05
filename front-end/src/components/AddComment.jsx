@@ -27,6 +27,8 @@ export function AddComment(props) {
         post: post_id,
     })
 
+
+
     const [error, setError] = useState({
         content: ""
     })

@@ -466,16 +466,14 @@ export function Mycomment(props) {
     <div className="roomList container" style={{ width: '75vw' }}>
       <div class="roomListRoom ">
         <div class="roomListRoom__header">
-          <a href="profile.html" class="roomListRoom__author">
+          <a href={`/profile/${comment.author.id}`} class="roomListRoom__author">
             <div class="avatar avatar--small">
               <img
                 src={profileimageurl}
                 alt="pp"
               />
             </div>
-            <NavLink className="nav-link" to={`/author/addbook`}>
               <span>@{comment.author.username}</span>
-            </NavLink>
             <div> techbin:{techbin}</div>
           </a>
 

@@ -21,6 +21,12 @@ export function EditComment() {
     })
 
     useEffect(() => {
+
+        if(localStorage.getItem('access_token') === null){                   
+            window.location.href = '/login'
+        }
+        else{
+
             axios
             .get(`${BASE_URL}BASE_URL/comment/${comment_id}`,
             {
@@ -38,7 +44,7 @@ export function EditComment() {
             .catch(err => {
                 console.log(err);
             });
-        // };
+        };
     }, []);
 
     if (isLoading) {
