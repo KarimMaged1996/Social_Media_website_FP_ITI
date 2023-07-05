@@ -716,8 +716,8 @@ export function Mypost(props) {
         {post.video ? (
           <Container>
           <Row style={{ display: 'flex', justifyContent: 'start' }}>
-            <Col xs={6} md={3}>
-            <video controls style={{ height: '300px', width: '500px', margin: '10px' }}>
+            <Col xs={12} >
+            <video controls style={{ height: 'auto', width: '100%', margin: '10px' }}>
               <source src={videourl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>

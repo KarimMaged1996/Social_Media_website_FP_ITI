@@ -144,7 +144,7 @@ export function AddPost() {
         });
 
     // let res = await PostApi.createpost(submitValues);
-    // navigate(`/group/${param.id}`);
+    navigate(`/group/${param.id}`);
   };
 
   return (

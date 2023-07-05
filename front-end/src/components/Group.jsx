@@ -8,6 +8,7 @@ import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { Mypost } from './Mypost';
+import { BASE_URL } from '../Constants';
 
 export default function Group() {
   let token = localStorage.getItem('access_token');
@@ -48,7 +49,7 @@ export default function Group() {
     }
   };
   function getPosts() {
-    let url = `http://127.0.0.1:8000/post/group_posts2/${param.id}/`;
+    let url = `${BASE_URL}/post/group_posts2/${param.id}/`;
 
     console.log(token);
     axios
@@ -66,12 +67,12 @@ export default function Group() {
   }, [isMember, isOwner]);
 
   function leaveGroup() {
-    let url = `http://127.0.0.1:8000/groups/leave_group/${param.id}/`;
+    let url = `${BASE_URL}/groups/leave_group/${param.id}/`;
     axios.delete(url, { headers });
     setIsMember(false);
   }
   function joinGroup() {
-    let url = `http://127.0.0.1:8000/groups/join_group/${param.id}/`;
+    let url = `${BASE_URL}/groups/join_group/${param.id}/`;
     axios
       .post(url, {}, { headers })
       .then((response) => {

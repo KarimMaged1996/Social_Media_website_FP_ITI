@@ -2,7 +2,9 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { BASE_URL } from '../Constants';
 import axios from 'axios';
+
 let name, description, minTech;
 export default function CreateGroup() {
   let { user } = useContext(AuthContext);
@@ -29,14 +31,14 @@ export default function CreateGroup() {
       owner: user.id,
     };
     axios
-      .post(`http://127.0.0.1:8000/groups/category_groups/${id}/`, postObj, {
+      .post(`${BASE_URL}/groups/category_groups/${id}/`, postObj, {
         headers,
       })
       .then((response) => {
         let group_id = response.data.id;
         axios
           .post(
-            `http://127.0.0.1:8000/groups/join_group/${group_id}/`,
+            `${BASE_URL}/groups/join_group/${group_id}/`,
             {},
             { headers }
           )

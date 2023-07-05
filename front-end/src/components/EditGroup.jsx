@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../Constants';
 let name, description;
+
 
 export default function EditGroup() {
   let navigate = useNavigate();
@@ -23,7 +25,7 @@ export default function EditGroup() {
     };
     axios
       .patch(
-        `http://127.0.0.1:8000/groups/single_group/${param.id}/`,
+        `${BASE_URL}/groups/single_group/${param.id}/`,
         postObj,
         {
           headers,

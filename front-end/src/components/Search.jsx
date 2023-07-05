@@ -3,6 +3,7 @@ import { Topics } from './Topics';
 import { Activity } from './Activity';
 import { SearchContext } from '../context/SearchContext';
 import { Mypost } from './Mypost';
+import { BASE_URL } from '../Constants';
 
 export default function Search() {
   let { searchResults } = useContext(SearchContext);
@@ -28,7 +29,7 @@ export default function Search() {
               <img
                 src={
                   user.avatar
-                    ? `http://127.0.0.1:8000${user.avatar}`
+                    ? `${BASE_URL}${user.avatar}`
                     : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
                 }
                 alt=""
