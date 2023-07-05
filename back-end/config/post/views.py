@@ -28,8 +28,8 @@ class Post_list(generics.ListAPIView):
 
 # RetrieveUpdateDestroyAPIView
 class Post_details(generics.RetrieveAPIView):
-    # premission_classes = [IsAuthorOrReadOnly]
-    permission_classes = (AllowAny,)
+    premission_classes = [IsAuthorOrReadOnly]
+    # permission_classes = (AllowAny,)
     queryset = Post.objects.all()
     serializer_class = PostSerializer2
 
@@ -43,8 +43,8 @@ class PostCreate(generics.CreateAPIView):
 class PostUpdate(generics.UpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    # permission_classes = [AllowAny]
 
 
 class PostDelete(generics.DestroyAPIView):
@@ -62,22 +62,22 @@ class Like_list(generics.ListAPIView):
 class PostLikeCreate(generics.CreateAPIView):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     # permission_classes = [IsAuthenticated]
 
 
 class PostLikeUpdate(generics.UpdateAPIView):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
-    permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated]
+    # permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 
 class PostLikeDelete(generics.DestroyAPIView):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
     permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 # endpoint to list all tha author posts
@@ -106,7 +106,7 @@ class ListGroupPosts(generics.ListCreateAPIView):
 
 # endpoint to list all tha group posts
 @api_view(["GET"])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def GroupPosts(request, pk):
     if request.method == "GET":
         try:

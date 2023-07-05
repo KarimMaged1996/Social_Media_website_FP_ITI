@@ -5,11 +5,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {BASE_URL} from '../Constants'
 
+
 export function EditComment() {
 
     let { id } = useParams();
     let comment_id = id
     const navigate = useNavigate()
+    const{user}= useContext(AuthContext);
 
     const [formValues, setFormValues] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +27,7 @@ export function EditComment() {
                 headers: 
                 {
                     'Content-Type': 'application/json',
-                    // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 }
             })
             .then(res => {
@@ -67,7 +69,7 @@ export function EditComment() {
         axios
             .patch(`${BASE_URL}/comment/update/${comment_id}`, submitValues,{
                 headers: {
-                    // 'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                     'Content-Type': 'multipart/form-data'
                 }
             })
@@ -109,6 +111,7 @@ export function EditComment() {
                     </div>
                 </div>
     
+                {formValues.author.id == user.id?
                 <div className="settings layout__body">
                     {/* commet Form */}
                     <form onSubmit={onSubmitHandler} encType="multipart/form-data" className="form" >
@@ -133,6 +136,7 @@ export function EditComment() {
                     </form>
                     {/* End Profile Form */}
                 </div>
+                :<div className="d-flex justify-content-center align-items-center"><h1>not allowed </h1></div>}
                 </div>
             </div>
             </main>

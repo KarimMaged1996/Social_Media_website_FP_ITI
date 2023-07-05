@@ -12,7 +12,7 @@ import { useRef } from 'react';
 export function EditPost() {
 
     const{user}= useContext(AuthContext);
-    // console.log(user)
+    console.log(user)
 
     let { id } = useParams();
     let post_id = id
@@ -126,6 +126,8 @@ export function EditPost() {
             });
         // };
     }, []);
+
+
     console.log(imagesfile)
     
     console.log((imagesfile[2]).image!=null)
@@ -316,6 +318,7 @@ export function EditPost() {
                     </div>
                 </div>
     
+                {formValues.author.id == user.id?
                 <div className="settings layout__body">
                     {/* Post Form */}
                     <form onSubmit={onSubmitHandler} encType="multipart/form-data" className="form" >
@@ -450,6 +453,7 @@ export function EditPost() {
                     </form>
                     {/* End Profile Form */}
                 </div>
+                : <div className="d-flex justify-content-center align-items-center"><h1>not allowed </h1></div>}
                 </div>
             </div>
             </main>

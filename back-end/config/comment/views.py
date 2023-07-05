@@ -29,38 +29,38 @@ class CommentCreate(generics.CreateAPIView):
 class CommentUpdate(generics.UpdateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer2
-    permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    # permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
 class CommentDelete(generics.DestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer2
-    permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    # permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
 class CommentLike_list(generics.ListCreateAPIView):
-    # permission_classes = [IsAuthenticated]
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
+    # permission_classes = [AllowAny]
     queryset = Comment_Vote.objects.all()
     serializer_class = CommentLikesSerializer
 
 class CommentLikeCreate(generics.CreateAPIView):
     queryset = Comment_Vote.objects.all()
     serializer_class = CommentLikesSerializer
-    permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated]
+    # permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class CommentLikeUpdate(generics.UpdateAPIView):
     queryset = Comment_Vote.objects.all()
     serializer_class = CommentLikesSerializer
-    permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated]
+    # permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class CommentLikeDelete(generics.DestroyAPIView):
     queryset = Comment_Vote.objects.all()
     serializer_class = CommentLikesSerializer
-    permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated]
+    # permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 
 # endpoint to list the comment votes 
@@ -68,7 +68,7 @@ class CommentLikeDelete(generics.DestroyAPIView):
 
 # endpoint to list the post comments 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def postcomments(request,pk):
     if request.method == 'GET':
         try:
@@ -83,7 +83,7 @@ def postcomments(request,pk):
 
 # endpoint to list the user comments 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def usercomments(request,pk):
     if request.method == 'GET':
         try:

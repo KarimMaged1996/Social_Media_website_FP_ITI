@@ -13,8 +13,8 @@ export function AddPost() {
   const navigate = useNavigate();
   const [images, setImages] = useState(['1']);
   const { user } = useContext(AuthContext);
-  // const admin_id = user.id
-  const admin_id = 1;
+  const admin_id = user.id
+  // const admin_id = 1;
 
   const [formValues, setFormValues] = useState({
     title: '',
