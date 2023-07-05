@@ -125,7 +125,7 @@ export function Mycomment(props) {
         .delete(LikeDeleteURL, {
           headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           },
         })
         .then((res) => {
@@ -139,11 +139,11 @@ export function Mycomment(props) {
       // decrease the score
       axios
         .patch(
-          `http://127.0.0.1:8000/comment/update/${comment.id}`,
+          `${BASE_URL}/comment/update/${comment.id}`,
           { score: score - 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -159,7 +159,7 @@ export function Mycomment(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${comment.author.id}`,
+          `${BASE_URL}/api/update/${comment.author.id}`,
           { techbin: techbin - 1 },
           {
             headers: {
@@ -201,7 +201,7 @@ export function Mycomment(props) {
       // decrease the score
       axios
         .patch(
-          `http://127.0.0.1:8000/comment/update/${comment.id}`,
+          `${BASE_URL}/comment/update/${comment.id}`,
           { score: score + 2 },
           {
             headers: {
@@ -218,7 +218,7 @@ export function Mycomment(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${comment.author.id}`,
+          `${BASE_URL}/api/update/${comment.author.id}`,
           { techbin: techbin + 2 },
           {
             headers: {
@@ -256,7 +256,7 @@ export function Mycomment(props) {
 
       axios
         .patch(
-          `http://127.0.0.1:8000/comment/update/${comment.id}`,
+          `${BASE_URL}/comment/update/${comment.id}`,
           { score: score + 1 },
           {
             headers: {
@@ -273,7 +273,7 @@ export function Mycomment(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${comment.author.id}`,
+          `${BASE_URL}/api/update/${comment.author.id}`,
           { techbin: techbin + 1 },
           {
             headers: {
@@ -311,7 +311,7 @@ export function Mycomment(props) {
       // decrease the score
       axios
         .patch(
-          `http://127.0.0.1:8000/comment/update/${comment.id}`,
+          `${BASE_URL}/comment/update/${comment.id}`,
           { score: score + 1 },
           {
             headers: {
@@ -331,7 +331,7 @@ export function Mycomment(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${comment.author.id}`,
+          `${BASE_URL}/api/update/${comment.author.id}`,
           { techbin: techbin + 1 },
           {
             headers: {
@@ -373,7 +373,7 @@ export function Mycomment(props) {
       // decrease the score
       axios
         .patch(
-          `http://127.0.0.1:8000/comment/update/${comment.id}`,
+          `${BASE_URL}/comment/update/${comment.id}`,
           { score: score - 2 },
           {
             headers: {
@@ -390,7 +390,7 @@ export function Mycomment(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${comment.author.id}`,
+          `${BASE_URL}/api/update/${comment.author.id}`,
           { techbin: techbin - 2 },
           {
             headers: {
@@ -429,7 +429,7 @@ export function Mycomment(props) {
 
       axios
         .patch(
-          `http://127.0.0.1:8000/comment/update/${comment.id}`,
+          `${BASE_URL}/comment/update/${comment.id}`,
           { score: score - 1 },
           {
             headers: {
@@ -446,7 +446,7 @@ export function Mycomment(props) {
       // decrease the techbin of the user
       axios
         .patch(
-          `http://127.0.0.1:8000/api/update/${comment.author.id}`,
+          `${BASE_URL}/api/update/${comment.author.id}`,
           { techbin: techbin - 1 },
           {
             headers: {

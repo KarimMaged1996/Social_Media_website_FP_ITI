@@ -201,7 +201,7 @@ export function Mypost(props) {
         .delete(LikeDeleteURL, {
           headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           },
         })
         .then((res) => {
@@ -219,7 +219,7 @@ export function Mypost(props) {
           { score: score - 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -239,7 +239,7 @@ export function Mypost(props) {
           { techbin: techbin - 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -257,7 +257,7 @@ export function Mypost(props) {
           {
             headers: {
               'Content-Type': 'application/json',
-              // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             },
           }
         )
@@ -281,7 +281,7 @@ export function Mypost(props) {
           { score: score + 2 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -298,7 +298,7 @@ export function Mypost(props) {
           { techbin: techbin + 2 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -316,7 +316,7 @@ export function Mypost(props) {
           {
             headers: {
               'Content-Type': 'application/json',
-              // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             },
           }
         )
@@ -336,7 +336,7 @@ export function Mypost(props) {
           { score: score + 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -353,7 +353,7 @@ export function Mypost(props) {
           { techbin: techbin + 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -373,7 +373,7 @@ export function Mypost(props) {
         .delete(LikeDeleteURL, {
           headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           },
         })
         .then((res) => {
@@ -391,7 +391,7 @@ export function Mypost(props) {
           { score: score + 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -411,7 +411,7 @@ export function Mypost(props) {
           { techbin: techbin + 1 },
           {
             headers: {
-              // 'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
               'Content-Type': 'multipart/form-data',
             },
           }
@@ -544,13 +544,11 @@ export function Mypost(props) {
 
       <div class="roomListRoom">
         <div class="roomListRoom__header">
-          <a href="profile.html" class="roomListRoom__author">
+          <a href={`/profile/${post.author.id}`} class="roomListRoom__author">
             <div class="avatar avatar--small">
               <img src={profileimageurl} alt="pp" />
             </div>
-            <NavLink className="nav-link" to={`/profile/${post.author.id}`}>
-              <span>@{post.author.username}</span>
-            </NavLink>
+              <span><h4>@{post.author.username}</h4></span>
           </a>
           <div class="roomListRoom__actions">
             <span>{sinceWhen(post.created_at)}</span>

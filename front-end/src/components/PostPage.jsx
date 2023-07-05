@@ -21,10 +21,10 @@ export function PostPage(props) {
     let commentsapiUrl = `${BASE_URL}/comment/post_comments/${post_id}/`
 
     useEffect(() => {
-        // if(localStorage.getItem('access_token') === null){                   
-        //     window.location.href = '/login'
-        // }
-        // else{
+        if(localStorage.getItem('access_token') === null){                   
+            window.location.href = '/login'
+        }
+        else{
             axios
             .get(postapiUrl,
             {
@@ -58,7 +58,7 @@ export function PostPage(props) {
             .catch(err => {
             console.log(err);
             });
-    // };
+    };
 }, []);
 
 // console.log(post)

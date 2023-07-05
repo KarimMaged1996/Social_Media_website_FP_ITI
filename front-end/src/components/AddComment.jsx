@@ -50,7 +50,7 @@ export function AddComment(props) {
         axios
             .post(`${BASE_URL}/comment/create`, submitValues,{
                 headers: {
-                    // 'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                     'Content-Type': 'multipart/form-data'
                 }
             })
